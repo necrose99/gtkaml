@@ -97,3 +97,7 @@ public class MyWidget : VBox {
 	private void on_click() { stdout.printf("you clicked me!"); }
 }
 }}}
+
+== Why? ==
+
+Beacause vala further transforms the source into .c and .h and gcc compiles them (of course) to native code;)
