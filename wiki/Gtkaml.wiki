@@ -4,7 +4,7 @@
 
 Gtkaml is an XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
 
-== example.gtkaml ==
+== MyWidget.gtkaml ==
 Here is what you may write:
 {{{
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -31,3 +31,69 @@ multilne</label>
 	private void on_click() { stdout.printf("you clicked me!"); }
 ]]>
 </VBox>
+}}}
+and the output of
+
+`$> gtkaml MyWidget.gtkaml`
+
+would be:
+
+== MyWidget.vala ==
+{{{
+using GLib;
+using Gtk;
+
+public class MyWidget : VBox {
+
+	private Label label5;
+	private Notebook notebook1;
+	private Label label4;
+	private Label label2;
+	private CheckButton check_button;
+	private HBox hbox1;
+	private HButtonBox hbuttonbox1;
+	private Button abort;
+	private Button button2;
+	private Button fail;
+
+	construct {
+		label5 = new Label("<b>Dialog Box Title Here</b>");
+		label5.use_markup = true;
+		this.pack_start(label5, false, false, 0 );
+
+		notebook1 = new Notebook();
+		this.pack_start(notebook1, true, true, 0 );
+
+		label4 = new Label("label\nmultiline");
+		notebook1.add( label4 );
+
+		label2 = new Label("Page 1");
+		notebook1.set_tab_label( notebook1.get_nth_page(0), label2);
+
+		hbox1 = new HBox( false, 0 );
+		notebook1.add( hbox1 );
+
+		check_button = CheckButton.with_label("check button");
+		check_button.active = true;
+		notebook1.set_tab_label( notebook1.get_nth_page(1), check_button );
+
+		hbuttonbox1 = new HButtonBox();
+		this.pack_start( hbuttonbox1, false, true, 0 );
+
+		abort = Button.with_mnemonic("_abort");
+		abort.can_default = true;
+		abort.clicked += target => { on_click(); }; 
+		hbuttonbox1.add( abort );
+
+		button2 = Button.from_stock("gtk-redo");
+		button2.can_default = true;
+		hbuttonbox1.add( button2 );
+
+		fail = Button.with_mnemonic("fail");
+		fail.can_default = true;
+		hbuttonbox1.add( fail );
+	}
+	
+	private void on_click() { stdout.printf("you clicked me!"); }
+}
+}}}
