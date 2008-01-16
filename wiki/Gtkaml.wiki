@@ -4,7 +4,11 @@
 
 Gtkaml is an XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
 
-== MyWidget.gtkaml ==
+== Example ==
+
+http://blad.files.wordpress.com/2007/11/gtkaml1.png
+
+=== MyWidget.gtkaml ===
 Here is what you may write:
 {{{
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -38,7 +42,7 @@ and the output of
 
 would be:
 
-== MyWidget.vala ==
+=== MyWidget.vala ===
 {{{
 using GLib;
 using Gtk;
