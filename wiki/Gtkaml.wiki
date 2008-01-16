@@ -4,7 +4,8 @@
 
 Gtkaml is an XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
 
-Example of .gtkaml source that you can write:
+== example.gtkaml ==
+Here is what you may write:
 {{{
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <VBox xmlns="Gtk:gtk+-2.0">
