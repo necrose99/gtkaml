@@ -2,5 +2,31 @@
 
 = What is Gtkaml =
 
-Gtkaml is a XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
+Gtkaml is an XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
 
+Example of .gtkaml source that you can write:
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<VBox xmlns="Gtk:gtk+-2.0">
+	<Label translatable="true" use_markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false">
+	</Label>
+	<Notebook can_focus="true" tab_vborder="1">
+		<Label>
+			<tab_label><Label label="label for a tab" fill="FALSE"/></tab_label>
+			<label>label
+multilne</label>
+		</Label>
+		<HBox>
+			<tab_label><CheckButton label="check button" active="TRUE" fill="FALSE" /></tab_label>
+			<Label label="Nothing to see here, please move along" />
+		</HBox>
+	</Notebook>
+	<HButtonBox expand="false">
+		<Button has_default="true" label="_abort" click="on_click()"/>
+		<Button label="gtk-redo" stock="true"/>
+		<Button label="fail"/>
+	</HButtonBox>
+<![CDATA[
+	private void on_click() { stdout.printf("you clicked me!"); }
+]]>
+</VBox>
