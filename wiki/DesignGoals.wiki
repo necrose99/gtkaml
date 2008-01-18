@@ -1,6 +1,6 @@
 #summary gtkaml design goals
 
-  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties.
+  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties
 
   * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional): 
 
@@ -28,6 +28,7 @@ generates:
 {{{
    private Gtk.Label label1;
    construct {
+       this.title = "gtkaml window";
        label1 = new Gtk.Label();
        label1.label = "test";
        this.add(label1);
@@ -44,8 +45,43 @@ generates:
 {{{
    public Gtk.Label myLabel;
    construct {
+       this.title = "gtkaml window";
        myLabel = new Gtk.Label();
        myLabel.label = "test";
        this.add(myLabel);
    }
 }}}
+  * attributes can be specified as sub-tags too (e.g. for multiline values)
+
+{{{
+    <Label gtkaml:public="myLabel" >
+         <label>multiline 
+label</label>
+    </Label>
+}}}
+  * code can be written in CDATA sections of the root tag
+
+{{{
+<Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
+   <![CDATA[
+   private function on_click() { 
+      stdout.printf("clicked!\n"); 
+   } ]]>
+</Window>
+}}}
+  * signals are properties holding code as their value (e.g. a function call)
+
+{{{
+<Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
+   <Label gtkaml:public="myLabel" label="test" clicked="on_click()"/>   
+   <![CDATA[
+   private function on_click() { 
+      stdout.printf("clicked!\n"); 
+   } ]]>
+</Window>
+}}}
+  * attributes that are not literals can be specified with {} surrounding an identifier
+
+{{{
+   <string gtkaml:public="myString">There is no spoon</string>
+   <Label gtkaml:public="myLabel" label="{myString}"/>   
