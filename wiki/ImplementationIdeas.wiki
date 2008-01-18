@@ -1,0 +1,8 @@
+#summary Various implementation showstoppers
+
+==Introspection==
+We need `gen-introspect` *GI* files to be able to generate correct code (e.g. value="true" means either a string or a boolean depending on the property type).
+
+We need `gen-introspect` itself so that we can generate GI and .vapi files for custom widgets.
+
+We would also need to `gen-introspect` the other .vala files around?!
