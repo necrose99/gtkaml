@@ -1,0 +1,51 @@
+#summary gtkaml design goals
+
+  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties.
+
+  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional): 
+
+{{{
+<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
+...
+</Gtkns.Window>
+}}}
+  * The root gtkaml tag represents the class that you're extending, therefore the line above translates to:
+
+{{{
+using Gtk;
+using GLib;
+
+public class FileName : Gtk.Window { ... } 
+}}}
+  * The other gtkaml tags are declared as class members and code is generated in the `construct` method so that they are added to the parent container
+
+{{{
+<Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
+    <Label label="test" />
+</Window>
+}}}
+generates:
+{{{
+   private Gtk.Label label1;
+   construct {
+       label1 = new Gtk.Label();
+       label1.label = "test";
+       this.add(label1);
+   }
+}}}
+  * The `gtkaml:public` and `gtkaml:private` attributes can change the name and visibility of the data member:
+
+{{{
+<Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
+    <Label gtkaml:public="myLabel" label="test" />
+</Window>
+}}}
+generates:
+{{{
+   public Gtk.Label myLabel;
+   construct {
+       myLabel = new Gtk.Label();
+       myLabel.label = "test";
+       this.add(myLabel);
+   }
+}}}
