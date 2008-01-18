@@ -1,6 +1,6 @@
 #summary gtkaml design goals
 
-  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties
+  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties or signals
 
   * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
 
