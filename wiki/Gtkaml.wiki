@@ -1,10 +1,13 @@
 #summary Introduction to Gtkaml
+#labels Featured,Phase-Design
 
-= What is Gtkaml =
+= What is gtkaml =
 
-Gtkaml is an XML preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
+Gtkaml is an XML syntax + a preprocessor that transforms an UI description into [http://live.gnome.org/Vala Vala] code.
 
-== Example ==
+== Example of gtkaml syntax ==
+
+Which would produce this:
 
 http://blad.files.wordpress.com/2007/11/gtkaml1.png
 
