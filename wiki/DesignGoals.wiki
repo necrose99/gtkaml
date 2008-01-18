@@ -2,7 +2,7 @@
 
   * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties
 
-  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional). The namespace you're creating can be specified in gtkaml:namespace attribute:
+  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
 
 {{{
 <Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" gtkaml:namespace="myNamespace">
