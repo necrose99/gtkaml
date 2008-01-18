@@ -2,20 +2,21 @@
 
   * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties
 
-  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional): 
+  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional). The namespace you're creating can be specified in gtkaml:namespace attribute:
 
 {{{
-<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
+<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" gtkaml:namespace="myNamespace">
 ...
 </Gtkns.Window>
 }}}
-  * The root gtkaml tag represents the class that you're extending, therefore the line above translates to:
+  * The root gtkaml tag represents the class that you're extending, and the name of the processed file represents the class you're creating:
 
 {{{
 using Gtk;
 using GLib;
-
-public class FileName : Gtk.Window { ... } 
+namespace myNamespace {
+   public class FileName : Gtk.Window { ... } 
+}
 }}}
   * The other gtkaml tags are declared as class members and code is generated in the `construct` method so that they are added to the parent container
 
@@ -84,4 +85,5 @@ label</label>
 
 {{{
    <string gtkaml:public="myString">There is no spoon</string>
-   <Label gtkaml:public="myLabel" label="{myString}"/>   
+   <Label gtkaml:public="myLabel" label="{myString}"/>
+}}}   
