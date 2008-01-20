@@ -5,3 +5,11 @@
 Gtk widgets, and other objects too, may not have a no-parameters constructor.
 In this case, we need to store the name of a property that needs to be feed as constructor parameter (and give it a "required" state), or have a good default 
 (e.g. `gtk_label_new(NULL)` is a good default, but others may not be)
+
+== XML References Vala and viceversa ==
+
+I cannot implement Gtkaml as a true Vala parser (that outputs data structures for the CCodeGenerator) because I cannot parse the code snippets in `<![CDATA[` sections. They begin in an unusual state - maybe someday I could hack the Bison parser to begin in that state directly:)
+
+That means that `gtkamlc` remains a text preprocessor and the result is fed once again to the Vala parser.
+
+Also, data members not declared in XML, when referenced in attributes (as in value="{data_member}" will simply get written as-is in the source. Vala will complain instead.
