@@ -1,15 +1,16 @@
 #summary gtkaml design goals
+#labels Featured
 
-  * The gtkaml XML tags correspond to existing GObject classes, and their attributes correspond to GObject properties, signals or fields
+  * The gtkaml XML tags correspond to existing GObject classes(DONE), and their attributes correspond to GObject properties, signals or fields
 
-  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (both optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
+  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
 
 {{{
 <Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" gtkaml:namespace="myNamespace">
 ...
 </Gtkns.Window>
 }}}
-  * The root gtkaml tag represents the class that you're extending, and the name of the processed file represents the class you're creating:
+  * The root gtkaml tag represents the class that you're extending(DONE), and the name of the processed file represents the class you're creating:
 
 {{{
 using Gtk;
@@ -18,7 +19,7 @@ namespace myNamespace {
    public class FileName : Gtk.Window { ... } 
 }
 }}}
-  * The other gtkaml tags are declared as class members and code is generated in the `construct` method so that they are added to the parent container
+  * The other gtkaml tags are declared as class members(DONE) and code is generated in the `construct` method so that their properties are set(DONE) and they are added to the parent container
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
@@ -35,7 +36,7 @@ generates:
        this.add(label1);
    }
 }}}
-  * The `gtkaml:public` and `gtkaml:private` attributes can change the name and visibility of the data member:
+  * The `gtkaml:public` and `gtkaml:private` attributes can change the name and visibility of the data member(DONE):
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
@@ -81,7 +82,7 @@ label</label>
    } ]]>
 </Window>
 }}}
-  * attributes that are not literals can be specified with {} surrounding an identifier
+  * attributes that are not literals can be specified with {} surrounding an identifier(DONE: string and boolean literals, and {} for the others)
 
 {{{
    <string gtkaml:public="myString">There is no spoon</string>
