@@ -6,10 +6,22 @@ Gtk widgets, and other objects too, may not have a no-parameters constructor.
 In this case, we need to store the name of a property that needs to be feed as constructor parameter (and give it a "required" state), or have a good default 
 (e.g. `gtk_label_new(NULL)` is a good default, but others may not be)
 
-== XML References Vala and viceversa ==
+== Gtkaml code References Vala code and viceversa ==
 
 I cannot implement Gtkaml as a true Vala parser (that outputs data structures for the CCodeGenerator) because I cannot parse the code snippets in `<![CDATA[` sections. They begin in an unusual state - maybe someday I could hack the Bison parser to begin in that state directly:)
 
 That means that `gtkamlc` remains a text preprocessor and the result is fed once again to the Vala parser.
 
 Also, data members not declared in XML, when referenced in attributes (as in value="{data_member}" will simply get written as-is in the source. Vala will complain instead.
+
+=== Bison reentrant parser ===
+The vala parser.y seems to define a reentrant (pure) parser.
+
+An idea is keep in memory any unresolved attributes (e.g. value="{identifier}" ones) until the next cdata block is parsed. 
+
+To parse a cdata block, I generate the whole code I am aware until now, and feed it to the parser. 
+The parser will stop (in error?), then I feed him the new cdata block (with `yyrestart ()`).
+
+If I resolve a few unresolved attribute values, I spill them out after this cdata block that referenced them, and again, give them to the parser.
+
+The same for all the other incoming cdata blocks.
