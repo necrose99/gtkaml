@@ -1,10 +1,27 @@
-#summary Various implementation showstoppers
+#summary Various implementation ideas / showstoppers
 
 == Construction ==
 
 Gtk widgets, and other objects too, may not have a no-parameters constructor.
 In this case, we need to store the name of a property that needs to be feed as constructor parameter (and give it a "required" state), or have a good default 
 (e.g. `gtk_label_new(NULL)` is a good default, but others may not be)
+
+== Containers' "add" function
+
+Many containers perform 'good enough' when adding the children wit `gtk_container_add (container, child)`.
+However, other constructors may be needed for a more fine-grained control.
+
+For example, you cannot specify a tab_label for a Notebook page without a function call (properties and fields don't do it).
+
+An idea would be to give each child a new set of properties derived from the additional constructor parameters, e.g. the `tab_label` here:
+{{{
+<Notebook can_focus="true" tab_vborder="1">
+     <HBox>
+           <tab_label><CheckButton label="check button"/></tab_label>
+           <Label label="Nothing to see here, please move along" />
+     </HBox>
+</Notebook>
+}}}
 
 == Gtkaml code References Vala code and viceversa ==
 
