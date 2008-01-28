@@ -39,45 +39,14 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 	 * Generates the code identifier.property = value
 	 * Also inspects the type to determine if value is string, boolean, int or {expression}
 	 */
-	public void set_identifier_property (string identifier, string property, DataType type, string value) {
+	public void set_identifier_property (string identifier, string property, string value) {
 		string source_value;
-		if (type is UnresolvedType)
-		{
-			UnresolvedType utype = type as UnresolvedType;
-			//stdout.printf("%s", utype.type_name); 
-			if (value.has_prefix ("{") && value.has_suffix ("}")) {
-				source_value = value.substring (1, value.len () - 2);
-			} else if (utype.type_name == "string") {
-				source_value = "\"" + value + "\"";
-			} else if (utype.type_name == "bool") {
-				if (value != "true" && value != "false") {
-					Report.error (null, "'%s' is not a boolean literal".printf (value));
-				}
-				source_value = value;
-			} else {
-				source_value = value;
-			}
-			construct_body += "\t\t%s.%s = %s;\n".printf (identifier, property, source_value);
+		if (value.has_prefix ("{") && value.has_suffix ("}")) {
+			source_value = value.substring (1, value.len () - 2);
+		} else {
+			source_value = "\"" + value + "\"";
 		}
-	}
-	
-	public void set_identifier_signal (string identifier, string signal_name, Collection<FormalParameter> parameters, string body)
-	{
-		string[] parameter_names = new string[0];
-		int i = 0;
-		string parameters_joined = "";
-		
-		if (parameters.size > 0) {
-			parameter_names.resize (parameters.size);
-			
-			foreach (FormalParameter p in parameters) {
-				parameter_names[i] = p.name;
-			}
-			parameters_joined = string.joinv (",", parameter_names);
-		}		
-		
-		
-		construct_body += "\t\t%s.%s += (%s) => { %s; };".printf (identifier, signal_name, parameters_joined, body);
+		construct_body += "\t\t%s.%s = %s;\n".printf (identifier, property, source_value);
 	}
 	
 	public void add_member (string identifier, string type_ns, string type, bool is_public)

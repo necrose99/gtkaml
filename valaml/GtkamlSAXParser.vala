@@ -216,20 +216,7 @@ public class Gtkaml.SAXParser : GLib.Object {
 		foreach (Attribute attr in attrs) {
 			if (attr.prefix == null)
 			{
-				Symbol m = SemanticAnalyzer.symbol_lookup_inherited(clazz, attr.localname);
-				if (m == null) {
-					Report.error ( create_source_reference (), "%s not found!\n".printf(attr.localname));
-					stop_parsing ();
-				} else if (m is Property) {
-					Property p = m as Property;
-					code_generator.set_identifier_property (identifier, p.name, p.type_reference, attr.value);
-				} else if (m is Vala.Signal) {
-					var s = m as Vala.Signal;
-					code_generator.set_identifier_signal (identifier, s.name, s.get_parameters (), attr.value);
-				} else if (m is Field) {
-					Field f = m as Field;
-					code_generator.set_identifier_property (identifier, f.name, f.type_reference, attr.value);
-				}
+				code_generator.set_identifier_property (identifier, p.name, attr.value);
 			}					
 		}
 	}		
