@@ -62,7 +62,7 @@ public class Gtkaml.SAXParser : GLib.Object {
 	[Import]
 	public int line_number();
 
-	public void cdata (string value, int len )
+	public void cdata_block (string value, int len )
 	{
 		State state = states.peek ();
 		if (state.state_id != StateId.SAX_PARSER_INITIAL_STATE){
@@ -93,16 +93,10 @@ public class Gtkaml.SAXParser : GLib.Object {
 							var namespace_reference = new Vala.NamespaceReference (uri_definition[0], source_reference);
 							source_file.add_using_directive (namespace_reference);
 							code_generator.add_using (uri_definition[0]);
-							//run the AttributeProcessor on this namespace
-							//var attributeProcessor = new Vala.AttributeProcessor ();
-							//attributeProcessor.visit_source_file (source_file);
 							if (ns.prefix != null)
 								prefixes_namespaces.set (ns.prefix, uri_definition[0]); 
 						}
 					}
-					//now run the SymbolResolver which will surely break things!
-					//var symbolResolver = new SymbolResolver ();
-					//symbolResolver.resolve (context);
 					
 					//now generate the class definition
 					Class clazz = lookup_class (prefix, localname);
@@ -176,13 +170,7 @@ public class Gtkaml.SAXParser : GLib.Object {
 	
 	public void end_element (string localname, string prefix, string URI)
 	{
-		//stdout.printf("End element:%s\n", localname );
 		states.pop();
-	}
-	
-	public void cdata_block (string cdata, int len)
-	{
-		//stdout.printf("cdata:%s", cdata.ndup(len));
 	}
 	
 	private string prefix_to_namespace (string prefix)
@@ -216,7 +204,7 @@ public class Gtkaml.SAXParser : GLib.Object {
 		foreach (Attribute attr in attrs) {
 			if (attr.prefix == null)
 			{
-				code_generator.set_identifier_property (identifier, p.name, attr.value);
+				code_generator.set_identifier_property (identifier, attr.localname, attr.value);
 			}					
 		}
 	}		
