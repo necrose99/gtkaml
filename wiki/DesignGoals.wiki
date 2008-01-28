@@ -1,7 +1,7 @@
 #summary gtkaml design goals
 #labels Featured
 
-  * The gtkaml XML tags correspond to existing GObject classes(DONE), and their attributes correspond to GObject properties, signals or fields
+  * The gtkaml XML tags correspond to existing GObject classes(DONE), and their attributes correspond to GObject properties, signals or fields(DONE)
 
   * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
 
@@ -19,7 +19,7 @@ namespace myNamespace {
    public class FileName : Gtk.Window { ... } 
 }
 }}}
-  * The other gtkaml tags are declared as class members(DONE) and code is generated in the `construct` method so that their properties are set(DONE) and they are added to the parent container
+  * The other gtkaml tags are declared as class members(DONE) and code is generated in the `construct` method so that their properties are set(DONE) and they are added to the parent container(partially DONE)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
@@ -53,7 +53,7 @@ generates:
        this.add(myLabel);
    }
 }}}
-  * attributes can be specified as sub-tags too (e.g. for multiline values)
+  * attributes can be specified as sub-tags too (e.g. for multiline values or complex literals like array ones)
 
 {{{
     <Label gtkaml:public="myLabel" >
@@ -61,7 +61,7 @@ generates:
 label</label>
     </Label>
 }}}
-  * code can be written in CDATA sections of the root tag
+  * code can be written in CDATA sections of the root tag(DONE)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
@@ -71,7 +71,7 @@ label</label>
    } ]]>
 </Window>
 }}}
-  * signals are properties holding code as their value (e.g. a function call)
+  * signals are properties holding code as their value (e.g. a function call)(DONE)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
