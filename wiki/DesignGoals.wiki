@@ -3,7 +3,7 @@
 
   * The gtkaml XML tags correspond to existing GObject classes(DONE), and their attributes correspond to GObject properties, signals or fields(DONE)
 
-  * The namespace definition includes the Vala namespace name followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
+  * The XML namespace URI includes the Vala namespace name(DONE) followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
 
 {{{
 <Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" gtkaml:namespace="myNamespace">
@@ -82,7 +82,7 @@ label</label>
    } ]]>
 </Window>
 }}}
-  * attributes that are not literals can be specified with {} surrounding an identifier(DONE: string and boolean literals, and {} for the others)
+  * attributes that are not literals can be specified with {} surrounding an identifier(DONE)
 
 {{{
    <string gtkaml:public="myString">There is no spoon</string>
