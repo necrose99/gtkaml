@@ -53,7 +53,7 @@ multilne</label>
 }}}
 and the output of
 
-`$> gtkamlc --pkg gtk+2.0 MyVBox.gtkaml`
+`$ gtkamlc --pkg gtk+2.0 MyVBox.gtkaml -o myvbox `
 
 would be:
 
