@@ -14,7 +14,6 @@ http://blad.files.wordpress.com/2007/11/gtkaml1.png
 === MyVBox.gtkaml ===
 Here is what you may write:
 {{{
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.1" class:name="MyVBox">
 	<Label pack_start="true" use_markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
 	
