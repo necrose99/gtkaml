@@ -1,25 +1,27 @@
 #summary gtkaml design goals
 #labels Featured
 
-  * The gtkaml XML tags correspond to existing GObject classes(DONE), and their attributes correspond to GObject properties, signals or fields(DONE)
+  * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
 
-  * The XML namespace URI includes the Vala namespace name(DONE) followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute:
+  * the XML namespace URI includes the Vala namespace name(DONE in 0.1) followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute (DONE in 0.1):
 
 {{{
-<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" gtkaml:namespace="myNamespace">
+<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:namespace="myNamespace" gtkaml:name="MyWindow">
 ...
 </Gtkns.Window>
 }}}
-  * The root gtkaml tag represents the class that you're extending(DONE), and the name of the processed file represents the class you're creating:
+  * the gtkaml namespace name may be changed as long as its URI begins with `http://gtkaml.org` (DONE in 0.1)
+
+  * the root tag represents the class that you're extending(DONE in 0.1), and the `gtkaml:name` represents the name of the class you're creating(DONE in 0.1):
 
 {{{
 using Gtk;
 using GLib;
 namespace myNamespace {
-   public class FileName : Gtk.Window { ... } 
+   public class MyWindow : Gtk.Window { ... } 
 }
 }}}
-  * The other gtkaml tags are declared as class members(DONE) and code is generated in the `construct` method so that their properties are set(DONE) and they are added to the parent container(partially DONE)
+  * the other tags are declared as locals in the `construct` method (DONE in 0.1) and code is generated so that their properties are set(DONE in 0.1) and they are added to the parent container(DONE in 0.1)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
@@ -36,7 +38,7 @@ generates:
        this.add(label1);
    }
 }}}
-  * The `gtkaml:public` and `gtkaml:private` attributes can change the name and visibility of the data member(DONE):
+  * the `gtkaml:public` and `gtkaml:private` attributes can set a name and visibility of a tag and declare it as a class member(DONE in 0.1):
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" title="gtkaml window">
@@ -53,7 +55,7 @@ generates:
        this.add(myLabel);
    }
 }}}
-  * attributes can be specified as sub-tags too (e.g. for multiline values or complex literals like array ones)
+  * attributes can be specified as sub-tags too (e.g. for multiline values or complex literals like array ones) (DONE in 0.1)
 
 {{{
     <Label gtkaml:public="myLabel" >
@@ -61,7 +63,8 @@ generates:
 label</label>
     </Label>
 }}}
-  * code can be written in CDATA sections of the root tag(DONE)
+
+  * code can be written in CDATA sections of the root tag(DONE in 0.1)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
@@ -71,7 +74,7 @@ label</label>
    } ]]>
 </Window>
 }}}
-  * signals are properties holding code as their value (e.g. a function call)(DONE)
+  * signals are properties holding code as their value (e.g. a function call). The parameters are `target`(the emmiter) and the other parameters from the signal signature, with the same names(DONE in 0.1)
 
 {{{
 <Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
@@ -82,9 +85,29 @@ label</label>
    } ]]>
 </Window>
 }}}
-  * attributes that are not literals can be specified with {} surrounding an identifier(DONE)
+  * attributes that are not literals can be specified with {} surrounding an identifier or expression (DONE in 0.1)
 
 {{{
    <string gtkaml:public="myString">There is no spoon</string>
    <Label gtkaml:public="myLabel" label="{myString}"/>
 }}}   
+  * signals can be written in between {} too - this way you have to specify yourself the lambda function (DONE in 0.1):
+
+{{{
+<Window xmlns="Gtk:gtk+-2.0" xmlns:GLibns="GLib">
+   <Label gtkaml:public="myLabel" label="test" clicked="{target=>{on_click()}}"/>   
+   ...
+}}}
+
+  * constructors are automatically determined based on the attributes present. If you want to use a specific constructor, specify his name as an attribute with the value "true" (DONE in 0.1):
+
+{{{
+   <Label with_mnemonic="true" label="_Shortcut"/>
+}}}
+  * the functions used to add child widgets to containers are automatically detected. If you want to use a specific container add function, specify his name as an attribut with the value "true" (DONE in 0.1:
+
+{{{
+   <VBox homogeneous="true" spacing="0">
+       <Label pack_end="true" label="packed at end" />
+   </VBox>
+}}}
