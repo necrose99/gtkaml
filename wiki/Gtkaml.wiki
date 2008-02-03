@@ -57,7 +57,7 @@ and the output of
 
 would be:
 
-=== MyWidget.vala ===
+=== MyVBox.vala ===
 {{{
 using Gtk;
 using GLib;
