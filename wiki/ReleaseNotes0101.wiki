@@ -1,4 +1,5 @@
 #summary gtkaml 0.1.0.1 release notes
+gtkaml 0.1.0.1 requires glib-2.0, vala-1.0 >= 0.1.6, libxml-2.0, and gtk+-2.0
 Fixed some packaging problems.
   * vala >= 0.1.6 required now
   * examples binaries not installed anymore
