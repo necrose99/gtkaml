@@ -1,12 +1,12 @@
-#summary Some bugs blocked entire goals from 0.1
+#summary Some bugs that blocked entire goals from 0.1
 #labels Featured
-  * fixed a bug [issue 1] which prevented a widget from a namespace to be added into a container from another namespace (and viceversa) e.g. this works now:
+  * fixed "issue #1" which prevented a widget from a namespace to be added into a container from another namespace (and viceversa) e.g. this works now:
 {{{
 <MyNS:MyBox>
   <Gtk:Label label="test"/>
 </MyNS:MyBox>
 }}}
-  * added the Gtk.MenuItem's constructor in implicits.ini because it required a parameter that was not a property
-  * fixed an issue when looking up for constructor parameters' type (i.e do not use the widget's property type, but use the constructor's formal parameter type). The MenuItem didn't work because of this.
-  * fixed [issue 3] with gtkaml:name and gtkaml:namespace which were attributed as properties of `this`
+  * added the `Gtk.MenuItem`'s constructor in implicits.ini because it required a parameter that was not a property
+  * fixed an issue when looking up for constructor parameters' type (i.e do not use the widget's property type, but use the constructor's formal parameter type). The `MenuItem` didn't work because of this.
+  * fixed "issue #3" with gtkaml:name and gtkaml:namespace which were attributed as properties of `this`
   * packaging: removed the signal handler from example0.gtkaml that caused a vala crash 
