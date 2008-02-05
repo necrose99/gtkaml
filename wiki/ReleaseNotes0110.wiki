@@ -1,5 +1,8 @@
-#summary Some bugs that blocked entire goals from 0.1
+#summary release notes for gtkaml 0.1.1.0
 #labels Featured
+gtkaml 0.1.1.0 requires glib-2.0, vala-1.0 >= 0.1.6, libxml-2.0, and gtk+-2.0
+
+Some bugs that blocked entire goals from 0.1 were fixed:
   * fixed "issue #1" which prevented a widget from a namespace to be added into a container from another namespace (and viceversa) e.g. this works now:
 {{{
 <MyNS:MyBox>
