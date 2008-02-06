@@ -31,13 +31,13 @@ If you have another namespace you would like included, use `xmlns:myns="Myns"` a
 
 The `gtkaml:name` is the name of the class you're defining. You can prefix it with a namespace (e.g `gtkaml:class='Myns.HelloWorldWindow'`) or use `gtkaml:namespace="Myns"` for that. 
 
-The `xmlns:gtkaml="http://gtkaml.org/0.1"` is how gtkaml recognizes the prefix to `gtkaml` to be the one corresponding to the gtkaml syntax level 0.1. You can have it renamed (e.g. `xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
+The `xmlns:gtkaml="http://gtkaml.org/0.1"` is the declaration of the gtkaml prefix for this kind of meta-informations. You can have it renamed (e.g. xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
 
-`title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (e.g. `spacing="0"` and booleans (e.g. `visible="true"`). 
+`title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (`spacing="0"`) and booleans (`visible="true"`). 
 
 `destroy` is a signal of the Gtk.Window. It is triggered when the window is closed. The value specifies that the main Gtk quit function should be added as handler.
 
-`<![CDATA[` is an xml construction that allows you to write otherwise invalid characters (like `<`). gtkaml uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
+`<![CDATA[` is an xml construction that allows you to write otherwise invalid characters (like '`<`'). gtkaml uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
 
 ===Compiling the example===
 Let's say you save the above in a file named `tutorial.gtkaml`
@@ -48,3 +48,8 @@ The fastest way to compile this would be
 The `--pkg` parameter tells vala to include the bindings for Gtk. That means to also include the headers and the linking parameters specified by e.g. `pkg-config`
 
 If the above command complains that `gtk+-2.0 not found in specified Vala API directories` then you should add the `--vapidir /path/to/share/vala/vapi` in the command-line, where `/path/to` is the prefix of your vala installation.
+
+===A more complex user interface===
+We will leave the `main ()` function out for the moment. You can write it in another file which is your application's entry point. We will focus on our custom window.
+
+Gtk uses layout containers for positioning elements in a window. One of the most populars is VBox is HBox - vertical and horizontal boxes, and
