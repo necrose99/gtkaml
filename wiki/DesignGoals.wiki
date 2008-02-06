@@ -10,7 +10,7 @@
 ...
 </Gtkns.Window>
 }}}
-  * the gtkaml namespace name may be changed as long as its URI begins with `http://gtkaml.org` (DONE in 0.1)
+  * the gtkaml namespace name may be changed as long as its URI begins with `http://gtkaml.org/` (DONE in 0.1)
 
   * the root tag represents the class that you're extending(DONE in 0.1), and the `gtkaml:name` represents the name of the class you're creating(DONE in 0.1):
 
@@ -38,6 +38,8 @@ generates:
        this.add(label1);
    }
 }}}
+  * the `gtkaml:preconstruct` and `gtkaml:postconstruct` are used to specify a method/code to be called before/after the construction of the ui, given that you cannot have another `construct` method (TODO in 0.2).
+
   * the `gtkaml:public` and `gtkaml:private` attributes can set a name and visibility of a tag and declare it as a class member(DONE in 0.1):
 
 {{{
@@ -104,10 +106,18 @@ label</label>
 {{{
    <Label with_mnemonic="true" label="_Shortcut"/>
 }}}
-  * the functions used to add child widgets to containers are automatically detected. If you want to use a specific container add function, specify his name as an attribut with the value "true" (DONE in 0.1:
+  * the functions used to add child widgets to containers are automatically detected. If you want to use a specific container add function, specify his name as an attribute with the value "true" (DONE in 0.1):
 
 {{{
    <VBox homogeneous="true" spacing="0">
        <Label pack_end="true" label="packed at end" />
    </VBox>
 }}}
+  * a class member can be 'added' multiple times in a container by specifying a reference (TODO in 0.2). Of course, no other attribute than the parameters to the add function shall be specified on a reference.
+{{{
+   <TreeViewColumn title="col1">
+       <CellRendererText gtkaml:public="renderer1" pack_start="true" expand="true" />
+       <CellRendererText gtkaml:reference="renderer1" add_attribute="true" attribute="text" column="0" />
+   </TreeViewColumn>
+}}}
+  
