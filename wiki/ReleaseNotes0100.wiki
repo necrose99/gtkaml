@@ -1,7 +1,6 @@
 #summary gtkaml 0.1.0.0 release notes
 This is the first `gtkaml` release
   * it requires glib-2.0, vala-1.0 >= 0.1.6, libxml-2.0, and gtk+-2.0
-See the release notes [ReleaseNotes0101 here]
   * has all the capabilities described in [DesignGoals] marked as 'DONE in 0.1'
 
 Known issues:
