@@ -10,10 +10,11 @@ This is a quick walk-trough on how to code in gtkaml and Vala.
 I am not trying to compare against one of the 6 examples [http://www.vector-seven.com/2008/01/23/gtk-hello-world-in-six-different-languages/ here]
 
 {{{
-<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:class="HelloWorldWindow" title="Hello World" destroy="{Gtk.main_quit}">
+<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:name="HelloWorldWindow" title="Hello World" destroy="{Gtk.main_quit}">
 <![CDATA[
    public static int main (string[] args)
    {
+       Gtk.init (ref args);
        var window = new HelloWorldWindow ();
        window.show_all ();
        Gtk.main ();
@@ -28,8 +29,18 @@ The `xmlns="Gtk"` declaration does two things: 'imports' the Gtk vala namespace 
 
 If you have another namespace you would like included, use `xmlns:myns="Myns"` and prefix all your classes in that namespace with `myns` like this: `<myns:MyWidget ..`
 
-The `gtkaml:class` is the name of the class you're defining. You can prefix it with a namespace (e.g `gtkaml:class='Myns.HelloWorldWindow'`) or use `gtkaml:namespace="Myns"` for that. 
+The `gtkaml:name` is the name of the class you're defining. You can prefix it with a namespace (e.g `gtkaml:class='Myns.HelloWorldWindow'`) or use `gtkaml:namespace="Myns"` for that. 
 
 The `xmlns:gtkaml="http://gtkaml.org/0.1"` is how gtkaml recognizes the prefix to `gtkaml` to be the one corresponding to the gtkaml syntax level 0.1. You can have it renamed (e.g. `xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
 
 `title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (e.g. `spacing="0"` and booleans (e.g. `visible="true"`).
+
+===Compiling the example===
+Let's say you save the above in a file named `tutorial.gtkaml`
+The fastest way to compile this would be
+
+`~$gtkamlc --pkg gtk+-2.0 tutorial.gtkaml -o tutorial`
+
+The `--pkg` parameter tells vala to include the bindings for Gtk. That means to also include the headers and the linking parameters specified by e.g. `pkg-config`
+
+If the above command complains that `gtk+-2.0 not found in specified Vala API directories` then you should add the `--vapidir /path/to/share/vala/vapi` in the command-line, where `/path/to` is the prefix of your vala installation.
