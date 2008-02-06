@@ -10,7 +10,7 @@ This is a quick walk-trough on how to code in gtkaml and Vala.
 I am not trying to compare against one of the 6 examples [http://www.vector-seven.com/2008/01/23/gtk-hello-world-in-six-different-languages/ here]
 
 {{{
-<Window xmlns="Gtk" gtkaml:class="HelloWorldWindow" title="Hello World" xmlns:gtkaml="http://gtkaml.org/0.1" destroy="{Gtk.main_quit}">
+<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:class="HelloWorldWindow" title="Hello World" destroy="{Gtk.main_quit}">
 <![CDATA[
    public static int main (string[] args)
    {
@@ -33,5 +33,3 @@ The `gtkaml:class` is the name of the class you're defining. You can prefix it w
 The `xmlns:gtkaml="http://gtkaml.org/0.1"` is how gtkaml recognizes the prefix to `gtkaml` to be the one corresponding to the gtkaml syntax level 0.1. You can have it renamed (e.g. `xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
 
 `title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (e.g. `spacing="0"` and booleans (e.g. `visible="true"`).
-
-
