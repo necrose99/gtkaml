@@ -111,6 +111,9 @@ label</label>
        <Label pack_end="true" label="packed at end" />
    </VBox>
 }}}
+
+==Goals for 0.2==
+
   * the `gtkaml:preconstruct` and `gtkaml:postconstruct` are used to specify a method/code to be called before/after the construction of the ui, given that you cannot have another `construct` method (TODO in 0.2).
 
   * a class member can be 'added' multiple times in a container by specifying a reference (TODO in 0.2). Of course, no other attribute than the parameters to the add function shall be specified on a reference.
@@ -121,3 +124,4 @@ label</label>
        <CellRendererText gtkaml:reference="renderer1" add_attribute="true" attribute="text" column="0" />
    </TreeViewColumn>
 }}}
+  *
