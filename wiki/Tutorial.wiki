@@ -33,7 +33,11 @@ The `gtkaml:name` is the name of the class you're defining. You can prefix it wi
 
 The `xmlns:gtkaml="http://gtkaml.org/0.1"` is how gtkaml recognizes the prefix to `gtkaml` to be the one corresponding to the gtkaml syntax level 0.1. You can have it renamed (e.g. `xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
 
-`title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (e.g. `spacing="0"` and booleans (e.g. `visible="true"`).
+`title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (e.g. `spacing="0"` and booleans (e.g. `visible="true"`). 
+
+`destroy` is a signal of the Gtk.Window. It is triggered when the window is closed. The value specifies that the main Gtk quit function should be added as handler.
+
+`<![CDATA[` is an xml construction that allows you to write otherwise invalid characters (like `<`). gtkaml uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
 
 ===Compiling the example===
 Let's say you save the above in a file named `tutorial.gtkaml`
