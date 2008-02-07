@@ -124,4 +124,4 @@ label</label>
        <CellRendererText gtkaml:reference="renderer1" add_attribute="true" attribute="text" column="0" />
    </TreeViewColumn>
 }}}
-  *
+  * the creation method of the base class should be enforced on the new created class too
