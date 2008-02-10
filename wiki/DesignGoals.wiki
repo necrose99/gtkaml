@@ -120,10 +120,10 @@ label</label>
 
 {{{
    <TreeViewColumn title="col1">
-       <CellRendererText gtkaml:public="renderer1" pack_start="true" expand="true" />
+       <CellRendererText gtkaml:private="renderer1" pack_start="true" expand="true" />
        <CellRendererText gtkaml:reference="renderer1" add_attribute="true" attribute="text" column="0" />
    </TreeViewColumn>
 }}}
-  * the creation method of the base class must be respected: all required creation methods's parameters must be specified on the root tag. The generated code incorporates a creation method with the same parameters (TODO in 0.2)
+  * the creation method of the base class must be respected: all required creation methods's parameters must be specified on the root tag.(DONE in 0.2).Otherwise the generated code incorporates a creation method with the missing parameters? (TODO in 0.2.1?)
   * the implicits.ini files is renamed to Gtk.implicits; when using a namespace, the ImplicitsResolver looks up the namespacename.implicits in gtkaml's data folder and in --implicitsdir (TODO in 0.2)
   * xmlns:gtkaml versions are taken into account: give a warning if the source level is not specified or not <=0.2 (http://gtkaml.org/ is not specified, http://gtkaml.org/0.1 is 0.1 level. Also give warnings when 0.2 features are used with 0.1 source level etc.) (TODO in 0.2)
