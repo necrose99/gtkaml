@@ -112,9 +112,9 @@ label</label>
    </VBox>
 }}}
 
-==Goals for 0.2.0.0==
+==Goals for 0.2.0.0 (TODO)==
 
-  * the `gtkaml:construct` and `gtkaml:preconstruct` are used to specify a method/code to be called before/after the construction of the ui, given that you cannot have another `construct` method (TODO in 0.2). The version without {} specifies a method name, while the version with {} specifies verbatim executable code. Also, a default parameter `target` will be available.
+  * the `gtkaml:construct` and `gtkaml:preconstruct` are used to specify a method/code to be called before/after the construction of the ui, given that you cannot have another `construct` method (TODO in 0.2). The version without {} specifies a method call, while the version with {} specifies verbatim executable code. Also, a default parameter `target` will be available.
 
   * the `gtkaml:implements` root attribute is used to specify a comma-separated interface list (TODO in 0.2)
 
@@ -127,6 +127,8 @@ label</label>
    </TreeViewColumn>
 }}}
   * the creation method of the base class must be respected: all required creation methods' parameters must be specified on the root tag.(DONE in 0.2).Otherwise the generated code incorporates a creation method with the missing parameters? (TODO in 0.2.1?)
+
+  * The creation methods' / container add methods' parameters can have default values in implicits configuration files. These are not taken into account when establishing maxium method match
 
   * the implicits.ini file is renamed to Gtk.implicits; when using a namespace, the implicits resolver looks up the namespacename.implicits in gtkaml's data folder and in --implicitsdir (TODO in 0.2)
 
