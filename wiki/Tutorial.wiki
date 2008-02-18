@@ -10,7 +10,7 @@ This is a quick walk-trough on how to code in gtkaml and Vala.
 I am not trying to compare against one of the 6 examples [http://www.vector-seven.com/2008/01/23/gtk-hello-world-in-six-different-languages/ here]
 
 {{{
-<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:name="HelloWorldWindow" title="Hello World" destroy="{Gtk.main_quit}">
+<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:name="HelloWorldWindow" title="Hello World" delete_event="{Gtk.main_quit}">
 <![CDATA[
    public static int main (string[] args)
    {
