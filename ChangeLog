@@ -1,16 +1,3 @@
-2008-02-11
-  - added support for gtkaml:construct and gtkaml:preconstruct attrs
-    Construct goes after all the children have been added, and
-    preconstruct goes right before the element has been created 
-    (or, in the case of root, right before setting the minimum
-    attributes of the base creation method)
-
-2008-02-10
-  - bumped version to 0.2.0.0
-  - removed dependency between SAXParser and CodeGenerator (moved
-    the parse/resolve/generate 'process' in Gtkaml.Parser)
-  - enforced specifying the constructor parameters for the root tag
-
 2008-02-08
   - fixed a segfault where a g_strjoinv () was called without a last NULL
   - fixed bug with signals handling that missed most parameters
