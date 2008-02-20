@@ -32,41 +32,34 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 	private string key_file_name {get;set;}
 	private Vala.CodeContext context {get;set;}
 	
-	public ImplicitsResolver (construct Vala.CodeContext! context, construct string! key_file_name) {}
+	public ImplicitsResolver (construct Vala.CodeContext context, construct string! key_file_name) {}
 	
 	construct {
-		string file_name;
 		try {
 			key_file = new KeyFile ();
-			file_name = Path.build_filename (Config.PACKAGE_DATADIR, "implicits", "implicits.ini");
+			string file_name = Path.build_filename (Config.PACKAGE_DATADIR, "implicits", "implicits.ini");
 			if (!FileUtils.test (file_name, FileTest.EXISTS))
 				file_name = "../data/implicits.ini";
 			key_file.load_from_file (file_name, KeyFileFlags.NONE);
-		} catch (Error error) {
-			Report.error (null, "Error while opening %s:%s".printf (file_name, error.message));
+		} catch (KeyFileError error) {
+			Report.error (null, error.message);
 		}
 	}
 	
 	public void resolve (ClassDefinition !class_definition)
 	{
-		//determine which constructor shall we use
-		//references don't have to be constructed
-		if (!(class_definition is ReferenceClassDefinition)) {
+		if (!(class_definition is RootClassDefinition))
+		{
+			//first determine which constructor shall we use
 			determine_construct_method (class_definition);
 			if (class_definition.construct_method == null) 
 				return;
+			//then determine the .add function, if applyable
+			if (class_definition.parent_container != null)
+				determine_add_method (class_definition);
+			resolve_complex_attributes (class_definition);
 		}
-		//then determine the container add function, if applicable
-		if (class_definition.parent_container != null)
-			determine_add_method (class_definition);
-		//References should have no 'rest attributes'
-		if (class_definition is ReferenceClassDefinition && class_definition.attrs.size != 0) {
-			Report.error (class_definition.source_reference, "No attributes other than the container add parameters are allowed on references");
-			return;
-		}
-		
 		//resolve the rest of the attr types
-		resolve_complex_attributes (class_definition);
 		determine_attribute_types (class_definition);
 		foreach (ClassDefinition child in class_definition.children)
 			resolve (child); 
@@ -98,7 +91,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 	 */	
 	public void determine_add_method (ClassDefinition! child_definition)
 	{
-		Gee.List<Vala.Method> adds = lookup_container_add_methods( child_definition.parent_container.base_ns, child_definition.parent_container.base_type );
+		Gee.List<Vala.Method> adds = lookup_container_add_methods( child_definition.base_ns, child_definition.parent_container.base_type );
 
 		Vala.Method determined_add = null;
 		Gtkaml.AddMethod new_method = new Gtkaml.AddMethod ();
@@ -120,12 +113,13 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 		
 		//pass two: the first who matches the most parameters + warning if there are more
 		if (determined_add == null) {
-			determined_add = implicit_method_choice (child_definition.parent_container, adds, "container add method", first_parameter);
+			determined_add = implicit_method_choice (child_definition, adds, "container add method", first_parameter);
 			if (determined_add == null) {
+				Report.error (child_definition.source_reference, "No matching container add method for adding %s into %s\n".printf (child_definition.base_full_name, child_definition.parent_container.base_full_name));
 				return;
 			}
 		}
-		
+
 		new_method.name = determined_add.name;
 		new_method.parameter_attributes.add (first_parameter);
 		//move the attributes from class definition to construct method
@@ -195,6 +189,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 		if (determined_constructor == null) {
 			determined_constructor = implicit_method_choice (class_definition, constructors, "constructor");
 			if (determined_constructor == null) {
+				Report.error (class_definition.source_reference, "No matching constructor for %s\n".printf (class_definition.base_full_name));
 				return;
 			}
 		}
@@ -207,7 +202,8 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 				if (parameter == attr.name) {
 					new_method.parameter_attributes.add (attr);
 					to_remove.add (attr);
-					//attr.target_type = member_lookup_inherited (class_definition.base_type, attr.name);
+					//bug?
+					attr.target_type = member_lookup_inherited (class_definition.base_type, attr.name);
 					break;
 				}
 			}
@@ -221,23 +217,9 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 				message += parameters.get (i) + ",";
 			if (parameters.size > 0)
 				message += parameters.get (i);
-			Report.error (class_definition.source_reference, "No matching %s found for %s: specify at least: %s\n".printf ("creation method", class_definition.base_full_name, message));
+			Report.error (class_definition.source_reference, "No matching %s found for %s: specify at least: %s\n".printf ("Constructor", class_definition.base_full_name, message));
 			return;
 		}
-		
-		
-		//determine attr.target_types directly from constructor signature
-		Gee.Collection<FormalParameter> constructor_parameters = determined_constructor.get_parameters ();
-		int i = 0;
-		foreach (FormalParameter formal_parameter in constructor_parameters)
-		{
-			if (!formal_parameter.ellipsis) {
-				var attr = new_method.parameter_attributes.get (i);
-				attr.target_type = formal_parameter;
-				i++;
-			}
-		}
-
 		
 		foreach (Gtkaml.Attribute attr in to_remove)
 			class_definition.attrs.remove (attr);
@@ -248,12 +230,9 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 	/**
 	 * the methods that brought this class (ImplicitResolver) to the world
 	 */
-	public Vala.Method implicit_method_choice (ClassDefinition !class_definition, Gee.List<Vala.Method>! methods, string! wording, ComplexAttribute first_parameter=null )
+	public Vala.Method implicit_method_choice (ClassDefinition !class_definition, Gee.List<Vala.Method>! methods, string! wording, Attribute first_parameter=null )
 	{
 			int min_params = 999;
-			ClassDefinition parameter_class = class_definition;
-			if (first_parameter != null)
-				parameter_class = first_parameter.complex_type;
 			Gee.List<string> min_param_names = null;
 			int max_matches = -1;
 			Vala.Method max_matches_method;
@@ -262,7 +241,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 				var parameters = determine_method_parameter_names (class_definition, method);
 				int current_matches = 0;
 				foreach (string parameter in parameters) {
-					foreach (Gtkaml.Attribute attr in parameter_class.attrs) {
+					foreach (Gtkaml.Attribute attr in class_definition.attrs) {
 						if (parameter == attr.name) {
 							current_matches ++;
 							break;
@@ -301,7 +280,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 					}
 					if (i < min_param_names.size )
 						message += min_param_names.get (i);
-					Report.error (parameter_class.source_reference, "No matching %s found for %s: specify at least: %s\n".printf (wording, class_definition.base_full_name, message));
+					Report.error (class_definition.source_reference, "No matching %s found for %s: specify at least: %s\n".printf (wording, class_definition.base_full_name, message));
 				}
 				return null;
 			}
@@ -314,26 +293,12 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 			return max_matches_method;
 	}	
 
-	private bool has_key (string! group_name, string! key)
-	{
-		return key_file.has_key (group_name, key);
-	}
-	
-	private string[] get_string_list (string! group_name, string! key)
-	{
-		return key_file.get_string_list (group_name, key);
-	}
-
-	public Gee.List<Vala.Method> lookup_container_add_methods (string! ns, Class! container_class)
+	public Gee.List<Vala.Method> lookup_container_add_methods (string! ns, Class container_class)
 	{
 		Gee.List<Vala.Method> methods = new Gee.ArrayList<Vala.Method> ();
-		//FIXME workaround to stop recursion at TypeInstance and Object
-		if (null == ns) 
-			return methods;
-
-		if (has_key (ns + "." + container_class.name, "adds"))
+		if (key_file.has_key (ns + "." + container_class.name, "adds"))
 		{
-			string[] add_methods = get_string_list (ns + "." + container_class.name, "adds");
+			string[] add_methods = key_file.get_string_list (ns + "." + container_class.name, "adds");
 			for (int i = 0; i < add_methods.length; i++) {
 				foreach (Vala.Method method in container_class.get_methods ())
 					if (method.name == add_methods[i]) {
@@ -345,10 +310,6 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 		
 		foreach (DataType dt in container_class.get_base_types ()) {
 			if (dt is UnresolvedType) {
-				var ns = (dt as UnresolvedType).namespace_name;
-				if (ns == null) {
-					continue;
-				}
 				Class c = lookup_class (ns, (dt as UnresolvedType).type_name);
 				if (c != null) {
 					var otherMethods = lookup_container_add_methods (ns, c);
@@ -366,12 +327,12 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 	public Gee.List<string> determine_method_parameter_names(ClassDefinition! class_definition, Vala.Method! method)
 	{
 		var result = new Gee.ArrayList<string> (str_equal);
-		string method_name = method.name;
+		string method_name= method.name;
 		if (method.name.has_prefix (".new"))
 			method_name = method.name.substring(1, method.name.len () - 1);
-		if (has_key (class_definition.base_full_name, method_name))
+		if (key_file.has_key (class_definition.base_full_name, method_name))
 		{
-			string [] result_array = get_string_list (class_definition.base_full_name, method_name);
+				string [] result_array = key_file.get_string_list (class_definition.base_full_name, method_name);
 			for (int i = 0; i < result_array.length; i++)
 				result.add (result_array [i]);
 		} else {
@@ -392,7 +353,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 		}
 	}
 	
-	public Member member_lookup_inherited (Class! clazz, string! member) {
+	public Member member_lookup_inherited (Class clazz, string! member) {
 		Member result = clazz.scope.lookup (member) as Member;
 		if (result != null)
 			return result;
@@ -410,7 +371,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 		return null;
 	}								
 
-	private Class lookup_class (string! xmlNamespace, string! name)
+	private Class lookup_class (string xmlNamespace, string name)
 	{
 		foreach (Vala.Namespace ns in context.root.get_namespaces ()) {
 			if ( (ns.name == null && xmlNamespace == null ) || ns.name == xmlNamespace) {
@@ -424,7 +385,7 @@ public class Gtkaml.ImplicitsResolver : GLib.Object
 	}
 
 
-	public Gee.List<Vala.Method> lookup_constructors (Class! clazz) {
+	public Gee.List<Vala.Method> lookup_constructors (Class clazz) {
 		var constructors = new Gee.ArrayList<Vala.Method> ();
 		foreach (Vala.Method m in clazz.get_methods ()) {
 			//todo: if m is ConstructMethod ?
