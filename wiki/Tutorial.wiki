@@ -1,4 +1,4 @@
-#summary gtkaml introduction
+#summary gtkaml introduction (draft)
 *this is work in progress*
 = Introduction =
 
