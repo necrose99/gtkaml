@@ -12,27 +12,35 @@ Which would produce this:
 http://blad.files.wordpress.com/2007/11/gtkaml1.png
 
 === MyVBox.gtkaml ===
-Here is what you may write:
+Here is what you write:
+(note: this is a gtkaml 0.2 example. To compile this in 0.1, replace hyphens with underscores)
 {{{
-<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.1" class:name="MyVBox">
-	<Label pack_start="true" use_markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
+<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" class:name="MyVBox">
+	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
 	
-	<Notebook can_focus="true" tab_vborder="1">
+	<Notebook can-focus="true" tab-vborder="1">
 		<Label>
-			<tab_label><Label label="label for a tab"/></tab_label>
+			<!-- this is the widget used for tab navigator label -->
+			<tab_label>
+			    <Label label="label for a tab"/>
+			</tab_label>
+			<!-- this is the label property of the Label instance -->
 			<label>label
 multilne</label>
 		</Label>
 		<HBox homogeneous="false" spacing="0">
-			<tab_label><CheckButton label="check button" active="true" /></tab_label>
+			<tab-label>
+			    <CheckButton label="check button" active="true" />
+			</tab_label>
 			<Label label="Nothing to see here, please move along" />
 		</HBox>
 	</Notebook>
 	<HButtonBox>
-		<Button with_mnemonic="true" has_default="true" label="_abort" clicked="on_click()"/>
-		<Button label="gtk-redo" use_stock="true"/>
+		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
+		<Button label="gtk-redo" use-stock="true"/>
 		<Button label="fail"/>
 	</HButtonBox>
+<!-- cdata sections are used for code -->
 <![CDATA[
 	private void on_click() { stdout.printf("you clicked me!"); }
 
