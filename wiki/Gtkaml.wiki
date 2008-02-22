@@ -21,9 +21,9 @@ Here is what you write:
 	<Notebook can-focus="true" tab-vborder="1">
 		<Label>
 			<!-- this is the widget used for tab navigator label -->
-			<tab_label>
+			<tab-label>
 			    <Label label="label for a tab"/>
-			</tab_label>
+			</tab-label>
 			<!-- this is the label property of the Label instance -->
 			<label>label
 multilne</label>
@@ -31,7 +31,7 @@ multilne</label>
 		<HBox homogeneous="false" spacing="0">
 			<tab-label>
 			    <CheckButton label="check button" active="true" />
-			</tab_label>
+			</tab-label>
 			<Label label="Nothing to see here, please move along" />
 		</HBox>
 	</Notebook>
