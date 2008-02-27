@@ -140,5 +140,4 @@ label</label>
 
   * ~~complex attributes can be used for adding to instead of being created; e.g Dialog.vbox should not be replaced. This can be imagined with a `<class:add>` (or `<class:parent>` or `<class:append>` or `<class:sibling>`) element which, when encountered as a complex attribute child, doesn't do anything, but its children are using its parent for adding). Plus, this can be useful for calling 'add' methods without child widgets: when the child is `<class:add method_name="true" />` (or `<class:parent method_name="true" />` or `<class:append method_name="true" />` or `<class:sibling method_name="true" />`), then method_name is called with the rest of the attributes, but without a second child widget parameter) (TODO in 0.3?)~~
 
-  * `gtkaml:standalone="true"` as attribute allows the beginning of a UI description that doesn't get added to a parent container. 
-Using `<VBox gtkaml:standalone="true" gtkaml:existing="{dialog.vbox}" ...` enables you to obtain the above requirements. 
+  * `gtkaml:standalone="true"` as attribute allows the beginning of a UI description that doesn't get added to a parent container. This way, using `<VBox gtkaml:standalone="true" gtkaml:existing="{dialog.vbox}" ...` enables you to obtain the above requirements. 
