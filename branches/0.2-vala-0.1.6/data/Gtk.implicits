@@ -1,0 +1,45 @@
+[Label]
+## For each 'new' or 'add', we point to the required attribute(s)
+## only if they cannot be inferred from the FormalParameters names
+## or, if you have default values for _some_ of them, specify them _all_
+new = label
+new.with_mnemonic = label
+[MenuItem]
+new.with_label = label
+new.with_mnemonic = label
+[Container]
+adds=add_with_properties
+[Box]
+adds = pack_start;pack_end;pack_start_defaults;pack_end_defaults
+add.pack_start = widget;expand=true;fill=true;padding=0
+add.pack_end   = widget;expand=true;fill=true;padding=0
+[VBox]
+new = homogeneous=false;spacing=0
+[HBox]
+new = homogeneous=false;spacing=0
+[Fixed]
+adds = put
+[Paned]
+adds = add1;add2;pack1;pack2
+[Layout]
+adds = put
+
+[MenuShell]
+adds = append;prepend;insert; 
+add.insert = position
+[Notebook]
+adds = append_page;append_page_menu;prepend_page;prepend_page_menu;insert_page;insert_page_menu
+[Socket]
+adds = add_id
+[Table]
+new = n_rows;n_columns;homogeneous
+adds = attach;attach_defaults; 
+[Toolbar]
+adds = insert
+#todo: support <void> for adding space no-childers?
+[TreeView]
+adds = append_column;remove_column;insert_column
+[TreeViewColumn]
+adds = pack_start;pack_end;add_attribute;
+[Dialog]
+adds = add_action_widget
