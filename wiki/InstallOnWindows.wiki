@@ -47,6 +47,8 @@ And their dependencies:
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-bin-zip.php tiff-bin-zip.php]
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-lib-zip.php tiff-lib-zip.php]
 
+Last but not least, gtkaml uses libxml2, which you can find here for windows: [http://www.zlatkovic.com/libxml.en.html]. Just get [http://www.zlatkovic.com/pub/libxml/libxml2-2.6.30+.win32.zip libxml2-2.6.30+.win32.zip].
+
 Make a folder named *C:/usr* (or C:/libs or how you prefere) and unzip _all_ the files there. They usually come with subdirectories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a linux `/usr` folder.
 
 Now we will add C:/usr/bin in the *$PATH* and C:/usr/lib/pkgconfig in *$PKG_CONFIG_PATH*. To do this, enter msys and do a
