@@ -124,17 +124,17 @@ label</label>
 {{{
    <TreeViewColumn title="col1">
        <CellRendererText gtkaml:private="renderer1" pack_start="true" expand="true" />
-       <CellRendererText gtkaml:reference="renderer1" add_attribute="true" attribute="text" column="0" />
+       <CellRendererText gtkaml:existing="renderer1" add_attribute="true" attribute="text" column="0" />
    </TreeViewColumn>
 }}}
 
   * the creation method of the base class must be respected: all required creation methods' parameters must be specified for the root tag (DONE in 0.2). Otherwise the implicits definition file must have default values (see below).  
 
-  * The creation methods / container add methods can have default values for parameters in implicits configuration files. These are not taken into account when establishing maximum method match (TODO in 0.2)
+  * The creation methods / container add methods can have default values for parameters in implicits configuration files. These are not taken into account when establishing maximum method match (DONE in 0.2)
 
   * the implicits.ini file is renamed to Gtk.implicits; when using a namespace, the implicits resolver looks up the namespacename.implicits in gtkaml's data folder and in --implicitsdir (DONE in 0.2)
 
-  * xmlns:gtkaml URI versions are taken into account: give a warning if the source level is not specified or not <=0.2 (TODO in 0.2) (http://gtkaml.org/ is not specified, http://gtkaml.org/0.1 is 0.1 level). Also give warnings when the source level is >= than the gtkaml version. (TODO in 0.2)
+  * xmlns:gtkaml URI versions are taken into account: give a warning if the source level is not specified or not <=0.2 (TODO in 0.2) (http://gtkaml.org/ is not specified, http://gtkaml.org/0.1 is 0.1 level). Also give warnings when the source level is > than the gtkaml version. (TODO in 0.2)
 
   * attributes can be hyphen-separated instead of underscores (e.g. `destroy-event`  instead of `destroy_event`) (DONE in 0.2)
 
