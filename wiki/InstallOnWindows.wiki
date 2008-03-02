@@ -47,8 +47,6 @@ And their dependencies:
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-bin-zip.php tiff-bin-zip.php]
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-lib-zip.php tiff-lib-zip.php]
 
-Last but not least, gtkaml uses libxml2, which you can find here for windows: [http://www.zlatkovic.com/libxml.en.html]. Just get [http://www.zlatkovic.com/pub/libxml/libxml2-2.6.30+.win32.zip libxml2-2.6.30+.win32.zip].
-
 Make a folder named *C:/usr* (or C:/libs or how you prefere) and unzip _all_ the files there. They usually come with subdirectories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a linux `/usr` folder.
 
 Now we will add C:/usr/bin in the *$PATH* and C:/usr/lib/pkgconfig in *$PKG_CONFIG_PATH*. To do this, enter msys and do a
@@ -63,9 +61,21 @@ Now edit gtkaml.sh (you can have another name here) with your favorite editor so
 export PKG_CONFIG_PATH=/c/usr/lib/pkgconfig:/c/msys/lib/pkgconfig
 export PATH=$PATH:/c/MinGW/libexec/gcc/mingw32/3.4.2/:/c/usr/bin
 }}}
-Adjust the paths if necessary.
+Adjust the paths if necessary - and restart msys.
 
 *Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
+
+Last but not least, gtkaml uses libxml2, which you _could_ find here for windows: [http://www.zlatkovic.com/libxml.en.html], but that distribution doesn't contain the libxml2.pc required for pkg-config.
+
+So we download the latest version from [ftp://xmlsoft.org/libxml2/], and do the following:
+{{{
+$ tar xvzf /path/to/libxml2-2.6.31.tar.gz
+$ cd libxml2-2.6.31
+$ ./configure --prefix=c:/usr
+$ make
+$ make install
+}}}
+
 
 ===Compiling vala and gtkaml===
 Download vala 0.1.7 or later (for gtkaml 0.2) or vala 0.1.6 (for gtkaml 0.1). Start msys and change to a folder of your choice, and type there
