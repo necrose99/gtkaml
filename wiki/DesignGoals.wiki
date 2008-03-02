@@ -119,14 +119,14 @@ label</label>
   * the `gtkaml:implements` root attribute is used to specify a comma-separated interface list (DONE in 0.2)
 
   * a class member can be 'added' multiple times in a container (thus skipping the creation) by specifying ~~`gtkaml:reference="identifier"`~~ ~~(DONE in 0.1.1.1)~~  `gtkaml:existing="identifier"` (DONE in 0.2). ~~Of course, no other attribute than the parameters to the add function shall be specified on a reference.~~ The values without {} will be cast to the tag class (TODO in 0.2)
-
-  * `gtkaml:standalone="true"` as attribute allows the beginning of a UI description that doesn't get added to a parent container. This way, using `<VBox gtkaml:standalone="true" gtkaml:existing="dialog.vbox" ...` enables you to customize an existing area of a dialog. (DONE in 0.2)
 {{{
    <TreeViewColumn title="col1">
        <CellRendererText gtkaml:private="renderer1" pack_start="true" expand="true" />
        <CellRendererText gtkaml:existing="renderer1" add_attribute="true" attribute="text" column="0" />
    </TreeViewColumn>
 }}}
+
+  * `gtkaml:standalone="true"` as attribute allows the beginning of a UI description that doesn't get added to a parent container. This way, using `<VBox gtkaml:standalone="true" gtkaml:existing="dialog.vbox" ...` enables you to customize an existing area of a dialog. (DONE in 0.2)
 
   * the creation method of the base class must be respected: all required creation methods' parameters must be specified for the root tag (DONE in 0.2). Otherwise the implicits definition file must have default values (see below).  
 
