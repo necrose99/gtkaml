@@ -1,0 +1,14 @@
+#summary Install instructions for gtkaml on Windows
+
+gtkaml is built using autotools and therefore the distribution comes with a './configure' script that only depends on unix utilities (so you don't have to have autotools installed - autoconf, automake etc.)
+
+But you _do_ have to install a compatible compiler and shell.
+
+The instructions here are based on [http://www.mingw.org/ MinGW] (minimal gcc for windows) and [http://www.mingw.org/msys.shtml MSYS] (minimal system)
+
+===Install MinGW==
+Use the [http://sourceforge.net/project/showfiles.php?group_id=2435 Automated MinGW installer] - as we speak this is [http://downloads.sourceforge.net/mingw/MinGW-5.1.3.exe?modtime=1168811236&big_mirror=1 MinGW-5.1.3.exe]. The default installation path is C:/MinGW but you can change it.
+Do not install the `make` utility that comes with MinGW.
+
+===Install MSys==
+At the moment, the base system has automatic installer only for the 1.0.10 version, found here: [http://downloads.sourceforge.net/mingw/MSYS-1.0.10.exe?modtime=1079444447&big_mirror=1 MSYS-1.0.10.exe] and as for the development toolkit, for the 1.0.1 version which is here: [http://downloads.sourceforge.net/mingw/msysDTK-1.0.1.exe?modtime=1041430674&big_mirror=1 msysDTK-1.0.1.exe]
