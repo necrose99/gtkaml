@@ -40,11 +40,21 @@ export PATH=$PATH:/c/MinGW/libexec/gcc/mingw32/3.4.2/:/c/usr/bin
 }}}
 Adjust the paths if necessary.
 
-*Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`, because msys might _fail to pass command-line arguments_ to those binaries.
+*Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
 
-===Compiling vala===
+===Compiling vala and gtkaml===
 Download vala 0.1.7 or later (for gtkaml 0.2) or vala 0.1.6 (for gtkaml 0.1). Start msys and change to a folder of your choice, and type there
 {{{
 $ tar -xvzf /path/to/vala-0.1.x.tar.gz
 $ cd vala-0.1.x
 $ ./configure --prefix=c:/usr
+$ make
+$ make install
+}}}
+
+The same exact steps are for compiling gtkaml (other filenames, though)
+
+===Testing the environment===
+If gtkaml compiled, it already means that vala works, and gtk+ is properly installed. 
+
+This is because gtkaml has **.vala sources and some **.gtkaml files in /tests or /examples, which use gtk+
