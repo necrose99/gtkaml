@@ -10,5 +10,34 @@ The instructions here are based on [http://www.mingw.org/ MinGW] (minimal gcc fo
 Use the [http://sourceforge.net/project/showfiles.php?group_id=2435 Automated MinGW installer] - as we speak this is [http://downloads.sourceforge.net/mingw/MinGW-5.1.3.exe?modtime=1168811236&big_mirror=1 MinGW-5.1.3.exe]. The default installation path is C:/MinGW but you can change it.
 Do not install the `make` utility that comes with MinGW.
 
-===Install MSys==
+===Install MSYS==
 At the moment, the base system has automatic installer only for the 1.0.10 version, found here: [http://downloads.sourceforge.net/mingw/MSYS-1.0.10.exe?modtime=1079444447&big_mirror=1 MSYS-1.0.10.exe] and as for the development toolkit, for the 1.0.1 version which is here: [http://downloads.sourceforge.net/mingw/msysDTK-1.0.1.exe?modtime=1041430674&big_mirror=1 msysDTK-1.0.1.exe]
+Tell MSYS where MinGW resides (usually C:/MinGW). 
+The default installation path for MSYS is *C:/msys/1.0*
+
+Now you should already have an msys shortcut on your desktop to start the rxvt terminal and play with shell commands like `ls -l` et co.;)
+
+===gtkaml prerequisites===
+gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/download-windows.html www.gtk.org]. 
+
+Take your time to read about the packages, then download the _required_ packages (ticked) _and_ their *-dev* counterparts, plus `pkg-config` and `iconv` (with -dev too)
+
+You should have a bunch of **.zip files by now:)
+
+Make a folder named *C:/usr* (or C:/libs or how you prefere) and unzip _all_ the files there. They usually come with subdirectories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a linux `/usr` folder.
+
+Now we will add C:/usr/bin in the *$PATH* and C:/usr/lib/pkgconfig in *$PKG_CONFIG_PATH*. To do this, enter msys and do a
+{{{
+$ mkdir /etc/profile.d
+$ touch /etc/profile.d/gtkaml.sh
+$ chmod a+x /etc/profile.d/gtkaml.sh
+}}}
+Now edit gtkaml.sh (you can have another name here) with your favorite editor so that it's contents are:
+{{{
+#!/bin/sh
+export PKG_CONFIG_PATH=/c/usr/lib/pkgconfig:/c/msys/lib/pkgconfig
+export PATH=$PATH:/c/MinGW/libexec/gcc/mingw32/3.4.2/:/c/usr/bin
+}}}
+Adjust the paths if necessary.
+
+===Compiling vala===
