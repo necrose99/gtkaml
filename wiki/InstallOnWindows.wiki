@@ -22,7 +22,7 @@ gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/
 
 Take your time to read about the packages, then download the _required_ packages (ticked) _and_ their *-dev* counterparts, plus `pkg-config` and `iconv` (with -dev too)
 
-You should have a bunch of **.zip files by now (here is the current list, but feel free to check their site for updates):
+You should have a bunch of **.zip files by now (here is the current list, but please check their site for updates):
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-2.14.6-2.zip glib-2.14.6-2]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-dev-2.14.6-2.zip glib-dev-2.14.5-2]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-2.12.8.zip gtk+-2.12.8]
@@ -34,13 +34,12 @@ You should have a bunch of **.zip files by now (here is the current list, but fe
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-1.4.14.zip cairo-1.4.14.zip]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-dev-1.4.14.zip cairo-dev-1.4.14.zip]
 
-Their dependencies:
+And their dependencies:
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config-0.23-2.zip pkg-config-0.23-2.zip]
   * [http://www.zlib.net/zlib123-dll.zip zlib123-dll.zip]
   * [http://www.gimp.org/~tml/gimp/win32/libiconv-1.9.1.bin.woe32.zip libiconv-1.9.1.bin.woe32.zip]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-0.17-1.zip  gettext-runtime-0.17-1.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-dev-0.17-1.zip
- gettext-runtime-dev-0.17-1.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-dev-0.17-1.zip gettext-runtime-dev-0.17-1.zip]
   * [http://downloads.sourceforge.net/gnuwin32/libpng-1.2.8-bin.zip libpng-1.2.8-bin.zip]
   * [http://downloads.sourceforge.net/gnuwin32/libpng-1.2.8-lib.zip libpng-1.2.8-lib.zip]
   * [http://gnuwin32.sourceforge.net/downlinks/jpeg-bin-zip.php jpeg-bin-zip.php]
