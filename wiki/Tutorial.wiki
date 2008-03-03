@@ -54,7 +54,7 @@ Now, the output is actually three files, tutorial.c and tutorial.h and tutorial.
 gcc `pkg-config --cflags gtk+-2.0` tutorial.h tutorial.c -o tutorial `pkg-config --libs gtk+2.0`
 }}}
 
-(The backticks surrounding a command replace it with it's output. pkg-config automatically fills in for us the (multiple) libraries gtk+-2.0 links to and the header directories needed.)
+(The backticks surrounding a command replace it with its output. pkg-config automatically fills in for us the (multiple) libraries gtk+-2.0 links to and the header directories needed.)
 
 ===A more complex user interface===
 We will leave the `main ()` function out for the moment. You can write it in another file which is your application's entry point. We will focus on our custom window.
