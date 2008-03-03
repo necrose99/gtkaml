@@ -80,7 +80,7 @@ $ make install
 ===Compiling vala and gtkaml===
 Download vala 0.1.7 or later (for gtkaml 0.2) or vala 0.1.6 (for gtkaml 0.1). Start msys and change to a folder of your choice, and type there
 {{{
-$ tar -xvzf /path/to/vala-0.1.x.tar.gz
+$ tar -xvjf /path/to/vala-0.1.x.tar.bz2
 $ cd vala-0.1.x
 $ ./configure --prefix=c:/usr
 $ make
