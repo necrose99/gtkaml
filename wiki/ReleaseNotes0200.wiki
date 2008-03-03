@@ -41,5 +41,8 @@ aboutdialog1.run ();
   * ===Existing-standalone widgets===
 By specifying both `gtkaml:standalone` and `gtkaml:existing` you can customize widgets _already created_ and _already added_ to their parent, like the *`Dialog.vbox`* container. 
 
+  * ===Windows support===
+Vala 0.1.7 comes with better windows support. Packages for gtkaml 0.2 on Windows will soon be available (There are already source installation instructions)
+
 === Known issues ===
 Known issues are filed as bug #5, #6 and #7 and they will be solved in future minor versions
