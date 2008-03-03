@@ -1,0 +1,32 @@
+#summary gtkaml 0.2.0.0 release notes.
+
+gtkaml 0.2.0.0 requires glib-2.0, vala-1.0 >= 0.1.7, libxml-2.0, and gtk+-2.0 
+
+===New features===
+
+  * Write code your way
+gtkaml 0.2 allows you to use either underscores in attribute names (like the Gtk+ functions do) or _hyphens_ (as signal names do) interchangeably
+ 
+  * Write less
+The new Gtk.implicits file allows default values for common arguments (for creation methods and add functions). For example, `HBox`/`VBox` creation method by default has `homogeneous=false` and `spacing=0`, while `pack_start` borrows the 3 defaults from `pack_start_defaults` so that you can specify only the changed ones
+
+  * Existing widgets
+By specifying `gtkaml:existing="identifier"` you *skip the creation method* for the current tag, and use an existing widget. An use case would be adding a `CellRenderer` to a `TreeViewColumn` and then specifying the attribute it renders:
+{{{
+<TreeViewColumn resizable="true" clickable="false" append_column="true" title="size">
+	<CellRendererText class:private="renderer1" expand="true" />
+	<CellRendererText class:existing="renderer1" attribute="text" column="1" />
+</TreeViewColumn>
+}}}
+The first call is `pack_start (renderer1, true)` and the second is `add_attribute ((renderer1 as Gtk.CellRendererText), "text", 1)`. 
+
+  * Standalone widgets
+Specifying `gtkaml:standalone="true"` *skips the parent container add call* for that widget. This way you may create private fields that have their UI described in gtkaml but that you show later, in code, when appropiate. For example, a standalone about dialog: 
+{{{
+<AboutDialog class:standalone="true" class:private="aboutdialog1" delete-event="{aboutdialog1.hide_on_delete}"
+modal="true" window-position="{WindowPosition.CENTER_ON_PARENT}" />
+}}}
+You can later use this dialog with 
+{{{
+aboutdialog1.run (); 
+}}}
