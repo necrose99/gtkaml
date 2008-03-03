@@ -90,6 +90,8 @@ $ make install
 The same exact steps are for compiling gtkaml (other filenames, though)
 
 ===Testing the environment===
-If gtkaml compiled, it already means that vala works, and gtk+ is properly installed. 
+If gtkaml compiled, it already means that vala works, and gtk+ and libxml2 are properly installed. 
 
-This is because gtkaml has **.vala sources and some **.gtkaml files in /tests or /examples, which use gtk+
+This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples, which use gtk+
+
+Now you can start reading the [http://live.gnome.org/Vala/Tutorial Vala Tutorial] or try out the sample code from [http://live.gnome.org/Vala/ vala's homepage], then you can jump to the gtkaml tutorial (when it's done)
