@@ -45,4 +45,4 @@ By specifying both `gtkaml:standalone` and `gtkaml:existing` you can customize w
 Vala 0.1.7 comes with better windows support. Packages for gtkaml 0.2 on Windows will soon be available (There are already source installation instructions)
 
 == Known issues ==
-Known issues are filed as bug #5, #6 and #7 and they will be solved in future minor versions
+Known issues are filed as issue #5, issue #6 and issue #7 and they will be solved in future minor versions
