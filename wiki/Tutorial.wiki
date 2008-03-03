@@ -43,13 +43,20 @@ The `xmlns:gtkaml="http://gtkaml.org/0.1"` is the declaration of the gtkaml pref
 Let's say you save the above in a file named `tutorial.gtkaml`
 The fastest way to compile this would be
 
-`~$gtkamlc --pkg gtk+-2.0 tutorial.gtkaml -o tutorial`
+`gtkamlc --pkg gtk+-2.0 tutorial.gtkaml`
 
 The `--pkg` parameter tells vala to include the bindings for Gtk. That means to also include the headers and the linking parameters specified by e.g. `pkg-config`
 
 If the above command complains that `gtk+-2.0 not found in specified Vala API directories` then you should add the `--vapidir /path/to/share/vala/vapi` in the command-line, where `/path/to` is the prefix of your vala installation.
 
+Now, the output is actually three files, tutorial.c and tutorial.h and tutorial.vala. The later can be inspected to understand what gtkaml did with your XML, before passing it to valac, but the first two files are the actual code you need: to compile them, use the following command:
+{{{
+gcc `pkg-config --cflags gtk+-2.0` tutorial.h tutorial.c -o tutorial `pkg-config --libs gtk+2.0`
+}}}
+
+(The backticks surrounding a command replace it with it's output. pkg-config automatically fills in for us the (multiple) libraries gtk+-2.0 links to and the header directories needed.)
+
 ===A more complex user interface===
 We will leave the `main ()` function out for the moment. You can write it in another file which is your application's entry point. We will focus on our custom window.
 
-Gtk uses layout containers for positioning elements in a window. One of the most populars is VBox is HBox - vertical and horizontal boxes, and
+Gtk uses layout containers for positioning elements in a window. One of the most populars is VBox and HBox - vertical and horizontal boxes. 
