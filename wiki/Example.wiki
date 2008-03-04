@@ -26,7 +26,7 @@ Here is what you write:
 			<!-- this is the widget used for notebook tab label -->
 			<tab-label>
 			    <!-- this label's text is set using the attribute label="" -->
-			    <Label label="label for a tab"/>
+			    <Label label="Page 1"/>
 			</tab-label>
 			<!-- the parent's text label is set using this sub-tag -->
 			<label>label
