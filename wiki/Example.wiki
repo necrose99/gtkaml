@@ -17,9 +17,9 @@ Here is what you write:
 {{{
 <!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces -->
 <VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" class:name="MyVBox">
-	<!-- a label is added to the VBox, created with gtk_label_new_with_mnemonic ()-->
+	<!-- a label is added to the VBox, you can see the box_pack_start () parameters -->
 	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
-	<!-- then a notebook (tab navigator) -->
+	<!-- then a notebook (tab navigator) is added, with box_pack_start_defaults () -->
 	<Notebook can-focus="true" tab-vborder="1">
 		<!-- the first page in the notebook is only a label -->
 		<Label>
@@ -34,7 +34,7 @@ multilne</label>
 		</Label>
 		<!-- the second page is an HBox -->
 		<HBox homogeneous="false" spacing="0">
-			<!-- actually this sub-tag is a parameter to gtk_notebook_append_page (notebook, child, tab_label -->
+			<!-- actually this sub-tag is a parameter to gtk_notebook_append_page (notebook, child, tab_label) -->
 			<tab-label>
 			    <!-- this uses a check button as its notebook tab -->
 			    <CheckButton label="check button" active="true" />
@@ -43,12 +43,14 @@ multilne</label>
 			<Label label="Nothing to see here, please move along" />
 		</HBox>
 	</Notebook>
+	<!-- next we add an HButtonBox to our VBox -->
 	<HButtonBox>
+		<!-- this button is created with gtk_button_new_with_mnemonic () -->
 		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
 		<Button label="gtk-redo" use-stock="true"/>
 		<Button label="fail"/>
 	</HButtonBox>
-<!-- cdata sections are used for code -->
+<!-- cdata sections are used for Vala code -->
 <![CDATA[
 	private void on_click() { stdout.printf("you clicked me!"); }
 
@@ -70,7 +72,7 @@ and the output of
 
 `$ gtkamlc --pkg gtk+2.0 MyVBox.gtkaml -o myvbox `
 
-would be:
+is:
 
 === MyVBox.vala ===
 {{{
