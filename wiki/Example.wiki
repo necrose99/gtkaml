@@ -15,8 +15,10 @@ http://blad.files.wordpress.com/2007/11/gtkaml1.png
 Here is what you write:
 (note: this is a gtkaml 0.2 example. To compile this in 0.1, replace hyphens with underscores)
 {{{
-<!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces -->
-<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" class:name="MyVBox">
+<!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces;
+     The (existing) gtk_main_quit function is associated with the delete signal -->
+<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" 
+class:name="MyVBox" delete-event="{Gtk.main_quit}">
 	<!-- a label is added to the VBox, you can see the box_pack_start () parameters -->
 	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
 	<!-- then a notebook (tab navigator) is added, with box_pack_start_defaults () -->
@@ -45,7 +47,8 @@ multilne</label>
 	</Notebook>
 	<!-- next we add an HButtonBox to our VBox -->
 	<HButtonBox>
-		<!-- this button is created with gtk_button_new_with_mnemonic () -->
+		<!-- this button is created with gtk_button_new_with_mnemonic () 
+		     'clicked' contains the body of the event handler lambda function -->
 		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
 		<Button label="gtk-redo" use-stock="true"/>
 		<Button label="fail"/>
