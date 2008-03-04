@@ -97,6 +97,6 @@ If gtkaml compiled, it already means that vala works, and gtk+ and libxml2 are p
 This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples, which use gtk+
 
 ===Binary packages for vala-0.1.7 and gtkaml 0.2===
-Binary packages are available at the download section here. Unzip them in c:/usr and you're done!
+Binary packages are available at the download section [http://code.google.com/p/gtkaml/downloads/list here]. Unzip them in c:/usr and you're done!
 
 Now you can start reading the [http://live.gnome.org/Vala/Tutorial Vala Tutorial] or try out the sample code from [http://live.gnome.org/Vala/ vala's homepage], then you can jump to the gtkaml tutorial (when it's done)
