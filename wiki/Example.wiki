@@ -15,23 +15,31 @@ http://blad.files.wordpress.com/2007/11/gtkaml1.png
 Here is what you write:
 (note: this is a gtkaml 0.2 example. To compile this in 0.1, replace hyphens with underscores)
 {{{
+<!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces -->
 <VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" class:name="MyVBox">
+	<!-- a label is added to the VBox, created with gtk_label_new_with_mnemonic ()-->
 	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
-	
+	<!-- then a notebook (tab navigator) -->
 	<Notebook can-focus="true" tab-vborder="1">
+		<!-- the first page in the notebook is only a label -->
 		<Label>
-			<!-- this is the widget used for tab navigator label -->
+			<!-- this is the widget used for notebook tab label -->
 			<tab-label>
+			    <!-- this label's text is set using the attribute label="" -->
 			    <Label label="label for a tab"/>
 			</tab-label>
-			<!-- this is the label property of the Label instance -->
+			<!-- the parent's text label is set using this sub-tag -->
 			<label>label
 multilne</label>
 		</Label>
+		<!-- the second page is an HBox -->
 		<HBox homogeneous="false" spacing="0">
+			<!-- actually this sub-tag is a parameter to gtk_notebook_append_page (notebook, child, tab_label -->
 			<tab-label>
+			    <!-- this uses a check button as its notebook tab -->
 			    <CheckButton label="check button" active="true" />
 			</tab-label>
+			<!-- this is what the HBox contains -->
 			<Label label="Nothing to see here, please move along" />
 		</HBox>
 	</Notebook>
