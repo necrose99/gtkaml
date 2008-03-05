@@ -1,5 +1,9 @@
 #summary release notes for gtkaml (chronologically-reversed)
 
+=== gtkaml 0.2.0.0 ===
+(2008-03-03) 
+Based on vala 0.1.7, gtkaml 0.2 brings lots of new features that are described
+
 === gtkaml 0_1_1_1 ===
 (2008-02-09) 
 Fixed a bug with signals parameters. 
