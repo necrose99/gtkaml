@@ -15,6 +15,50 @@ http://blad.files.wordpress.com/2007/11/gtkaml1.png
 Here is what you write:
 (note: this is a gtkaml 0.2 example. To compile this in 0.1, replace hyphens with underscores)
 {{{
+<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" 
+class:name="MyVBox" delete-event="{Gtk.main_quit}">
+	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
+	<Notebook can-focus="true" tab-vborder="1">
+		<Label>
+			<tab-label>
+			    <Label label="Page 1"/>
+			</tab-label>
+			<label>label
+multilne</label>
+		</Label>
+		<HBox homogeneous="false" spacing="0">
+			<tab-label>
+			    <CheckButton label="check button" active="true" />
+			</tab-label>
+			<Label label="Nothing to see here, please move along" />
+		</HBox>
+	</Notebook>
+	<HButtonBox>
+		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
+		<Button label="gtk-redo" use-stock="true"/>
+		<Button label="fail"/>
+	</HButtonBox>
+<![CDATA[
+	private void on_click() { stdout.printf("you clicked me!"); }
+
+	static int main (string[] args) 
+	{
+		Gtk.init (ref args);
+		Window w = new Gtk.Window (WindowType.TOPLEVEL);
+		MyVBox v = new MyVBox ();
+		w.add (v);
+		w.show_all ();
+		Gtk.main ();
+		return 0;
+	}
+		
+]]>
+</VBox>
+}}}
+
+Um.. what was that again? Here's what happens (same source, annotated):
+
+{{{
 <!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces;
      The (existing) gtk_main_quit function is associated with the delete signal -->
 <VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" 
