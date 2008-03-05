@@ -1,4 +1,5 @@
 #summary release notes for gtkaml (chronologically-reversed)
+#labels Featured
 
 === (2008-03-03) gtkaml 0.2.0.0 ===
 Based on vala 0.1.7, gtkaml 0.2 brings lots of new features that are described
