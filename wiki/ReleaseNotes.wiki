@@ -1,0 +1,24 @@
+#summary release notes for gtkaml (chronologically-reversed)
+
+===(2008-02-09) gtkaml 0.1.1.1 released!==
+Fixed a bug with signals parameters. 
+
+===(2008-02-06) gtkaml 0.1.1.0 released!==
+Squashed some more bugs (some of them were blocking features). 
+
+===(2008-02-03) gtkaml 0.1.0.1 released!===
+Fixed some packaging problems. 
+
+===(2008-02-03) gtkaml 0.1.0.0 released!===
+This is the first `gtkaml` release.
+
+gtkaml 0.1.0.1 requires glib-2.0, vala-1.0 >= 0.1.6, libxml-2.0, and gtk+-2.0
+Fixed some packaging problems.
+  * vala >= 0.1.6 required now
+  * examples binaries not installed anymore
+  * examples intermediate sources (.c and .h) not delivered anymore - they are built from .gtkaml files
+Known issues:
+  * on some machines, gtkaml segfaults while compiling the example0.gtkaml source. Remove the `key_release_event` signal handler as a quick workaround, or try installing vala from svn (you will need vala-0.1.6 to build it)
+  * the error reporting needs improvement
+  * `Container.add ()` is not used/found because it's a signal. Instead, `Container.add_with_properties ()` it's used for now. Future releases will lookup for signals too when determining the add method to use
+  * if you have Vala installed in an /unusual/place you need to specify `--vapidir=/unusual/place/share/vala/vapi` at command-line parameter
