@@ -26,7 +26,7 @@ By specifying `gtkaml:existing="identifier"` you *skip the creation method* for 
 	<CellRendererText class:existing="renderer1" attribute="text" column="1" />
 </TreeViewColumn>
 }}}
-The first CellRendererText yields `renderer1 = new Gtk.CellRendererText ()` and `pack_start (renderer1, true)` and the second only `add_attribute ((renderer1 as Gtk.CellRendererText), "text", 1)`. 
+The first child tag yields `renderer1 = new Gtk.CellRendererText ()` and `pack_start (renderer1, true)` and the second only `add_attribute ((renderer1 as Gtk.CellRendererText), "text", 1)`. 
 
   * ===Creating standalone widgets===
 Specifying `gtkaml:standalone="true"` *skips the parent container add call* for that widget. This way you may create private fields that have their UI described in gtkaml but that you show later, in code, when appropiate. For example, a standalone about dialog: 
