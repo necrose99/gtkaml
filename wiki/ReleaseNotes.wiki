@@ -1,6 +1,7 @@
 #summary release notes for gtkaml (chronologically-reversed)
 
-===(2008-02-09) gtkaml 0.1.1.1 released!==
+=== gtkaml 0.1.1.1 ===
+(2008-02-09) 
 Fixed a bug with signals parameters. 
 
 ===(2008-02-06) gtkaml 0.1.1.0 released!==
