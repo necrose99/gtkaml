@@ -32,11 +32,11 @@ Specifies a name under which the current tag becomes a private class member.
 Mutually exclusive with `class:public`.
 
 === class:existing ===
-Specifies that the current tag does not configure a newly-constructed widget, but an existing one.
+Specifies that the current widget doesn't get constructed, but it configures a an existing widget.
 
 The value is the identifier/expression under which the existing widget is reachable.
 
-The expression is cast to the tag's name (e.g. `<VBox class:existing="dialog.vbox1" />` becomes `(vbox1 as VBox)`)
+The expression is cast to the tag's name (e.g. `<VBox class:existing="dialog.vbox1" spacing="1" />` becomes `(dialog.vbox as VBox).spacing = 1`)
 
 Allowed only on non-root tags.
 
