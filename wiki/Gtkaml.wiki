@@ -1,0 +1,58 @@
+#summary gtkaml-specific keywords
+
+= Introduction =
+
+As seen in the [Example example] or in the tests and sample that come with gtkaml, there is a prefix(usually referred to as `xmlns:class="http://gtkaml.org/0.2"` or `xmlns:gtkaml="http://gtkaml.org/0.2"`) that contains some attributes that are _not_ part of the Gtk+ Vala bindings.
+
+Here are their specifications, assuming the prefix is declared with `xmlns:class`.
+
+=== class:name ===
+The name of the class you're creating. May contain fully qualified name.
+
+Allowed only at the root tag level.
+
+=== class:namespace ===
+The name of the namespace your class resides in.
+
+Allowed only at the root tag level.
+
+=== class:implements ===
+The comma-separated list of interfaces that the class implements.
+ 
+Note that the inherited class is the root tag name.
+
+=== class:public ===
+Specifies a name under which the current tag becomes a public class member.
+
+Mutually exclusive with `class:private`.
+
+=== class:private ===
+Specifies a name under which the current tag becomes a private class member.
+
+Mutually exclusive with `class:public`.
+
+=== class:existing ===
+Specifies that the current tag does not configure a newly-constructed widget, but an existing one.
+
+The value is the identifier/expression under which the existing widget is reachable.
+
+The expression is cast to the tag's name (e.g. `<VBox class:existing="dialog.vbox1" />` becomes `(vbox1 as VBox)`)
+
+Allowed only on non-root tags.
+
+=== class:standalone ===
+Specifies that the current widget doesn't get added to the parent container.
+
+The only valid value is "true".
+
+Allowed only on non-root tags.
+
+=== class:construct ===
+Specifies code to be executed just before adding this widget to the parent container.
+
+The code may use `target` as the name of the current widget, just like with a signal
+
+=== class:preconstruct ===
+Specifies code to be executed just after the instance is created. 
+
+The code may use `target` as the name of the current widget, just like with a signal
