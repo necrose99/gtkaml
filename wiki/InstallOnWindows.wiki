@@ -22,7 +22,7 @@ gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/
 
 Take your time to read about the packages, then download the _required_ packages (ticked) _and_ their *-dev* counterparts, plus `pkg-config` and `iconv` (with -dev too)
 
-You should have a bunch of **.zip files by now (here is the current list, but please check their site for updates):
+You should have a bunch of **.zip files by now (here is what you might expect currently, but please check the http://www.gtk.org site for updates):
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-2.14.6-2.zip glib-2.14.6-2]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-dev-2.14.6-2.zip glib-dev-2.14.6-2]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-2.12.8.zip gtk+-2.12.8]
@@ -47,7 +47,7 @@ And their dependencies:
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-bin-zip.php tiff-bin.zip]
   * [http://gnuwin32.sourceforge.net/downlinks/tiff-lib-zip.php tiff-lib.zip]
 
-Make a folder named *C:/usr* (or C:/libs or how you prefere) and unzip _all_ the files there. They usually come with subdirectories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a linux `/usr` folder.
+Make a folder named *C:/usr* (or C:/libs or how you prefer) and unzip _all_ the files there. They usually come with sub-directories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a UNIX `/usr` folder.
 
 Now we will add C:/usr/bin in the *$PATH* and C:/usr/lib/pkgconfig in *$PKG_CONFIG_PATH*. To do this, enter msys and do a
 {{{
@@ -55,7 +55,7 @@ $ mkdir /etc/profile.d
 $ touch /etc/profile.d/gtkaml.sh
 $ chmod a+x /etc/profile.d/gtkaml.sh
 }}}
-Now edit gtkaml.sh (you can have another name here) with your favorite editor so that it's contents are:
+Now edit gtkaml.sh (you can have any other name here too) with your faVorite edItor so that its contents are:
 {{{
 #!/bin/sh
 export PKG_CONFIG_PATH=/c/usr/lib/pkgconfig:/c/msys/lib/pkgconfig
@@ -63,11 +63,13 @@ export PATH=$PATH:/c/MinGW/libexec/gcc/mingw32/3.4.2/:/c/usr/bin
 }}}
 Adjust the paths if necessary - and restart msys.
 
-*Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
+(Note: to be able to run the Gtk+ programs outside msys consider adding that PATH to Windows's environment)
+
+*Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid outside it). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
 
 Last but not least, gtkaml uses libxml2, which you can find here for windows: [http://www.zlatkovic.com/libxml.en.html], but that distribution doesn't contain the libxml2.pc required for pkg-config.
 
-So if you want to _compile_ gtkaml, you have to _compile libxml2_ too. Otherwise, use binary packages for both.
+So *if you want to _compile_ gtkaml, you have to _compile libxml2_ too*. Otherwise, use binary packages for both (see below).
 
 ===Compiling libxml2, vala and gtkaml==
 
@@ -89,14 +91,23 @@ $ make
 $ make install
 }}}
 
-The same exact steps are for compiling gtkaml (other filenames, though)
+The same exact steps are for compiling gtkaml 
+{{{
+$ tar -xvjf /path/to/gtkaml-0.2.x.x.tar.bz2
+$ cd gtkaml-0.2.x.x
+$ ./configure --prefix=c:/usr
+$ make
+$ make install
+}}}
 
 ===Testing the environment===
-If gtkaml compiled, it already means that vala works, and gtk+ and libxml2 are properly installed. 
+If gtkaml compiled, it already means that vala works, and Gtk+ and libxml2 are properly installed. 
 
-This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples, which use gtk+
+(This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples, which use Gtk+)
 
-===Binary packages for vala-0.1.7 and gtkaml 0.2===
+If you install from binary packages, try pasting the [Example example] in a file and compile it.
+
+===Binary packages for vala and gtkaml===
 Binary packages are available at the download section [http://code.google.com/p/gtkaml/downloads/list here]. Unzip them in c:/usr and you're done!
 
-Now you can start reading the [http://live.gnome.org/Vala/Tutorial Vala Tutorial] or try out the sample code from [http://live.gnome.org/Vala/ vala's homepage], then you can jump to the gtkaml tutorial (when it's done)
+Now you can start reading the [http://live.gnome.org/Vala/Tutorial Vala Tutorial] or try out the sample code from [http://live.gnome.org/Vala/ vala's homepage], then you can jump to the gtkaml tutorial (when it's done).
