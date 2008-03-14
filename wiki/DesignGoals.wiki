@@ -151,4 +151,4 @@ To think about:
   * data binding?
 
 ==Goals for 1.0==
-  * split gtkaml in valaml, pytonml etc??
+  * vala re-entrant parser (allows to generate AST directly instead of code)?
