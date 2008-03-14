@@ -1,4 +1,4 @@
-#summary gtkaml design goals
+#summary goals done + future goals
 #labels Featured
 ==goals for 0.1==
   * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
@@ -138,4 +138,14 @@ label</label>
 
   * attributes can be hyphen-separated instead of underscores (e.g. `destroy-event`  instead of `destroy_event`) (DONE in 0.2)
 
+==Goals for 0.2.x.x (TODO)==
+
   * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO in 0.2.x.x)
+  * fix existing bugs + reformulate .implicits parsing code (TODO)
+  * cleanup source (using latest vala features such as 'construct set') (TODO)
+  * (optional) explicit dot notation for add() parameters and for attributes-as-subtags? (TODO?)
+
+==Goals for gtkaml 0.3 ==
+To think about:
+  * internationalization
+  * data binding?
