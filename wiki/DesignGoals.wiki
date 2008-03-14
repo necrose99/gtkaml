@@ -145,7 +145,10 @@ label</label>
   * cleanup source (using latest vala features such as 'construct set') (TODO)
   * (optional) explicit dot notation for add() parameters and for attributes-as-subtags? (TODO?)
 
-==Goals for gtkaml 0.3 ==
+==Goals for 0.3==
 To think about:
   * internationalization
   * data binding?
+
+==Goals for 1.0==
+  * split gtkaml in valaml, pytonml etc??
