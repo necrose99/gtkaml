@@ -2,7 +2,7 @@
 #labels Featured
 
 === (2008-03-03) gtkaml 0.2.0.0 ===
-Based on vala 0.1.7, gtkaml 0.2 brings lots of new features that are described
+Based on vala 0.1.7, gtkaml 0.2 brings lots of new features.
 
 gtkaml 0.2.0.0 requires glib-2.0, vala-1.0 >= 0.1.7, libxml-2.0, and gtk+-2.0 
 
