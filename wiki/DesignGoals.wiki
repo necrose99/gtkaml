@@ -1,6 +1,6 @@
 #summary goals done + future goals
 #labels Featured
-==goals for 0.1==
+==goals for 0.1 (DONE)==
   * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
 
   * the XML namespace URI includes the Vala namespace name(DONE in 0.1) followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute (DONE in 0.1):
