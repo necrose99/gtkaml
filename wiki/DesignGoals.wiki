@@ -149,6 +149,7 @@ label</label>
 To think about:
   * internationalization
   * data binding?
+  * rename gtkaml:name to gtkaml:class and allow it on other tags (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?
 
 ==Goals for 1.0==
   * vala re-entrant parser (allows to generate AST directly instead of code)?
