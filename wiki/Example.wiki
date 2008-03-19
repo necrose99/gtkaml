@@ -117,9 +117,15 @@ multilne</label>
 }}}
 and the output of
 
-`$ gtkamlc --pkg gtk+2.0 MyVBox.gtkaml -o myvbox `
+`$ gtkamlc --pkg gtk+2.0 MyVBox.gtkaml `
 
-is:
+is the following MyVBox.vala file (along with MyVBox.c and MyVBox.h).
+
+(to compile the executable you need to run
+{{{
+$ gcc `pkg-config --cflags gtk+-2.0` MyVBox.c -o myvbox `pkg-config --libs gtk+-2.0`
+}}}
+then `./myvbox` will execute it)
 
 === MyVBox.vala ===
 {{{
