@@ -1,5 +1,10 @@
 #summary goals done + future goals
 #labels Featured
+
+Future goals:
+  * [DesignGoals#Goals_for_0.2.x.x 0.2.x.x]
+  * [DesignGoals#Goals_for_0.3]
+
 ==goals for 0.1 (DONE)==
   * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
 
@@ -138,7 +143,7 @@ label</label>
 
   * attributes can be hyphen-separated instead of underscores (e.g. `destroy-event`  instead of `destroy_event`) (DONE in 0.2)
 
-==Goals for 0.2.x.x (TODO)==
+==Goals for 0.2.x.x==
 
   * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
   * fix existing bugs + reformulate .implicits parsing code (TODO)
