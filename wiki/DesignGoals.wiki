@@ -140,16 +140,25 @@ label</label>
 
 ==Goals for 0.2.x.x (TODO)==
 
-  * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO in 0.2.x.x)
+  * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
   * fix existing bugs + reformulate .implicits parsing code (TODO)
   * cleanup source (using latest vala features such as 'construct set') (TODO)
+  * introduce `gtkaml:type` as alternative to `gtkaml:name` and issue a warning about the latter (see Goals for 0.3) (TODO)
   * (optional) explicit dot notation for add() parameters and for attributes-as-subtags? (TODO?)
 
 ==Goals for 0.3==
 To think about:
   * internationalization
-  * data binding?
-  * rename gtkaml:name to gtkaml:class and allow it on other tags (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?
+  * data binding? 
+By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
+
+For example, `label="{mystring + yourstring}"` would create an expression that's used in three places: at label initialization, at 'mystring' change notification and at 'yourstring' change notification. 
+
+The difficulty lies in determining the identifiers and in determining their owner object. 
+
+Alternative notation: `label="(mystring){mystring + yourstring}"` which changes only when 'mystring' changes.
+  * rename gtkaml:name to gtkaml:type and allow it on other tags than root (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?
+  * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible.
 
 ==Goals for 1.0==
   * vala re-entrant parser (allows to generate AST directly instead of code)?
