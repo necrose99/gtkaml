@@ -1,10 +1,9 @@
 #summary goals done + future goals
 #labels Featured
 
-Future goals:
-  * [DesignGoals#Goals_for_0.2.x.x 0.2.x.x]
-  * [DesignGoals#Goals_for_0.3]
+See [DesignGoals#FutureGoals Future Goals] - "not done".
 
+=Goals "done"=
 ==goals for 0.1 (DONE)==
   * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
 
@@ -142,6 +141,8 @@ label</label>
   * xmlns:gtkaml URI versions are taken into account: give a warning if the source level is not specified or not <=0.2 (http://gtkaml.org/ is not specified, http://gtkaml.org/0.1 is 0.1 level). Also give warnings when the source level is > than the gtkaml version. (DONE in 0.2)
 
   * attributes can be hyphen-separated instead of underscores (e.g. `destroy-event`  instead of `destroy_event`) (DONE in 0.2)
+
+=Future Goals=
 
 ==Goals for 0.2.x.x==
 
