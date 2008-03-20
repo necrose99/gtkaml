@@ -3,7 +3,7 @@
 
 See [DesignGoals#Future_Goals Future Goals] - "not done".
 
-=Goals "done"=
+=Achieved Goals=
 ==goals for 0.1 (DONE)==
   * the gtkaml XML tags correspond to existing GObject classes(DONE in 0.1), and their attributes correspond to GObject properties, signals or fields(DONE in 0.1)
 
@@ -160,7 +160,7 @@ By using the 'notify' event of GLib.Object we can re-evaluate a property value o
 
 For example, `label="{mystring + yourstring}"` would create an expression that's used in three places: at label initialization, at 'mystring' change notification and at 'yourstring' change notification. 
 
-The difficulty lies in determining the identifiers and in determining their owner object. 
+The difficulty lies in determining the identifiers from the expression and then determining their owner object. 
 
 Alternative notation: `label="(mystring){mystring + yourstring}"` which changes only when 'mystring' changes.
   * rename gtkaml:name to gtkaml:type and allow it on other tags than root (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?
