@@ -1,7 +1,7 @@
 #summary goals done + future goals
 #labels Featured
 
-See [DesignGoals#FutureGoals Future Goals] - "not done".
+See [DesignGoals#Future_Goals Future Goals] - "not done".
 
 =Goals "done"=
 ==goals for 0.1 (DONE)==
