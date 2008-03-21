@@ -16,7 +16,7 @@ Here is what you write:
 (note: this is a gtkaml 0.2 example. To compile this in 0.1, replace hyphens with underscores)
 {{{
 <VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" 
-class:name="MyVBox" delete-event="{Gtk.main_quit}">
+class:name="MyVBox">
 	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
 	<Notebook can-focus="true" tab-vborder="1">
 		<Label>
@@ -39,12 +39,13 @@ multilne</label>
 		<Button label="fail"/>
 	</HButtonBox>
 <![CDATA[
-	private void on_click() { stdout.printf("you clicked me!"); }
+	private void on_click() { message("you clicked me!"); }
 
 	static int main (string[] args) 
 	{
 		Gtk.init (ref args);
 		Window w = new Gtk.Window (WindowType.TOPLEVEL);
+		w.delete_event += Gtk.main_quit;
 		MyVBox v = new MyVBox ();
 		w.add (v);
 		w.show_all ();
@@ -59,10 +60,8 @@ multilne</label>
 Um.. what was that again? Here's what happens (same source, annotated):
 
 {{{
-<!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces;
-     The (existing) gtk_main_quit function is associated with the delete signal -->
-<VBox xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2" 
-class:name="MyVBox" delete-event="{Gtk.main_quit}">
+<!-- MyVBox class extends VBox and imports the Gtk and GLib namespaces -->
+<VBox class:name="MyVBox" xmlns="Gtk" xmlns:glib="GLib" xmlns:class="http://gtkaml.org/0.2">
 	<!-- a label is added to the VBox, you can see the box_pack_start () parameters -->
 	<Label use-markup="true" label="&lt;b&gt;Dialog Box Title Here&lt;/b&gt;" expand="false" fill="false" padding="0" />
 	<!-- then a notebook (tab navigator) is added, with box_pack_start_defaults () -->
@@ -105,6 +104,7 @@ multilne</label>
 	{
 		Gtk.init (ref args);
 		Window w = new Gtk.Window (WindowType.TOPLEVEL);
+		w.delete_event += Gtk.main_quit;
 		MyVBox v = new MyVBox ();
 		w.add (v);
 		w.show_all ();
