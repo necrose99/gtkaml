@@ -34,7 +34,7 @@ multilne</label>
 		</HBox>
 	</Notebook>
 	<HButtonBox>
-		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
+		<Button with-mnemonic="true" label="_abort" clicked="on_click()"/>
 		<Button label="gtk-redo" use-stock="true"/>
 		<Button label="fail"/>
 	</HButtonBox>
@@ -92,7 +92,7 @@ multilne</label>
 	<HButtonBox>
 		<!-- this button is created with gtk_button_new_with_mnemonic () 
 		     'clicked' contains the body of the event handler lambda function -->
-		<Button with-mnemonic="true" has-default="true" label="_abort" clicked="on_click()"/>
+		<Button with-mnemonic="true" label="_abort" clicked="on_click()"/>
 		<Button label="gtk-redo" use-stock="true"/>
 		<Button label="fail"/>
 	</HButtonBox>
