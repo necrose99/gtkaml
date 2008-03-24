@@ -23,14 +23,14 @@ gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/
 Take your time to read about the packages, then download the _required_ packages (ticked) _and_ their *-dev* counterparts, plus `pkg-config` and `iconv` (with -dev too)
 
 You should have a bunch of **.zip files by now (here is what you might expect currently, but please check the http://www.gtk.org site for updates):
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-2.14.6-2.zip glib-2.14.6-2]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.14/glib-dev-2.14.6-2.zip glib-dev-2.14.6-2]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-2.12.8.zip gtk+-2.12.8]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-dev-2.12.8.zip gtk+-dev-2.12.8.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.18/pango-1.18.4.zip pango-1.18.4.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.18/pango-dev-1.18.4.zip pango-dev-1.18.4.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.20/atk-1.20.0.zip atk-1.20.0.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.20/atk-dev-1.20.0.zip atk-dev-1.20.0.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.16/glib-2.16.1.zip glib-2.16.1.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.16/glib-dev-2.16.1.zip glib-dev-2.16.1.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-2.12.9.zip gtk+-2.12.9.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-dev-2.12.9.zip gtk+-dev-2.12.9.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.20/pango-1.20.0.zip pango-1.20.0.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.20/pango-dev-1.20.0.zip pango-dev-1.20.0.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.22/atk-1.22.0.zip atk-1.22.0.zip]
+  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.22/atk-dev-1.22.0.zip atk-dev-1.22.0.zip]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-1.4.14.zip cairo-1.4.14.zip]
   * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-dev-1.4.14.zip cairo-dev-1.4.14.zip]
 
