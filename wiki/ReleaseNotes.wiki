@@ -1,6 +1,13 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2008-03-24) gtkaml 0.2.0.1 ===
+Minor fixes:
+  * you can now modify properties of `existing` widgets, but only if they're `standalone` too (issue #8)
+  * if the parsing of the generated vala file succeeds, the generated file is removed (unless --save-temps is specified from command-line)
+  * line numbers of the first CDATA code block match (if possible) with the generated vala file (so you can lookup errors)
+  * removed an unintended debugging output left in 0.2.0.0
+
 === (2008-03-03) gtkaml 0.2.0.0 ===
 Based on vala 0.1.7, gtkaml 0.2 brings lots of new features.
 
