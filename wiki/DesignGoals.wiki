@@ -146,11 +146,13 @@ label</label>
 
 ==Goals for 0.2.x.x==
 
+  * delete generated files unless --save-temps present (DONE in 0.2.0.1)
+  * align generated .vala source lines to the first code island lines (DONE in 0.2.0.1)
   * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
   * fix existing bugs + reformulate .implicits parsing code (TODO)
   * cleanup source (using latest vala features such as 'construct set') (TODO)
-  * introduce `gtkaml:type` as alternative to `gtkaml:name` and issue a warning about the latter (see Goals for 0.3) (TODO)
-  * (optional) explicit dot notation for add() parameters and for attributes-as-subtags? (TODO?)
+  * ~~introduce `gtkaml:type` as alternative to `gtkaml:name` and issue a warning about the latter (see Goals for 0.3) (TODO)~~
+  * (optional) explicit dot notation for add() parameters and for attributes-as-subtags? (is it TODO?)
 
 ==Goals for 0.3==
 To think about:
@@ -158,14 +160,14 @@ To think about:
   * data binding? 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
 
-For example, `label="{mystring + yourstring}"` would create an expression that's used in three places: at label initialization, at 'mystring' change notification and at 'yourstring' change notification. 
+For example, `label="mystring + yourstring"` would create a lambda expression that's evaluated in three places: at label initialization, at 'mystring' change notification and at 'yourstring' change notification. 
 
 The difficulty lies in determining the identifiers from the expression and then determining their owner object. 
 
-Alternative notation: `label="(mystring){mystring + yourstring}"` which changes only when 'mystring' changes.
-  * rename gtkaml:name to gtkaml:type and allow it on other tags than root (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?
+Alternative notation: `label="mystring => mystring + yourstring"` which changes only when 'mystring' changes.
+  * ~~rename gtkaml:name to gtkaml:type and allow it on other tags than root (which have gtkaml:private or gtkaml:public) just so that you can declare an interface and instantiate a class? should we break the syntax for this?~~
   * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible.
   * GtkBuildable by default?
 
-==Goals for 1.0==
-  * vala re-entrant parser (allows to generate AST directly instead of code)?
+==Goals for 1.0 syntax stable==
+  * vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')
