@@ -161,13 +161,13 @@ Example for add method:
 Currently:
 {{{
   <VBox>
-    <Label pack_end="true" expand="false" label="hello" />
+    <Label pack_end="true" expand="false" fill="true" label="hello" />
   </VBox>
 }}} 
 Allow this too - for clarity's sake
 {{{
   <VBox>
-    <Label pack_end.expand="false" label="hello" />
+    <Label pack_end.expand="false" pack_end.fill="true" label="hello" />
   </VBox>
 }}}
 
@@ -175,7 +175,7 @@ Same example for attribute-as-subtag:
 Currently:
 {{{
   <VBox>
-    <Label pack_end="true" expand="false">
+    <Label pack_end.expand="false" pack_end.fill="true">
       <label>hello</label>
     </Label>
   </VBox>
@@ -183,23 +183,21 @@ Currently:
 Allow this too:
 {{{
   <VBox>
-    <Label pack_end="true" expand="false">
+    <Label pack_end.expand="false" pack_end.fill="true">
       <Label.label>hello</Label.label>
     </Label>
   </VBox>
 }}}
 This is to prevent attribute names clashing with existing classes.
 
-
-
   * data binding? 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
 
-For example, `label="mystring + yourstring"` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'mystring' change notification and at 'yourstring' change notification. 
+For example, `<Label label="mystring + yourstring" />` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'this.mystring' change notification and at 'this.yourstring' change notification. 
 
 The difficulty lies in determining the identifiers from the expression and then determining their owner object. 
 
-Alternative notation: `label=" (mystring, yourstring) => {mystring + yourstring}"`. This would mean that we deprecate literals?
+Alternative notation: `<Label label=" (mystring, yourstring) => {mystring + yourstring}" />`. This would mean that we deprecate literals?
   * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
   * GtkBuildable by default?
 
