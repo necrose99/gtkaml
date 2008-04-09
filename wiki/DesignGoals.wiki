@@ -156,7 +156,7 @@ label</label>
 To think about:
   * internationalization
 
-  * explicit dot notation for add method parameters and for attributes-as-subtags (TODO)
+  * explicit dot notation for add method parameters, creation method selection and for attributes-as-subtags (TODO)
 Example for add method:
 Currently:
 {{{
@@ -180,7 +180,7 @@ Currently:
     </Label>
   </VBox>
 }}}
-Allow this too:
+Allow this too - to prevent attribute names clashing with existing classes.
 {{{
   <VBox>
     <Label pack_end.expand="false" pack_end.fill="true">
@@ -188,7 +188,18 @@ Allow this too:
     </Label>
   </VBox>
 }}}
-This is to prevent attribute names clashing with existing classes.
+Same example with different creation method: with_mnemonic:
+{{{
+  <VBox>
+    <Label with_mnemonic="true" pack_end.expand="false" pack_end.fill="true" label="hello" />
+  </VBox>
+}}}
+Allow this too - for readability?:
+{{{
+  <VBox>
+    <Label.with_mnemonic pack_end.expand="false" pack_end.fill="true" label="hello" />
+  </VBox>
+}}}
 
   * data binding? 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
