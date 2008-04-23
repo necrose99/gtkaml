@@ -214,4 +214,7 @@ Alternative notation: `<Label label=" (mystring, yourstring) => {mystring + your
   * GtkBuildable by default?
 
 ==Goals for 1.0 syntax stable==
-  * vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')
+  * stop generating text (.vala) files. Directly create vala AST elements.
+The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` )
+This would also enrich gtkaml's knowledge about the current source.  
+  *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
