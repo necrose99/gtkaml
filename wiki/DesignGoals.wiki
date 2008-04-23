@@ -149,14 +149,14 @@ label</label>
   * delete generated files unless --save-temps present (DONE in 0.2.0.1)
   * align generated .vala source lines to the first code island lines (DONE in 0.2.0.1)
   * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
-  * fix existing bugs + reformulate .implicits parsing code (TODO)
+  * fix existing bugs + reformulate .implicits parsing code (partially DONE in 0.2.0.2)
   * cleanup source (TODO)
 
 ==Goals for 0.3==
 To think about:
-  * internationalization
+  * ====internationalization====
 
-  * explicit dot notation for add method parameters, creation method selection and for attributes-as-subtags (TODO)
+  * ====explicit dot notation==== for add method parameters, creation method selection and for attributes-as-subtags (TODO)
 Example for add method:
 Currently:
 {{{
@@ -201,7 +201,7 @@ Allow this too - for readability?:
   </VBox>
 }}}
 
-  * data binding? 
+  * ====data binding====? 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
 
 For example, `<Label label="mystring + yourstring" />` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'this.mystring' change notification and at 'this.yourstring' change notification. 
