@@ -156,7 +156,8 @@ label</label>
 To think about:
   * ====internationalization====
 
-  * ====explicit dot notation==== for add method parameters, creation method selection and for attributes-as-subtags (TODO)
+  * ====explicit dot notation==== 
+for _add method parameters_, _creation method_ selection and for _attributes-as-subtags_ (TODO)
 Example for add method:
 Currently:
 {{{
@@ -201,7 +202,7 @@ Allow this too - for readability?:
   </VBox>
 }}}
 
-  * ====data binding====? 
+  * ====data binding?==== 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
 
 For example, `<Label label="mystring + yourstring" />` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'this.mystring' change notification and at 'this.yourstring' change notification. 
