@@ -1,8 +1,11 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
+=== (2008-05-13) gtkaml 0.2.1.0 ===
+Upgraded to valacompiler 0.3.2, changes:
+  * the README and other docs are not installed anymore
 
 === (2008-04-22) gtkaml 0.2.0.2 ===
-Upgraded to on valacompiler 0.3.x, this version comes mostly with bug fixes:
+Upgraded to valacompiler 0.3.x, this version comes mostly with bug fixes:
   * you can now rely on default argument values even when you explicitly state a creation method or container add function (issue #6)
   * when using preconstruct/construct on non root widget, the target parameter is now set to the right (current) widget (issue #9)
   * the .implicits files can now list methods from base classes before methods from the current class (issue #5)
