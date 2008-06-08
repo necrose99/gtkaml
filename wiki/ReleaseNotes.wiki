@@ -1,5 +1,9 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
+=== (2008-06-09) gtkaml 0.2.1.1 ===
+Upgraded to valacompiler 0.3.3, changes:
+  * fixed issue #14, "{expression} values should work for unknown literal types"
+
 === (2008-05-13) gtkaml 0.2.1.0 ===
 Upgraded to valacompiler 0.3.2, changes:
   * the README and other docs are not installed anymore
