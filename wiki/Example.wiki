@@ -45,7 +45,7 @@ multilne</label>
 	{
 		Gtk.init (ref args);
 		Window w = new Gtk.Window (WindowType.TOPLEVEL);
-		w.delete_event += Gtk.main_quit;
+		w.delete_event += (x,y) => { Gtk.main_quit(); };
 		MyVBox v = new MyVBox ();
 		w.add (v);
 		w.show_all ();
@@ -104,7 +104,7 @@ multilne</label>
 	{
 		Gtk.init (ref args);
 		Window w = new Gtk.Window (WindowType.TOPLEVEL);
-		w.delete_event += Gtk.main_quit;
+		w.delete_event += (x,y) => { Gtk.main_quit(); };
 		MyVBox v = new MyVBox ();
 		w.add (v);
 		w.show_all ();
