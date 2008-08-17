@@ -10,9 +10,9 @@ See [DesignGoals#Future_Goals Future Goals] - "not done".
   * the XML namespace URI includes the Vala namespace name(DONE in 0.1) followed by a colon (':') and the Vala pkg name (optional). The namespace you're creating can be specified in `gtkaml:namespace` attribute (DONE in 0.1):
 
 {{{
-<Gtkns.Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:namespace="myNamespace" gtkaml:name="MyWindow">
+<Gtkns:Window xmlns:Gtkns="Gtk:gtk+-2.0" xmlns:GLibns="GLib" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:namespace="myNamespace" gtkaml:name="MyWindow">
 ...
-</Gtkns.Window>
+</Gtkns:Window>
 }}}
   * the gtkaml namespace name may be changed as long as its URI begins with `http://gtkaml.org/` (DONE in 0.1)
 
@@ -154,7 +154,9 @@ label</label>
 
 ==Goals for 0.3==
 To think about:
-  * ====internationalization====
+  * ====rewrite====
+    * method matcher should parse the *.implicits files upfront
+    * replace libxml fsm with GMarkup
 
   * ====explicit dot notation==== 
 for _add method parameters_, _creation method_ selection and for _attributes-as-subtags_ (TODO)
@@ -202,7 +204,7 @@ Allow this too - for readability?:
   </VBox>
 }}}
 
-  * ====data binding?==== 
+  * ====data binding==== 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
 
 For example, `<Label label="mystring + yourstring" />` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'this.mystring' change notification and at 'this.yourstring' change notification. 
