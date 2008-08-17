@@ -1,5 +1,12 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
+=== (2008-08-17) gtkaml 0.2.2.0 ===
+Upgraded to valacompiler 0.3.5, changes:
+  * fixed an issue that lead gtkaml considering a misspelled tag with no content/subtags to be an attached attribute and ignore it
+
+=== (2008-07-??) gtkaml 0.2.1.2 ===
+This version was skipped.
+
 === (2008-06-09) gtkaml 0.2.1.1 ===
 Upgraded to valacompiler 0.3.3, changes:
   * fixed issue #14, "{expression} values should work for unknown literal types"
