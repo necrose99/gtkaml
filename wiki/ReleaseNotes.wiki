@@ -2,7 +2,7 @@
 #labels Featured
 
 
-=== (2008-11-23) gtkaml 0.2.2.0 ===
+=== (2008-11-23) gtkaml 0.2.2.1 ===
 Upgraded to valacompiler 0.5.1, changes:
   * fixed issue #15 ("Should take interfaces into account when searching an add method described in an .implicits file")
 
