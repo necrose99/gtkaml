@@ -1,6 +1,8 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2008-12-03) gtkaml 0.2.2.2 ===
+Upgraded to valacompiler 0.5.2
 
 === (2008-11-23) gtkaml 0.2.2.1 ===
 Upgraded to valacompiler 0.5.1, changes:
