@@ -7,7 +7,7 @@ But you _do_ have to install a compatible compiler and shell.
 The instructions here are based on [http://www.mingw.org/ MinGW] (minimal gcc for windows) and [http://www.mingw.org/msys.shtml MSYS] (minimal system)
 
 ===Install MinGW==
-Use the [http://sourceforge.net/project/showfiles.php?group_id=2435 Automated MinGW installer] - as we speak this is [http://downloads.sourceforge.net/mingw/MinGW-5.1.3.exe?modtime=1168811236&big_mirror=1 MinGW-5.1.3.exe]. The default installation path is *C:/MinGW* but you can change it.
+Use the [http://sourceforge.net/project/showfiles.php?group_id=2435 Automated MinGW installer] - as we speak this is [http://downloads.sourceforge.net/mingw/MinGW-5.1.4.exe?modtime=1168811236&big_mirror=1 MinGW-5.1.3.exe]. The default installation path is *C:/MinGW* but you can change it.
 Do *not* install the `make` utility that comes with MinGW.
 
 ===Install MSYS==
@@ -65,7 +65,7 @@ Adjust the paths if necessary - and restart msys.
 
 (Note: to be able to run the Gtk+ programs outside msys consider adding that PATH to Windows's environment)
 
-*Important*: from now on, make sure you compile every package with *`--prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid outside it). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
+*Important*: from now on, make sure you configure every package with *`./configure --prefix=c:/usr`* so that it works outside of msys too (`c:/usr` is a valid windows path, but msys is able to emulate `/c/usr` which is not valid outside it). Another reason to do this is so that you _don't install executables in `c:/msys/1.0/bin`_, because msys might _fail to pass command-line arguments_ to those binaries.
 
 Last but not least, gtkaml uses libxml2, which you can find here for windows: [http://www.zlatkovic.com/libxml.en.html], but that distribution doesn't contain the libxml2.pc required for pkg-config.
 
@@ -75,17 +75,17 @@ So *if you want to _compile_ gtkaml, you have to _compile libxml2_ too*. Otherwi
 
 Download the latest version from [ftp://xmlsoft.org/libxml2/], and do the following:
 {{{
-$ tar xvzf /path/to/libxml2-2.6.31.tar.gz
-$ cd libxml2-2.6.31
+$ tar xvzf /path/to/libxml2-2.7.2.tar.gz
+$ cd libxml2-2.7.2
 $ ./configure --prefix=c:/usr
 $ make
 $ make install
 }}}
 
-Download vala 0.1.7 or later (for gtkaml 0.2) or vala 0.1.6 (for gtkaml 0.1). Start msys and change to a folder of your choice, and type there
+Download vala 0.5.2 or later (for gtkaml 0.2.2.2). Start msys and change to a folder of your choice, and type there
 {{{
-$ tar -xvjf /path/to/vala-0.1.x.tar.bz2
-$ cd vala-0.1.x
+$ tar -xvjf /path/to/vala-0.5.x.tar.bz2
+$ cd vala-0.5.x
 $ ./configure --prefix=c:/usr
 $ make
 $ make install
@@ -103,11 +103,13 @@ $ make install
 ===Testing the environment===
 If gtkaml compiled, it already means that vala works, and Gtk+ and libxml2 are properly installed. 
 
-(This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples, which use Gtk+)
+(This is because gtkaml uses libxml2, has **.vala sources and some **.gtkaml files in /tests or /examples which use Gtk+)
 
 If you install from binary packages, try pasting the [Example example] in a file and compile it.
 
 ===Binary packages for vala and gtkaml===
 Binary packages are available at the download section [http://code.google.com/p/gtkaml/downloads/list here]. Unzip them in c:/usr and you're done!
+
+(*UPDATE*: the [http://code.google.com/p/valide/ Val(a)ide] project provides an installation kit for MinGW, Gtk+, and Vala. You would still need `msys` for binutils though)
 
 Now you can start reading the [http://live.gnome.org/Vala/Tutorial Vala Tutorial] or try out the sample code from [http://live.gnome.org/Vala/ vala's homepage], then you can jump to the gtkaml tutorial (when it's done).
