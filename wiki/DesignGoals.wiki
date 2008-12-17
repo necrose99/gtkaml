@@ -168,7 +168,7 @@ label</label>
 ==Goals for 1.0==
 To think about:
   * ====rewrite====
-    * method matcher should parse the *.implicits files upfront
+    * method matcher should parse the **.implicits files upfront
     * replace libxml fsm with GMarkup
   * ====data binding==== 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
