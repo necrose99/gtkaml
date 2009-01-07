@@ -163,7 +163,9 @@ label</label>
 ==Goals for 0.3.x===
   * Genie support through root gtkaml:language attribute (+ genie code generator)
 
-  
+==Not formulated ideas==  
+  * text runs
+  * pango and cairo markup
 
 ==Goals for 1.0==
 To think about:
