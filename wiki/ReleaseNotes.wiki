@@ -3,6 +3,7 @@
 
 === (2009-04-06) gtkaml 0.2.5 ===
 Upgraded to valacompiler 0.7.0
+(A 0.2.5-1 archive was uploaded to fix some more Vala 0.7 changes.)
 
 === (2009-03-10) gtkaml 0.2.4 ===
 Upgraded to valacompiler 0.5.7
