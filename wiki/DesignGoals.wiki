@@ -151,38 +151,32 @@ label</label>
   * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
   * fix existing bugs + reformulate .implicits parsing code (partially DONE in 0.2.0.2)
   * cleanup source (TODO)
+  * use more human-parsable version numbering scheme (x.y.z) (DONE in 0.2.3)
 
-==Goals for 0.3.0==
-  * use more human-parsable version numbering scheme (x.y.z)
+==Goals for 0.4==
+To think about:
+  * ====rewrite====
+    * method matcher should parse the **.implicits files upfront
+    * stop generating text (.vala) files. Directly create vala AST elements. The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` )
+This would also enrich gtkaml's knowledge about the current source.  
+  * ====data binding==== 
+By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
+  *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
   * signal handlers syntax: use {} for arbitrary expressions and no (additional) curly braces for method names or lambdas.
   * property values syntax: introduce data binding expression similar to lambda notation (see below)
   * enum literals (e.g. `<Window type="TOPLEVEL">` instead of `<Window type="{WindowType.TOPLEVEL}>"`)
   * `<gtkaml:Code source='path'>` instead of `<![[CDATA ... ]]>`. Suggest `filename.gtkaml.vala` as preferred path, (let `<![[CDATA>` live on, too). 
-
-
-==Goals for 0.3.x===
-  * Genie support through root gtkaml:language attribute (+ genie code generator)
+static int main() )
+  * Genie support through root gtkaml:language attribute (+ genie code generator). Bonus points: yaml markup for genie, automatically detected
+  * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
+  * GtkBuildable interface by default?
+  * array add methods (e.g. define an attribute then fill it with array elements)
+  * non-class code after the XML end tag (e.g. int main() belongs there, not public 
 
 ==Not formulated ideas==  
   * text runs
   * pango and cairo markup
+  * clutter markup
 
 ==Goals for 1.0==
-To think about:
-  * ====rewrite====
-    * method matcher should parse the **.implicits files upfront
-    * replace libxml fsm with GMarkup
-  * ====data binding==== 
-By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
-
-For example, `<Label label="mystring + yourstring" />` would create a lambda expression that's evaluated in three places: at Label's initialization, at 'this.mystring' change notification and at 'this.yourstring' change notification. 
-
-The difficulty lies in determining the identifiers from the expression and then determining their owner object. 
-
-Alternative notation: `<Label label=" (mystring, yourstring) => {mystring + yourstring}" />`. 
-  * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
-  * GtkBuildable by default?
-  * stop generating text (.vala) files. Directly create vala AST elements.
-The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` )
-This would also enrich gtkaml's knowledge about the current source.  
-  *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
+  * all of the above, tested and stable
