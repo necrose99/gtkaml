@@ -157,8 +157,7 @@ label</label>
 To think about:
   * ====rewrite====
     * method matcher should parse the **.implicits files upfront
-    * stop generating text (.vala) files. Directly create vala AST elements. The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` )
-This would also enrich gtkaml's knowledge about the current source.  
+    * stop generating text (.vala) files. Directly create vala AST elements. The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` ). This would also enrich gtkaml's knowledge about the current source.  
   * ====data binding==== 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
   *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
@@ -166,14 +165,13 @@ By using the 'notify' event of GLib.Object we can re-evaluate a property value o
   * property values syntax: introduce data binding expression similar to lambda notation (see below)
   * enum literals (e.g. `<Window type="TOPLEVEL">` instead of `<Window type="{WindowType.TOPLEVEL}>"`)
   * `<gtkaml:Code source='path'>` instead of `<![[CDATA ... ]]>`. Suggest `filename.gtkaml.vala` as preferred path, (let `<![[CDATA>` live on, too). 
-static int main() )
-  * Genie support through root gtkaml:language attribute (+ genie code generator). Bonus points: yaml markup for genie, automatically detected
   * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
-  * GtkBuildable interface by default?
   * array add methods (e.g. define an attribute then fill it with array elements)
-  * non-class code after the XML end tag (e.g. int main() belongs there, not public 
+  * non-class code after the XML end tag (e.g. int main() belongs there, not public static int main() )
 
 ==Not formulated ideas==  
+  * Genie support through root gtkaml:language attribute (+ genie code generator). Bonus points: yaml markup for genie, detect it automatically
+  * implement GtkBuildable by default? re-use GtkBuildable instead of 'implicits' ?
   * text runs
   * pango and cairo markup
   * clutter markup
