@@ -1,0 +1,85 @@
+--- ../../vala-0.7.0/compiler/valacompiler.vala	2009-04-02 21:50:29.000000000 +0300
++++ GtkamlCompiler.vala	2009-05-04 19:53:06.000000000 +0300
+@@ -1,5 +1,5 @@
+-/* valacompiler.vala
+- *
++/* GtkamlCompiler.vala
++ * 
+  * Copyright (C) 2006-2009  Jürg Billeter
+  * Copyright (C) 1996-2002, 2004, 2005, 2006 Free Software Foundation, Inc.
+  *
+@@ -22,8 +22,9 @@
+  */
+ 
+ using GLib;
++using Vala;
+ 
+-class Vala.Compiler {
++class Gtkaml.Compiler {
+ 	static string basedir;
+ 	static string directory;
+ 	static bool version;
+@@ -38,6 +39,9 @@
+ 	[NoArrayLength]
+ 	static string[] packages;
+ 	static string target_glib;
++	[CCode (array_length = false, array_null_terminated = true)]
++	[NoArrayLength]
++	static string[] implicits_directories; 
+ 
+ 	static bool ccode_only;
+ 	static string header_filename;
+@@ -90,6 +94,7 @@
+ 		{ "Xcc", 'X', 0, OptionArg.STRING_ARRAY, ref cc_options, "Pass OPTION to the C compiler", "OPTION..." },
+ 		{ "dump-tree", 0, 0, OptionArg.FILENAME, ref dump_tree, "Write code tree to FILE", "FILE" },
+ 		{ "save-temps", 0, 0, OptionArg.NONE, ref save_temps, "Keep temporary files", null },
++		{ "implicitsdir", 0, 0, OptionArg.FILENAME_ARRAY, ref implicits_directories, "Look for implicit add and creation methods and their parameters in DIRECTORY", "DIRECTORY..." },
+ 		{ "quiet", 'q', 0, OptionArg.NONE, ref quiet_mode, "Do not print messages to the console", null },
+ 		{ "target-glib", 0, 0, OptionArg.STRING, ref target_glib, "Target version of glib for code generation", "MAJOR.MINOR" },
+ 		{ "", 0, 0, OptionArg.FILENAME_ARRAY, ref sources, null, "FILE..." },
+@@ -243,6 +248,8 @@
+ 					source_file.add_using_directive (new UsingDirective (new UnresolvedSymbol (null, "GLib", null)));
+ 
+ 					context.add_source_file (source_file);
++				} else if (source.has_suffix (".gtkaml")) {
++					context.add_source_file (new SourceFile (context, rpath));
+ 				} else if (source.has_suffix (".vapi")) {
+ 					context.add_source_file (new SourceFile (context, rpath, true));
+ 				} else if (source.has_suffix (".c")) {
+@@ -260,8 +267,8 @@
+ 			return quit ();
+ 		}
+ 		
+-		var parser = new Parser ();
+-		parser.parse (context);
++		var parser = new Gtkaml.Parser ();
++		parser.parse (context, implicits_directories);
+ 
+ 		var genie_parser = new Genie.Parser ();
+ 		genie_parser.parse (context);
+@@ -279,7 +286,6 @@
+ 
+ 		var analyzer = new SemanticAnalyzer ();
+ 		analyzer.analyze (context);
+-
+ 		if (dump_tree != null) {
+ 			var code_writer = new CodeWriter (true);
+ 			code_writer.write_file (context, dump_tree);
+@@ -428,7 +434,7 @@
+ 
+ 	static int main (string[] args) {
+ 		try {
+-			var opt_context = new OptionContext ("- Vala Compiler");
++			var opt_context = new OptionContext ("- Vala Gtkaml Compiler");
+ 			opt_context.set_help_enabled (true);
+ 			opt_context.add_main_entries (options, null);
+ 			opt_context.parse (ref args);
+@@ -439,7 +445,7 @@
+ 		}
+ 		
+ 		if (version) {
+-			stdout.printf ("Vala %s\n", Config.PACKAGE_VERSION);
++			stdout.printf ("Gtkaml %s (based on Vala 0.7.1)\n", Config.PACKAGE_VERSION);
+ 			return 0;
+ 		}
+ 		
