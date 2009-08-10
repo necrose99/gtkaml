@@ -6,6 +6,8 @@ using Vala;
  */ 
 public interface Gtkaml.MarkupTag : CodeNode {
 
+	public abstract string prop {get;}
+	
 	/**
 	 * The parent of this tag
 	 */

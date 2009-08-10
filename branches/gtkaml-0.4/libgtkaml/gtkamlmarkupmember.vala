@@ -7,12 +7,22 @@ using Vala;
 public class Gtkaml.MarkupMember : MarkupTag, Property {
 
 	private MarkupTag? parent_tag;
+	private Gtkaml.Class parent_class;
 	private Gee.List<MarkupTag> child_tags = new Gee.ArrayList<MarkupTag>();
 	
-	public MarkupMember (string name, DataType data_type, SourceReference source_reference)
+	public MarkupMember (string name, DataType data_type, Gtkaml.Class parent_class, Gtkaml.MarkupTag? parent_tag, SourceReference? source_reference)
 	{
 		base (name, data_type, null, null, source_reference);
+		this.parent_class = parent_class;
+		this.parent_tag = parent_tag;
 	}	
+		
+	/**
+	 * The class this tag is defined in
+	 */
+	public Gtkaml.Class get_parent_class () {
+		return this.parent_class;
+	}
 	
 	//MarkupTag implementation
 		
