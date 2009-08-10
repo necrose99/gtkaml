@@ -49,6 +49,9 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		entry.add_markup_attribute (new MarkupAttribute ("clicked", "entry.text=\"text changed\""));
 		
 		root.add_child_tag (entry);
+		
+		source_file.add_node (root);
+		context.root.add_class (root);
 	}
 }
 
