@@ -2,7 +2,7 @@ using GLib;
 using Vala;
 
 /*
- * MarkupSubtag adds to MarkupTag: 
+ * MarkupSubTag is a MarkupTag that has itself a parent: 
  * parent_tag, parent_class, and g:existing, g:standalone, g:construct, g:private etc.
  */
 public interface Gtkaml.MarkupSubTag : MarkupTag {

@@ -2,7 +2,7 @@ using GLib;
 using Vala;
 
 /**
- * Represents a widget with g:private or g:public which will be declared as a class member
+ * Represents a tag with g:private or g:public which will be declared as a class member
  */
 public class Gtkaml.MarkupMember : UnresolvedMarkupSubTag {
 

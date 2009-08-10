@@ -2,7 +2,7 @@ using GLib;
 using Vala;
 
 /**
- * Represents the building block of the markup hierarchy
+ * Interface representing a tag that is a parent of others. Can be the root tag.
  */ 
 public interface Gtkaml.MarkupTag : CodeNode {
 	

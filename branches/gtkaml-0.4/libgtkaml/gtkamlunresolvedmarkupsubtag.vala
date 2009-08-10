@@ -1,6 +1,10 @@
 using GLib;
 using Vala;
 
+/**
+ * Any markup tag encountered in XML that is not the root, nor has g:public/g:private identifier.
+ * Can later morph into a complex attribute
+ */
 public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag, MarkupTag, CodeNode {
 
 	private weak MarkupTag parent_tag;
