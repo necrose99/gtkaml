@@ -5,8 +5,6 @@ using Vala;
  * Represents the building block of the markup hierarchy
  */ 
 public interface Gtkaml.MarkupTag : CodeNode {
-
-	public abstract string prop {get;}
 	
 	/**
 	 * The parent of this tag
