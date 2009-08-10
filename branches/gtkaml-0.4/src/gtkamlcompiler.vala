@@ -45,6 +45,7 @@ class Gtkaml.Compiler {
 	static bool ccode_only;
 	static string header_filename;
 	static string internal_header_filename;
+	static string internal_vapi_filename;
 	static bool compile_only;
 	static string output;
 	static bool debug;
@@ -65,6 +66,7 @@ class Gtkaml.Compiler {
 	[NoArrayLength]
 	static string[] defines;
 	static bool quiet_mode;
+	static bool verbose_mode;
 
 	private CodeContext context;
 
@@ -78,6 +80,7 @@ class Gtkaml.Compiler {
 		{ "ccode", 'C', 0, OptionArg.NONE, ref ccode_only, "Output C code", null },
 		{ "header", 'H', 0, OptionArg.FILENAME, ref header_filename, "Output C header file", "FILE" },
 		{ "internal-header", 'h', 0, OptionArg.FILENAME, ref internal_header_filename, "Output internal C header file", "FILE" },
+		{ "internal-vapi", 0, 0, OptionArg.FILENAME, ref internal_vapi_filename, "Output vapi with internal api", "FILE" },
 		{ "compile", 'c', 0, OptionArg.NONE, ref compile_only, "Compile but do not link", null },
 		{ "output", 'o', 0, OptionArg.FILENAME, ref output, "Place output in file FILE", "FILE" },
 		{ "debug", 'g', 0, OptionArg.NONE, ref debug, "Produce debug information", null },
@@ -94,6 +97,7 @@ class Gtkaml.Compiler {
 		{ "dump-tree", 0, 0, OptionArg.FILENAME, ref dump_tree, "Write code tree to FILE", "FILE" },
 		{ "save-temps", 0, 0, OptionArg.NONE, ref save_temps, "Keep temporary files", null },
 		{ "quiet", 'q', 0, OptionArg.NONE, ref quiet_mode, "Do not print messages to the console", null },
+		{ "verbose", 'v', 0, OptionArg.NONE, ref verbose_mode, "Print additional messages to the console", null },
 		{ "target-glib", 0, 0, OptionArg.STRING, ref target_glib, "Target version of glib for code generation", "MAJOR.MINOR" },
 		{ "", 0, 0, OptionArg.FILENAME_ARRAY, ref sources, null, "FILE..." },
 		{ null }
@@ -139,6 +143,7 @@ class Gtkaml.Compiler {
 				ulong deps_len;
 				FileUtils.get_contents (deps_filename, out deps_content, out deps_len);
 				foreach (string dep in deps_content.split ("\n")) {
+					dep.strip ();
 					if (dep != "") {
 						if (!add_package (context, dep)) {
 							Report.error (null, "%s, dependency of %s, not found in specified Vala API directories".printf (dep, pkg));
@@ -175,6 +180,7 @@ class Gtkaml.Compiler {
 		context.non_null_experimental = non_null_experimental;
 		context.dbus_transformation = !disable_dbus_transformation;
 		context.report.set_verbose_errors (!quiet_mode);
+		context.verbose_mode = verbose_mode;
 
 		context.ccode_only = ccode_only;
 		context.compile_only = compile_only;
@@ -341,6 +347,26 @@ class Gtkaml.Compiler {
 
 
 			library = null;
+		}
+		if (internal_vapi_filename != null) {
+			if (internal_header_filename == null ||
+			    header_filename == null) {
+				Report.error (null, "--internal-vapi may only be used in combination with --header and --internal-header");
+				return quit();
+			}
+
+			var interface_writer = new CodeWriter (false, true);
+			interface_writer.set_cheader_override(header_filename, internal_header_filename);
+			string vapi_filename = internal_vapi_filename;
+
+			// put .vapi file in current directory unless -d has been explicitly specified
+			if (directory != null && !Path.is_absolute (vapi_filename)) {
+				vapi_filename = "%s%c%s".printf (context.directory, Path.DIR_SEPARATOR, vapi_filename);
+			}
+
+			interface_writer.write_file (context, vapi_filename);
+
+			internal_vapi_filename = null;
 		}
 
 		if (!ccode_only) {
