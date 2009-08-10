@@ -1,6 +1,9 @@
 using GLib;
 using Vala;
 
+//TODO: rename ".implicits" to ".markuphints"
+//TODO: rename "constructor" to "creation method"
+
 /**
  * Contains parameters for constructors and add methods of a given Class/Interface, 
  * along with their default values if present
@@ -9,7 +12,7 @@ public class Gtkaml.MarkupImplicits {
 	public string target;
 	
 	/** the class/interface after resolving */
-	public TypeSymbol symbol;
+	public TypeSymbol symbol; //TODO use this
 	
 	/** cache of the base markup implicits */
 	Gee.List<weak MarkupImplicits> base_implicits_cache; //of course is not used, it's a cache:P
@@ -69,9 +72,6 @@ public class Gtkaml.MarkupImplicits {
 	public bool add_implicit_add_parameter (string implicit_add_name, string parameter, string? default_value) {
 		return add_implicit_parameter (implicit_add_name, ADD, parameter, default_value);
 	}
-	
-	
-	
 }
 
 public class Gtkaml.Pair<K,V> {

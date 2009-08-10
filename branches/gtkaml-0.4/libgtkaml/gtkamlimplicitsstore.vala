@@ -36,7 +36,7 @@ public class Gtkaml.ImplicitsStore {
 	
 	public void determine_creation_method (MarkupResolver markup_resolver, MarkupClass markup_class) {
 		MarkupImplicits markup_implicits = implicits.get (markup_class.get_full_name ());
-		//TODO: needs comment
+		//TODO: needs
 		//...
 	}
 	

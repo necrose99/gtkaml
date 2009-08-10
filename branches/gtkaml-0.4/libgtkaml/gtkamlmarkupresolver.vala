@@ -84,6 +84,8 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		creation_method.access = SymbolAccessibility.PUBLIC;
 		
 		//TODO: determine the base() to call from ImplicitsStore
+		//TODO: take into account the fact that, if the arguments are actually {code} expressions or complex attributes
+		//      .. they can't be used in this scenario:(
 		var base_call = new MethodCall (new BaseAccess (markup_class.source_reference), markup_class.source_reference);
 		base_call.add_argument (new BooleanLiteral (false, markup_class.source_reference));
 		base_call.add_argument (new IntegerLiteral ("0", markup_class.source_reference));
@@ -100,10 +102,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		var constructor = new Constructor (markup_class.source_reference);
 		constructor.body = new Block (markup_class.source_reference);	
 		
-		generate_construct_locals (markup_class, constructor.body);
-		
 		//TODO: this code will currently assume that *creation methods* parameters don't create dependencies between properties 
-		// or between properties and locals or etc.
+		// or between properties and locals or etc.		
+		generate_construct_locals (markup_class, constructor.body);
 		initialize_properties (markup_class, constructor.body);
 		
 		generate_adds (markup_class, constructor.body);
