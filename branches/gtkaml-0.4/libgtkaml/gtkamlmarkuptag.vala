@@ -18,7 +18,13 @@ public class Gtkaml.MarkupTag {
 	public DataType data_type {get ; set;}
 	
 	//TO THINK
-	public virtual void generate_code (MarkupResolver resolver) {}
+	public virtual void resolve (MarkupResolver resolver) {
+	}
+	
+	public virtual void parse () {
+		markup_class.add_base_type (new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name)));
+	}
+
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;

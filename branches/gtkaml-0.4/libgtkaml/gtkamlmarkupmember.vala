@@ -17,7 +17,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		this.access = access;
 	}
 	
-	public void parse () {
+	public override void parse () {
 		var unresolved_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name));
 		
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, unresolved_type.copy (), null, source_reference);

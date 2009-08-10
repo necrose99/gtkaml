@@ -36,7 +36,7 @@ public class Gtkaml.ImplicitsStore {
 	}
 	
 	public void determine_creation_method (MarkupResolver markup_resolver, MarkupClass markup_class) {
-		MarkupImplicits markup_implicits = implicits.get (markup_class.get_full_name ());
+		//MarkupImplicits markup_implicits = implicits.get (markup_class.get_full_name ());
 		//TODO: needs
 		//...
 	}
@@ -45,18 +45,18 @@ public class Gtkaml.ImplicitsStore {
 		KeyFile key_file = new KeyFile ();
 		try {
 			key_file.load_from_file (package_filename, KeyFileFlags.NONE);		
+		
+			foreach (var symbol_fullname in key_file.get_groups ()) {
+				var symbol_implicits = parse_symbol (ref key_file, symbol_fullname);
+				implicits.set (symbol_fullname, symbol_implicits);
+			}
 		} catch (KeyFileError e) {
 			context.report.warn (null, "There was an error parsing %s as implicits file".printf (package_filename));
 			return;
 		}
-		
-		foreach (var symbol_fullname in key_file.get_groups ()) {
-			var symbol_implicits = parse_symbol (ref key_file, symbol_fullname);
-			implicits.set (symbol_fullname, symbol_implicits);
-		}
 	}
 	
-	MarkupImplicits parse_symbol (ref KeyFile key_file, string symbol_fullname) {
+	MarkupImplicits parse_symbol (ref KeyFile key_file, string symbol_fullname) throws KeyFileError {
 		#if DEBUGIMPLICITS
 		stderr.printf ("parsing implicits group '%s'\n", symbol_fullname);
 		#endif
@@ -117,7 +117,7 @@ public class Gtkaml.ImplicitsStore {
 						#if DEBUGIMPLICITS
 						stderr.printf ("\t'%s'='%s'\n", parameter_name, parameter_value);
 						#endif
-						if (!symbol_implicits.add_implicit_add_parameter (implicit_name, parameter.split ("=",2)[0], parameter.split ("=",2)[1]))
+						if (!symbol_implicits.add_implicit_add_parameter (implicit_name, parameter_name, parameter_value))
 							context.report.warn (null, "Add method %s not listed in [%s] implicits 'adds' ".printf (implicit_name, symbol_fullname)); 
 					}	
 				} else {

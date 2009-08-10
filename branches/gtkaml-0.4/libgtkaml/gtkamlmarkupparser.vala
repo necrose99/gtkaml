@@ -31,10 +31,10 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		source_file.add_using_directive (new UsingDirective (gtk_namespace));
 
 		// <VBox g:name="MyVBox">
-		var root = new MarkupClass ("MyVBox", gtk_namespace, new SourceReference (source_file, 0, 0, 0, 66));
+		var root = new MarkupClass ("VBox", gtk_namespace, "MyVBox", new SourceReference (source_file, 0, 0, 0, 66));
 		root.access = SymbolAccessibility.PUBLIC;
-		//TODO: this line in the resolver
-		root.add_base_type (new UnresolvedType.from_symbol (new UnresolvedSymbol (gtk_namespace, "VBox")));
+		root.markup_root.parse ();
+		
 		source_file.add_node (root);
 		context.root.add_class (root);
 		

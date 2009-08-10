@@ -14,8 +14,8 @@ public class Gtkaml.MarkupImplicits {
 	/** the class/interface after resolving */
 	public TypeSymbol symbol; //TODO use this
 	
-	/** cache of the base markup implicits */
-	Gee.List<weak MarkupImplicits> base_implicits_cache; //of course is not used, it's a cache:P
+	///** cache of the base markup implicits */
+	//Gee.List<weak MarkupImplicits> base_implicits_cache; //of course is not used, it's a cache:P
 	
 	private static string ADD = "add-";
 	private static string NEW = "new-";
@@ -77,8 +77,8 @@ public class Gtkaml.MarkupImplicits {
 public class Gtkaml.Pair<K,V> {
 	public K name;
 	public V value;
-	public Pair (K# name, V# value) {
-		this.name = #name;
-		this.value = #value;
+	public Pair (owned K name, owned V value) {
+		this.name = (owned)name;
+		this.value = (owned)value;
 	}
 }
