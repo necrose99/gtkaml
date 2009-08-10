@@ -36,11 +36,6 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		generate_construct (mcl);
 	}
 	
-	void visit_markup_member (MarkupMember member) {
-		member.generate_property (this);
-	}
-
-
 	/**
 	 * generate creation method with base () call
 	 * CHANTIER

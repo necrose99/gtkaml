@@ -52,6 +52,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 2, 6, 2, 79));
 		entry.add_markup_attribute (new MarkupAttribute ("label", "ok"));
 		entry.add_markup_attribute (new MarkupAttribute ("clicked", "entry.text=\"text changed\""));
+		entry.parse ();
 		
 		root.markup_root.add_child_tag (entry);
 		

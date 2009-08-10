@@ -8,6 +8,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 
 	public string member_name { get; private set; }
 	public SymbolAccessibility access {get; private set;}
+	public weak Property property {get; private set;}
 
 	public MarkupMember (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, string member_name, SymbolAccessibility access, SourceReference? source_reference = null)
 	{
@@ -16,7 +17,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		this.access = access;
 	}
 	
-	public void generate_property (CodeVisitor visitor) {
+	public void parse () {
 		var unresolved_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name));
 		
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, unresolved_type.copy (), null, source_reference);
@@ -30,6 +31,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		p.field = new Field ("_%s".printf (p.name), field_type, p.default_expression, p.source_reference);
 				
 		markup_class.add_property (p);
+		this.property = p;
 	}
 	
 		
