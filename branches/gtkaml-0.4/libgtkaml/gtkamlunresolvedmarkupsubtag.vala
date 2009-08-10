@@ -14,11 +14,11 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 	}	
 	
 	public override void parse () {
-		//do nothing
+		
 	}
 
 	public override void resolve (MarkupResolver resolver) {
-		//replace unresolved with temp or complex attribute
+		//replace unresolved tags with temp tags or complex attributes
 		var markup_temp = new MarkupTemp (parent_tag, tag_name, tag_namespace, source_reference);
 		parent_tag.replace_child_tag (this, markup_temp);
 		markup_temp.resolve (resolver);
