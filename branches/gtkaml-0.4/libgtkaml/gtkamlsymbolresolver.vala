@@ -12,6 +12,18 @@ using Vala;
  * - fields: use the expression of the lambda as field assignment
  */
 public class Gtkaml.SymbolResolver : Vala.SymbolResolver {
+
+	public override void visit_class (Vala.Class cl) {
+		if (cl is Gtkaml.Class) {
+			var gcl = cl as Gtkaml.Class;
+			foreach (var child_tag in gcl.get_child_tags ())
+			{
+				message ("found child tag %s", (child_tag as MarkupMember).name);
+			}
+		}
+		base.visit_class (cl);
+	}
+
 	public override void visit_property (Property prop) {
 		if (prop is MarkupMember) message ("hoooooraaaay");
 		base.visit_property (prop);

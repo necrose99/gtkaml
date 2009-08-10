@@ -7,19 +7,30 @@ using Vala;
 public interface Gtkaml.MarkupTag : CodeNode {
 	
 	/**
-	 * The parent of this tag
+	 * Vala namespace inferred from XML prefix
 	 */
-	public abstract MarkupTag? get_parent_tag ();
+	//TODO:use UnresolvedSymbol/UnresolvedType
+	public abstract string get_markup_namespace ();
 	
-	public abstract void set_parent_tag (MarkupTag? parent_tag);	
 	/**
 	 * The list of children MarkupTags
 	 */
-	public abstract Gee.ReadOnlyList<MarkupTag> get_child_tags ();
+	public abstract Gee.ReadOnlyList<MarkupSubTag> get_child_tags ();
 		
 	/**
 	 * Adds a child tag to this one
 	 */
-	public abstract void add_child_tag (MarkupTag child_tag);		
+	public abstract void add_child_tag (MarkupSubTag child_tag);	
+	
+	/**
+	 * The list of attributes
+	 */
+	public abstract Gee.ReadOnlyList<MarkupAttribute> get_markup_attributes ();	
+	
+	/**
+	 * Adds an attribute
+	 */
+	public abstract void add_markup_attribute (MarkupAttribute markup_attribute);
+	
 }
 
