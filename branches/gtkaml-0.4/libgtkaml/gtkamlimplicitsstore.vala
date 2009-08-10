@@ -18,17 +18,18 @@ public class Gtkaml.ImplicitsStore {
 		foreach (var source_file in context.get_source_files ()) {
 			if (source_file.external_package) {
 				var filename = source_file.filename.replace (".vapi", ".implicits");
-				#if DEBUG
+				#if DEBUGIMPLICITS
 				stderr.printf ("checking if '%s' file exists.. ", filename);
 				#endif
 				if (FileUtils.test (filename, FileTest.EXISTS))  {
-					#if DEBUG
+					#if DEBUGIMPLICITS
 					stderr.printf ("yes\n");
 					#endif
 					parse_package (filename);
 				} else {
-					#if DEBUG
+					#if DEBUGIMPLICITS
 					stderr.printf ("no\n");
+					#endif
 				}
 			}
 		}
@@ -56,7 +57,7 @@ public class Gtkaml.ImplicitsStore {
 	}
 	
 	MarkupImplicits parse_symbol (ref KeyFile key_file, string symbol_fullname) {
-		#if DEBUG
+		#if DEBUGIMPLICITS
 		stderr.printf ("parsing implicits group '%s'\n", symbol_fullname);
 		#endif
 		
@@ -66,7 +67,7 @@ public class Gtkaml.ImplicitsStore {
 
 		string implicit_name;		
 		foreach (string key in keys) {
-			#if DEBUG
+			#if DEBUGIMPLICITS
 			stderr.printf ("definition is '%s' and is interpreted as ", key);
 			#endif
 			
@@ -77,7 +78,7 @@ public class Gtkaml.ImplicitsStore {
 				else
 					implicit_name = "";
 
-				#if DEBUG
+				#if DEBUGIMPLICITS
 				stderr.printf ("creation method '%s' with the following parameters:\n", implicit_name);
 				#endif
 				
@@ -86,7 +87,7 @@ public class Gtkaml.ImplicitsStore {
 				foreach (var parameter in key_file.get_string_list (symbol_fullname, key)) {
 					string parameter_name = parameter.split ("=",2)[0];
 					string parameter_value = parameter.split ("=",2)[1];
-					#if DEBUG
+					#if DEBUGIMPLICITS
 					stderr.printf ("\t'%s'='%s'\n", parameter_name, parameter_value);
 					#endif
 					symbol_implicits.add_constructor_parameter (implicit_name, parameter_name, parameter_value);
@@ -95,11 +96,11 @@ public class Gtkaml.ImplicitsStore {
 			} else if (key.has_prefix ("add")) { //add method
 			
 				if (key == "adds") { //add method listing
-					#if DEBUG
+					#if DEBUGIMPLICITS
 					stderr.printf ("add method listing with the following methods:\n");
 					#endif
 					foreach (string add in key_file.get_string_list (symbol_fullname, key)) {
-						#if DEBUG
+						#if DEBUGIMPLICITS
 						stderr.printf ("\t'%s'\n", add);
 						#endif
 						symbol_implicits.add_implicit_add (add);
@@ -107,13 +108,13 @@ public class Gtkaml.ImplicitsStore {
 				
 				} else if (key[4] == '.') { //add method parameters
 					implicit_name = key.substring (4);
-					#if DEBUG
+					#if DEBUGIMPLICITS
 					stderr.printf ("add method '%s' with the following parameters:\n", implicit_name);
 					#endif
 					foreach (var parameter in key_file.get_string_list (symbol_fullname, key)) {
 						string parameter_name = parameter.split ("=",2)[0];
 						string parameter_value = parameter.split ("=",2)[1];
-						#if DEBUG
+						#if DEBUGIMPLICITS
 						stderr.printf ("\t'%s'='%s'\n", parameter_name, parameter_value);
 						#endif
 						if (!symbol_implicits.add_implicit_add_parameter (implicit_name, parameter.split ("=",2)[0], parameter.split ("=",2)[1]))

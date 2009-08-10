@@ -26,7 +26,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	
 		if (cl is MarkupClass) {
 			var mcl = cl as MarkupClass;
-			generate_properties (mcl);
+			generate_properties (mcl, mcl);
 			generate_creation_method (mcl);
 			generate_construct (mcl);
 		
@@ -47,15 +47,12 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		base.visit_property (prop);
 	}
 
-	/**
-	 * generates {get;set;} for each of the MarkupMember instances encountered
-	 * TODO
-	 */
-	private void generate_properties (MarkupClass markup_class) {
-		foreach (MarkupSubTag markup_subtag in markup_class.get_child_tags ()) {
+	private void generate_properties (MarkupClass markup_class, MarkupTag current_tag) {
+		foreach (MarkupSubTag markup_subtag in current_tag.get_child_tags ()) {
 			if (markup_subtag is MarkupMember) {
 				generate_property (markup_class, markup_subtag as MarkupMember);
 			}
+			generate_properties(markup_class, markup_subtag);
 		}
 	}
 	
@@ -104,7 +101,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		
 		//TODO: this code will currently assume that *creation methods* parameters don't create dependencies between properties 
 		// or between properties and locals or etc.		
-		generate_construct_locals (markup_class, constructor.body);
+		generate_construct_locals (markup_class, markup_class, constructor.body);
 		initialize_properties (markup_class, constructor.body);
 		
 		generate_adds (markup_class, constructor.body);
@@ -116,21 +113,14 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		//TODO
 	}
 	
-	private void generate_construct_locals (MarkupClass markup_class, Block statements) {
+	private void generate_construct_locals (MarkupClass markup_class, MarkupTag current_tag, Block statements) {
 		//CHANTIER
-		var initializer = new ObjectCreationExpression (new MemberAccess (null, "Label", markup_class.source_reference), markup_class.source_reference);
+		var initializer = new ObjectCreationExpression (new MemberAccess (null, "Label", markup_class.source_reference), 
+			markup_class.source_reference);
 		
 		//TODO: determine the initialize to call from ImplicitsStore
 		initializer.add_argument (new StringLiteral ("\"_Hello\"", markup_class.source_reference));
 		
-		//TODO: determine MarkupTag type => unresolvedsymbol
-		/*TODO: keep a map of prefixes<->namespaces in the MarkupClass to qualify types
-		var gtk_namespace = new MarkupNamespace (null, "Gtk");
-		gtk_namespace.explicit_prefix = false;
-
-		var type = new UnresolvedType.from_symbol (new UnresolvedSymbol (gtk_namespace, "Label"));
-		type.nullable = true;
-		//*/
 		var local_variable = new LocalVariable (null, "label0",  initializer, markup_class.source_reference);
 		var local_declaration = new DeclarationStatement (local_variable, markup_class.source_reference);
 		
