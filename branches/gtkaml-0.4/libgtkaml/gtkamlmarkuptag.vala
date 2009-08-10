@@ -4,7 +4,7 @@ using Vala;
 /**
  * Represents the building block of the markup hierarchy
  */ 
-public interface Gtkaml.MarkupTag : Symbol {
+public interface Gtkaml.MarkupTag : CodeNode {
 
 	/**
 	 * The parent of this tag

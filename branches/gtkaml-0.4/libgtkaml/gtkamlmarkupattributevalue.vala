@@ -1,11 +1,12 @@
 using GLib;
 using Vala;
 
-public class Gtkaml.MarkupAttributeValue : MemberAccess, MarkupTag {
+public class Gtkaml.MarkupAttributeValue : Expression, MarkupTag {
 	private MarkupTag? parent_tag;
 	private Gee.List<MarkupTag> child_tags = new Gee.ArrayList<MarkupTag>();
 	
 	//TODO
+	public override bool is_pure () { return true; }
 	
 	//MarkupTag implementation
 		
