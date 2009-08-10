@@ -15,10 +15,10 @@ public class Gtkaml.MarkupClass : MarkupTag, Class {
 	
 	public MarkupClass (string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{
+		base (tag_name, source_reference);
 		this.tag_name = tag_name;
 		this.tag_namespace = tag_namespace;
-		//TODO: this class in a namespace
-		base (tag_name, source_reference);
+		//TODO: this class in a namespace too
 	}
 	
 	//MarkupTag implementation
