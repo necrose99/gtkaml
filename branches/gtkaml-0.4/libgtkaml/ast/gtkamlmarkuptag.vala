@@ -32,7 +32,7 @@ public abstract class Gtkaml.MarkupTag {
 	/** the determined data type - see resolve() */
 	public DataType resolved_type { 
 		get {
-			assert (!(_data_type_parent is UnresolvedType));
+			assert (!(_data_type_parent.data_type is UnresolvedType));
 			return _data_type_parent.data_type;
 		}
 	}
@@ -64,7 +64,7 @@ public abstract class Gtkaml.MarkupTag {
 		this.tag_name = tag_name;
 		this.tag_namespace = tag_namespace;
 		this.source_reference = source_reference;
-		data_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name, source_reference));
+		this.data_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name, source_reference));
 		_data_type_parent = new DataTypeParent (data_type);
 	}
 
