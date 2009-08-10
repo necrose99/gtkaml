@@ -2,7 +2,7 @@ using GLib;
 using Vala;
 
 /**
- * stores a map between .implicits symbols like [Gtk.Window] and their ImplicitMarkup definitions
+ * stores a map between .implicits symbols like [Gtk.Window] and their MarkupImplicits definitions
  */
 public class Gtkaml.ImplicitsStore {
 	public Gee.Map<string, MarkupImplicits> implicits;
@@ -14,14 +14,30 @@ public class Gtkaml.ImplicitsStore {
 	}
 
 	public void parse () {
+		//TODO: use our own folder?
 		foreach (var source_file in context.get_source_files ()) {
 			if (source_file.external_package) {
-				var	filename = source_file.filename.replace ("vapi$", "implicits");
+				var filename = source_file.filename.replace (".vapi", ".implicits");
+				#if DEBUG
+				stderr.printf ("checking if '%s' file exists.. ", filename);
+				#endif
 				if (FileUtils.test (filename, FileTest.EXISTS))  {
+					#if DEBUG
+					stderr.printf ("yes\n");
+					#endif
 					parse_package (filename);
+				} else {
+					#if DEBUG
+					stderr.printf ("no\n");
 				}
 			}
 		}
+	}
+	
+	public void determine_creation_method (MarkupResolver markup_resolver, MarkupClass markup_class) {
+		MarkupImplicits markup_implicits = implicits.get (markup_class.get_full_name ());
+		//TODO: needs comment
+		//...
 	}
 	
 	void parse_package (string package_filename) {
@@ -29,24 +45,31 @@ public class Gtkaml.ImplicitsStore {
 		try {
 			key_file.load_from_file (package_filename, KeyFileFlags.NONE);		
 		} catch (KeyFileError e) {
-			context.report.warn (null, "There was an error parsing %s".printf (package_filename));
+			context.report.warn (null, "There was an error parsing %s as implicits file".printf (package_filename));
 			return;
 		}
 		
 		foreach (var symbol_fullname in key_file.get_groups ()) {
-			//I can write complicated jumpy code
 			var symbol_implicits = parse_symbol (ref key_file, symbol_fullname);
 			implicits.set (symbol_fullname, symbol_implicits);
 		}
 	}
 	
 	MarkupImplicits parse_symbol (ref KeyFile key_file, string symbol_fullname) {
+		#if DEBUG
+		stderr.printf ("parsing implicits group '%s'\n", symbol_fullname);
+		#endif
+		
 		var symbol_implicits = new MarkupImplicits (symbol_fullname);
 
 		string [] keys = key_file.get_keys (symbol_fullname); //the group comes from get_groups ()
 
 		string implicit_name;		
 		foreach (string key in keys) {
+			#if DEBUG
+			stderr.printf ("definition is '%s' and is interpreted as ", key);
+			#endif
+			
 			if (key.has_prefix ("new")) { //constructor parameters
 				
 				if (key.has_prefix ("new.")) 
@@ -54,25 +77,48 @@ public class Gtkaml.ImplicitsStore {
 				else
 					implicit_name = "";
 
+				#if DEBUG
+				stderr.printf ("creation method '%s' with the following parameters:\n", implicit_name);
+				#endif
+				
 				symbol_implicits.add_implicit_constructor (implicit_name);
 				
-				foreach (var parameter in key_file.get_string_list (symbol_fullname, 	key))
-					symbol_implicits.add_constructor_parameter (implicit_name, parameter.split ("=",2)[0], parameter.split ("=",2)[1]);
+				foreach (var parameter in key_file.get_string_list (symbol_fullname, key)) {
+					string parameter_name = parameter.split ("=",2)[0];
+					string parameter_value = parameter.split ("=",2)[1];
+					#if DEBUG
+					stderr.printf ("\t'%s'='%s'\n", parameter_name, parameter_value);
+					#endif
+					symbol_implicits.add_constructor_parameter (implicit_name, parameter_name, parameter_value);
+				}
 					
 			} else if (key.has_prefix ("add")) { //add method
 			
 				if (key == "adds") { //add method listing
-				
-					foreach (string add in key_file.get_string_list (symbol_fullname, key))
+					#if DEBUG
+					stderr.printf ("add method listing with the following methods:\n");
+					#endif
+					foreach (string add in key_file.get_string_list (symbol_fullname, key)) {
+						#if DEBUG
+						stderr.printf ("\t'%s'\n", add);
+						#endif
 						symbol_implicits.add_implicit_add (add);
+					}
 				
 				} else if (key[4] == '.') { //add method parameters
 					implicit_name = key.substring (4);
-					
-					foreach (var parameter in key_file.get_string_list (symbol_fullname, key))
+					#if DEBUG
+					stderr.printf ("add method '%s' with the following parameters:\n", implicit_name);
+					#endif
+					foreach (var parameter in key_file.get_string_list (symbol_fullname, key)) {
+						string parameter_name = parameter.split ("=",2)[0];
+						string parameter_value = parameter.split ("=",2)[1];
+						#if DEBUG
+						stderr.printf ("\t'%s'='%s'\n", parameter_name, parameter_value);
+						#endif
 						if (!symbol_implicits.add_implicit_add_parameter (implicit_name, parameter.split ("=",2)[0], parameter.split ("=",2)[1]))
 							context.report.warn (null, "Add method %s not listed in [%s] implicits 'adds' ".printf (implicit_name, symbol_fullname)); 
-						
+					}	
 				} else {
 					context.report.warn (null, "Unkown '%s' key in [%s] section".printf (key, symbol_fullname));
 				}
