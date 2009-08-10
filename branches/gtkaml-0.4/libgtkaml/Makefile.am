@@ -16,6 +16,7 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupattributevalue.vala \
 	gtkamlmarkuptag.vala \
 	gtkamlclass.vala \
+	gtkamlsymbolresolver.vala \
 	gtkamlmarkupmember.vala
 
 libgtkaml_la_SOURCES = \

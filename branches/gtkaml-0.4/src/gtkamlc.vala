@@ -259,7 +259,7 @@ class Vala.Compiler {
 			return quit ();
 		}
 		
-		var resolver = new SymbolResolver ();
+		var resolver = new Gtkaml.SymbolResolver ();
 		resolver.resolve (context);
 		
 		if (context.report.get_errors () > 0) {
