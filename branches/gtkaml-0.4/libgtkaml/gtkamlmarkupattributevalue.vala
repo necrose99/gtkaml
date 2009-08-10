@@ -5,10 +5,7 @@ public class Gtkaml.MarkupAttributeValue : MemberAccess, MarkupTag {
 	private MarkupTag? parent_tag;
 	private Gee.List<MarkupTag> child_tags = new Gee.ArrayList<MarkupTag>();
 	
-	public MarkupMember (string name, DataType data_type, SourceReference source_reference)
-	{
-		base (name, data_type, null, null, source_reference);
-	}	
+	//TODO
 	
 	//MarkupTag implementation
 		
