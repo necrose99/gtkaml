@@ -25,7 +25,8 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkuptemp.vala \
 	gtkamlmarkupnamespace.vala \
 	gtkamlmarkupimplicits.vala \
-	gtkamlimplicitsstore.vala
+	gtkamlimplicitsstore.vala \
+	workarounds/gtkamldatatypeparent.vala
 
 libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \

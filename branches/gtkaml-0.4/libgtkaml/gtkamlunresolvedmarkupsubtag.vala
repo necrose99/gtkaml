@@ -13,18 +13,18 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}	
 	
-	public override void parse () {
-		
+	public override void generate_public_ast () {
 	}
-
+	
 	public override void resolve (MarkupResolver resolver) {
-		//replace unresolved tags with temp tags or complex attributes
+		//TODO:replace unresolved tags with temp tags or complex attributes	
 		var markup_temp = new MarkupTemp (parent_tag, tag_name, tag_namespace, source_reference);
 		parent_tag.replace_child_tag (this, markup_temp);
+		markup_temp.generate_public_ast (); //catch up with others
 		markup_temp.resolve (resolver);
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		//TODO
+		assert_not_reached ();//unresolved tags are replaced with temporary variables or complex attributes at resolve () time
 	}
 }

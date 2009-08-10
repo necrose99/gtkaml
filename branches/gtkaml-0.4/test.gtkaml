@@ -1,21 +1,5 @@
-<Window xmlns="Gtk" xmlns:g="http://gtkaml.org/0.2"
-  g:name="ButtonAndText" destroy="{Gtk.main_quit}" type="{WindowType.TOPLEVEL}">
+<VBox xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk" g:name="MyVBox">  
+      <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
+      <Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
+</VBox>
 
-  <VBox homogeneous="false" spacing="10" border-width="10">
-    <Entry g:public="entry" editable="false" text="hello" expand="false" />
-    <Button label="ok" expand="false" clicked='entry.text="text changed!"'/>
-  </VBox>
-
-<![CDATA[
-
-  static int main (string [] args)
-  {
-    Gtk.init (ref args);
-    var window = new ButtonAndText();
-    window.set_default_size (300, 10);
-    window.show_all ();
-    Gtk.main ();
-  }
-
-]]>
-</Window> 

@@ -14,24 +14,33 @@ public abstract class Gtkaml.MarkupTag {
 	public weak MarkupClass markup_class {get; private set;}
 	public SourceReference? source_reference {get; set;}
 	
-	//filled by the resolver
 	public DataType data_type {get ; set;}
 	
-	public virtual void parse () {
+	private DataTypeParent _data_type_parent;
+	public DataType resolved_type { 
+		get {
+			assert (!(_data_type_parent is UnresolvedType));
+			return _data_type_parent.data_type;
+		}
 	}
+			
+	
+	public abstract void generate_public_ast ();
 
 	public virtual void resolve (MarkupResolver resolver) {
-		//TODO data_type
+		assert (data_type.parent_node is DataTypeParent);
+		resolver.visit_data_type (data_type);
 	}
 	
-	public virtual void generate (MarkupResolver resolver) {
-	}
+	public abstract void generate (MarkupResolver resolver);
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;
 		this.tag_name = tag_name;
 		this.tag_namespace = tag_namespace;
 		this.source_reference = source_reference;
+		data_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name, source_reference));
+		_data_type_parent = new DataTypeParent (data_type);
 	}
 
 	public Gee.ReadOnlyList<MarkupSubTag> get_child_tags () {

@@ -5,7 +5,7 @@ using Vala;
  * MarkupSubTag is a MarkupTag that has itself a parent: 
  * parent_tag, and g:existing, g:standalone, g:construct, g:private etc.
  */
-public class Gtkaml.MarkupSubTag : MarkupTag {
+public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 	public weak MarkupTag parent_tag {get;set;}
 

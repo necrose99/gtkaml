@@ -8,25 +8,42 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	{
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}
-
-	public override void parse () {
-		//do nothing
+	
+	public override void generate_public_ast () {
+		generate_temp ();
 	}
 
 	public override void resolve (MarkupResolver resolver) {
 		//TODO
+		base.resolve (resolver);
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		generate_temp (resolver);
+		
 	}
 	
-	private void generate_temp (MarkupResolver resolver) {
-		var initializer = new ObjectCreationExpression (new MemberAccess (null, tag_name, source_reference), source_reference);
+	private void generate_temp () {
+		
+		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
+		MemberAccess namespace_access = null;
+		UnresolvedSymbol ns = tag_namespace;
+		while (ns is UnresolvedSymbol) {
+			namespace_access = new MemberAccess(namespace_access, ns.name, source_reference);
+			ns = ns.inner;
+		}
+		var member_access = new MemberAccess (namespace_access, tag_name, source_reference);
+		member_access.creation_member = true;
+		var initializer = new ObjectCreationExpression (member_access, source_reference);
 		
 		//TODO: determine the initialize to call from ImplicitsStore
 		initializer.add_argument (new StringLiteral ("\"_Hello\"", source_reference));
 		
+		var variable_type = resolved_type.copy ();
+		variable_type.value_owned = true;
+		variable_type.nullable = false;
+		variable_type.is_dynamic = false;
+
+		//FIXME: use variable_type instead of null.. but why does it look like nullable?		
 		var local_variable = new LocalVariable (null, "label0",  initializer, source_reference);
 		var local_declaration = new DeclarationStatement (local_variable, source_reference);
 		
