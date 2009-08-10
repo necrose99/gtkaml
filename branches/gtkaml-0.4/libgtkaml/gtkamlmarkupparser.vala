@@ -23,6 +23,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		}
 	}
 	
+	//Note to self: the parser engine should be able to tell tags with content beforehand (SimpleAttributes)
 	/** 
 	 * creates appropriate Gtkaml AST nodes (MarkupClass, MarkupSubTag, UnresolvedMarkupSubTag, MarkupMember)
 	 * and calls generate_public_ast () on each.
