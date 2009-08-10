@@ -16,8 +16,20 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		this.member_name = member_name;
 		this.access = access;
 	}
-	
+
 	public override void parse () {
+		generate_property ();
+	}
+	
+	public override void resolve (MarkupResolver resolver) {
+		//TODO
+	}
+	
+	public override void generate (MarkupResolver resolver) {
+		//TODO	
+	}
+	
+	private void generate_property () {
 		var unresolved_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name));
 		
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, unresolved_type.copy (), null, source_reference);
@@ -26,13 +38,9 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		Property p = new Property (member_name, unresolved_type, getter, setter, source_reference);
 		p.access = access;
 		
-		//private field
-		var field_type = unresolved_type.copy ();
-		p.field = new Field ("_%s".printf (p.name), field_type, p.default_expression, p.source_reference);
+		p.field = new Field ("_%s".printf (p.name), unresolved_type.copy (), p.default_expression, p.source_reference);
 				
 		markup_class.add_property (p);
 		this.property = p;
 	}
-	
-		
 }
