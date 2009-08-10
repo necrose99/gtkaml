@@ -8,12 +8,11 @@ bin_PROGRAMS = gtkamlc
 
 BUILT_SOURCES = gtkamlc.stamp
 
-gtkamlc_VALASOURCES = gtkamlc.vala
+gtkamlc_VALASOURCES = gtkamlcompiler.vala
 
 gtkamlc_SOURCES = \
 	gtkamlc.stamp \
-	$(gtkamlc_VALASOURCES:.vala=.c) \
-	$(gtkamlc_VALASOURCES:.vala=.h)
+	$(gtkamlc_VALASOURCES:.vala=.c) 
 
 gtkamlc.stamp : $(gtkamlc_VALASOURCES)
 	$(VALAC) -C $(VALAFLAGS) --vapidir ../libgtkaml --pkg gtkaml --pkg vala-1.0 --pkg glib-2.0 $^
