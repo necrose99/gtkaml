@@ -6,8 +6,8 @@ using Vala;
  */
 public class Gtkaml.MarkupMember : MarkupSubTag {
 
-	public string member_name { get; private set; }
-	public SymbolAccessibility access {get; private set;}
+	protected string member_name { get; private set; }
+	protected SymbolAccessibility access {get; private set;}
 
 	public MarkupMember (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, string member_name, SymbolAccessibility access, SourceReference? source_reference = null)
 	{
@@ -15,6 +15,8 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		this.member_name = member_name;
 		this.access = access;
 	}
+
+	public override string me { get { return member_name; }}
 
 	public override void generate_public_ast () {
 		generate_property ();

@@ -6,6 +6,8 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	public MarkupRoot (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		base (markup_class, tag_name, tag_namespace, source_reference);
 	}
+	
+	public override string me { get { return "this"; } }
 
 	public override void generate_public_ast () {
 		markup_class.add_base_type (data_type.copy ());

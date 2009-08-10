@@ -5,6 +5,9 @@ using Vala;
  * Markup tag that has no g:private or g:public gtkaml attribute, therefore is local to the construct method
  */
 public class Gtkaml.MarkupTemp : MarkupSubTag {
+	private string temp_name;
+	
+	public override string me { get { return temp_name; } }
 	
 	public MarkupTemp (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{
@@ -16,16 +19,12 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 
 	public override void resolve (MarkupResolver resolver) {
-		//TODO
 		base.resolve (resolver);
+		
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		generate_temp ();
-	}
-	
-	private void generate_temp () {
-		
+			
 		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
 		MemberAccess namespace_access = null;
 		UnresolvedSymbol ns = tag_namespace;
@@ -46,7 +45,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		variable_type.is_dynamic = false;
 
 		//FIXME: use variable_type instead of null.. but why does it look like nullable?		
-		var local_variable = new LocalVariable (null, "label0",  initializer, source_reference);
+		var local_variable = new LocalVariable (null, me,  initializer, source_reference);
 		var local_declaration = new DeclarationStatement (local_variable, source_reference);
 		
 		markup_class.constructor.body.add_statement (local_declaration);

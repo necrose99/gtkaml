@@ -22,6 +22,9 @@ public abstract class Gtkaml.MarkupTag {
 	public weak MarkupClass markup_class {get; private set;}
 	public SourceReference? source_reference {get; set;}
 	
+	/** the expression to be used (either 'this', or 'property name' or 'temporary variable name') when using the tag */
+	public abstract string me {get;}
+	
 	/** usually an Unresolved data type created from the tag name/namespace */
 	public DataType data_type {get ; set;}
 	

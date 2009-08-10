@@ -7,13 +7,15 @@ using Vala;
  */
 public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 
-	
+	public override string me { get { assert_not_reached(); return ":D"; } }
+
 	public UnresolvedMarkupSubTag (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}	
 	
 	public override void generate_public_ast () {
+		//No public AST for future temps or attributes
 	}
 	
 	public override void resolve (MarkupResolver resolver) {
