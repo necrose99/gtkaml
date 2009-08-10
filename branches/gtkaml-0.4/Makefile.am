@@ -1,4 +1,4 @@
 SUBDIRS = \
 	libgtkaml \
-	src \
+	src 
 

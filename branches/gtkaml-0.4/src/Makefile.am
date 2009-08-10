@@ -8,7 +8,7 @@ bin_PROGRAMS = gtkamlc
 
 BUILT_SOURCES = gtkamlc.stamp
 
-gtkamlc_VALASOURCES = gtkamlc.vala
+gtkamlc_VALASOURCES = gtkamlc.vala gtkamlparser.vala
 
 gtkamlc_SOURCES = \
 	gtkamlc.stamp \

@@ -1,0 +1,25 @@
+1,2c1,2
+< /* valacompiler.vala
+<  *
+---
+> /* gtkamlc.vala
+>  * 
+224c224
+< 				if (source.has_suffix (".vala") || source.has_suffix (".gs")) {
+---
+> 				if (source.has_suffix (".vala") || source.has_suffix (".gs") || source.has_suffix (".gtkaml")) {
+252a253,256
+> 		
+> 		var gtkaml_parser = new Gtkaml.Parser ();
+> 		gtkaml_parser.parse (context);
+> 
+267d270
+< 
+416c419
+< 			var opt_context = new OptionContext ("- Vala Compiler");
+---
+> 			var opt_context = new OptionContext ("- Vala Gtkaml Compiler");
+427c430
+< 			stdout.printf ("Vala %s\n", Config.PACKAGE_VERSION);
+---
+> 			stdout.printf ("Gtkaml %s (based on Vala 0.5.7)\n", "0.4.0 the great rewrite");
