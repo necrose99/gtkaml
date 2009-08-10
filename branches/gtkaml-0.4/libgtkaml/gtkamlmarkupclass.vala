@@ -11,7 +11,7 @@ public class Gtkaml.MarkupClass : Class {
 	public MarkupClass (string tag_name, MarkupNamespace tag_namespace, string class_name, SourceReference? source_reference = null)
 	{
 		base (class_name, source_reference);
-		this.markup_root = new MarkupTag (this, tag_name, tag_namespace, source_reference);
+		this.markup_root = new MarkupRoot (this, tag_name, tag_namespace, source_reference);
 		//TODO: this class in a namespace too
 	}
 	

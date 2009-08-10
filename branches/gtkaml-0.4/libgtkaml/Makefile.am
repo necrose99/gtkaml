@@ -16,8 +16,9 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupparser.vala \
 	gtkamlmarkupresolver.vala \
 	gtkamlmarkupattribute.vala \
-	gtkamlmarkuptag.vala \
 	gtkamlmarkupclass.vala \
+	gtkamlmarkuptag.vala \
+	gtkamlmarkuproot.vala \
 	gtkamlmarkupsubtag.vala \
 	gtkamlunresolvedmarkupsubtag.vala \
 	gtkamlmarkupmember.vala \
