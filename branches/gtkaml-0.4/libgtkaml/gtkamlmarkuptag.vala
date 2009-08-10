@@ -12,6 +12,7 @@ public interface Gtkaml.MarkupTag : CodeNode {
 	//TODO:use UnresolvedSymbol/UnresolvedType
 	//public abstract string get_markup_namespace ();
 	public abstract string tag_name {get; set;}
+	public abstract MarkupNamespace tag_namespace {get; set;}
 	
 	/**
 	 * The list of children MarkupTags
