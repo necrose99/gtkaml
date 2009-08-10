@@ -3,20 +3,30 @@ using Vala;
 
 /**
  * A tag that is a parent of others. Can be the root tag.
+ * 
+ * You have to implement:
+ * - generate_public_ast
+ * - (optionally) resolve
+ * - generate
  */ 
 public abstract class Gtkaml.MarkupTag {
 	
 	private Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
 	private Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
-	
+
+	/** the actual tag encountered */	
 	public string tag_name {get; set;}
+	/** the Vala namespace */
 	public MarkupNamespace tag_namespace {get; set;}
+	/** the Vala class in which this tag was defined */
 	public weak MarkupClass markup_class {get; private set;}
 	public SourceReference? source_reference {get; set;}
 	
+	/** usually an Unresolved data type created from the tag name/namespace */
 	public DataType data_type {get ; set;}
 	
 	private DataTypeParent _data_type_parent;
+	/** the determined data type - see resolve() */
 	public DataType resolved_type { 
 		get {
 			assert (!(_data_type_parent is UnresolvedType));
@@ -24,14 +34,26 @@ public abstract class Gtkaml.MarkupTag {
 		}
 	}
 			
-	
+	/**
+	 * Called when parsing.
+	 * This only generates placeholder Vala AST so that the Parser can move on.
+	 * e.g. the class itself, its public properties go here.
+	 */
 	public abstract void generate_public_ast ();
 
+	/**
+	 * Called when Gtkaml is resolving. 
+	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp)
+	 */
 	public virtual void resolve (MarkupResolver resolver) {
 		assert (data_type.parent_node is DataTypeParent);
 		resolver.visit_data_type (data_type);
 	}
 	
+	/** 
+	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
+	 * Final AST generation phase (all AST)
+	 */
 	public abstract void generate (MarkupResolver resolver);
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {

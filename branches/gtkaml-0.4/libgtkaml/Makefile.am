@@ -17,12 +17,12 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupresolver.vala \
 	gtkamlmarkupattribute.vala \
 	gtkamlmarkupclass.vala \
-	gtkamlmarkuptag.vala \
-	gtkamlmarkuproot.vala \
-	gtkamlmarkupsubtag.vala \
-	gtkamlunresolvedmarkupsubtag.vala \
-	gtkamlmarkupmember.vala \
-	gtkamlmarkuptemp.vala \
+	ast/gtkamlmarkuptag.vala \
+	ast/gtkamlmarkuproot.vala \
+	ast/gtkamlmarkupsubtag.vala \
+	ast/gtkamlunresolvedmarkupsubtag.vala \
+	ast/gtkamlmarkupmember.vala \
+	ast/gtkamlmarkuptemp.vala \
 	gtkamlmarkupnamespace.vala \
 	gtkamlmarkuphint.vala \
 	gtkamlmarkuphintsstore.vala \
