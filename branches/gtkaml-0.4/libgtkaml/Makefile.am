@@ -21,6 +21,7 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupsubtag.vala \
 	gtkamlunresolvedmarkupsubtag.vala \
 	gtkamlmarkupmember.vala \
+	gtkamlmarkuptemp.vala \
 	gtkamlmarkupnamespace.vala \
 	gtkamlmarkupimplicits.vala \
 	gtkamlimplicitsstore.vala

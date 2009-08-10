@@ -31,34 +31,15 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	}
 	
 	public void visit_markup_class (MarkupClass mcl) {
-		generate_properties (mcl, mcl);
+		//generate_properties (mcl, mcl);
 		generate_creation_method (mcl);
 		generate_construct (mcl);
 	}
-
-	private void generate_properties (MarkupClass markup_class, MarkupTag current_tag) {
-		foreach (MarkupSubTag markup_subtag in current_tag.get_child_tags ()) {
-			if (markup_subtag is MarkupMember) {
-				generate_property (markup_class, markup_subtag as MarkupMember);
-			} 
-			
-			generate_properties(markup_class, markup_subtag);
-		}
-	}
 	
-	private void generate_property (MarkupClass markup_class, MarkupMember markup_member) {
-		PropertyAccessor getter = new PropertyAccessor (true, false, false, markup_member.to_unresolved_type (), null, markup_member.source_reference);
-		PropertyAccessor setter = new PropertyAccessor (false, true, false, markup_member.to_unresolved_type (), null, markup_member.source_reference);
-		
-		Property p = new Property (markup_member.member_name, markup_member.to_unresolved_type (), getter, setter, markup_member.source_reference);
-		p.access = markup_member.access;
-		
-		//private field
-		var field_type = markup_member.to_unresolved_type ();
-		p.field = new Field ("_%s".printf (p.name), field_type, p.default_expression, p.source_reference);
-				
-		markup_class.add_property (p);
+	void visit_markup_member (MarkupMember member) {
+		member.generate_property (this);
 	}
+
 
 	/**
 	 * generate creation method with base () call
@@ -89,7 +70,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		
 		//TODO: this code will currently assume that *creation methods* parameters don't create dependencies between properties 
 		// or between properties and locals or etc.		
-		generate_construct_locals (markup_class, markup_class, constructor.body);
+		generate_construct_locals (markup_class.markup_root, constructor.body);
 		initialize_properties (markup_class, constructor.body);
 		
 		generate_adds (markup_class, constructor.body);
@@ -101,16 +82,16 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		//TODO
 	}
 	
-	private void generate_construct_locals (MarkupClass markup_class, MarkupTag current_tag, Block statements) {
+	private void generate_construct_locals (MarkupTag current_tag, Block statements) {
 		//CHANTIER
-		var initializer = new ObjectCreationExpression (new MemberAccess (null, "Label", markup_class.source_reference), 
-			markup_class.source_reference);
+		var initializer = new ObjectCreationExpression (new MemberAccess (null, "Label", current_tag.source_reference), 
+			current_tag.markup_class.source_reference);
 		
 		//TODO: determine the initialize to call from ImplicitsStore
-		initializer.add_argument (new StringLiteral ("\"_Hello\"", markup_class.source_reference));
+		initializer.add_argument (new StringLiteral ("\"_Hello\"", current_tag.source_reference));
 		
-		var local_variable = new LocalVariable (null, "label0",  initializer, markup_class.source_reference);
-		var local_declaration = new DeclarationStatement (local_variable, markup_class.source_reference);
+		var local_variable = new LocalVariable (null, "label0",  initializer, current_tag.source_reference);
+		var local_declaration = new DeclarationStatement (local_variable, current_tag.source_reference);
 		
 		statements.add_statement (local_declaration);
 	}

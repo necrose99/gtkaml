@@ -39,21 +39,21 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		context.root.add_class (root);
 		
 		// <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
-		var label = new UnresolvedMarkupSubTag (root, "Label", gtk_namespace, new SourceReference (source_file, 1, 6, 1, 91));
+		var label = new UnresolvedMarkupSubTag (root.markup_root, "Label", gtk_namespace, new SourceReference (source_file, 1, 6, 1, 91));
 		label.add_markup_attribute (new MarkupAttribute ("label", "_Hello"));
 		label.add_markup_attribute (new MarkupAttribute ("with-mnemonic", "true"));
 		label.add_markup_attribute (new MarkupAttribute ("expand", "false"));
 		label.add_markup_attribute (new MarkupAttribute ("fill", "false"));
 		label.add_markup_attribute (new MarkupAttribute ("padding", "0"));
 		
-		root.add_child_tag (label);
+		root.markup_root.add_child_tag (label);
 		
 		//<Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
-		var entry = new MarkupMember (root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 2, 6, 2, 79));
+		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 2, 6, 2, 79));
 		entry.add_markup_attribute (new MarkupAttribute ("label", "ok"));
 		entry.add_markup_attribute (new MarkupAttribute ("clicked", "entry.text=\"text changed\""));
 		
-		root.add_child_tag (entry);
+		root.markup_root.add_child_tag (entry);
 		
 	}
 }
