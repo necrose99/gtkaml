@@ -11,14 +11,14 @@ using Vala;
  * - signals: use the result of lambda parsing add the signal parameters
  * - fields: use the expression of the lambda as field assignment
  */
-public class Gtkaml.SymbolResolver : Vala.SymbolResolver {
+public class Gtkaml.MarkupResolver : SymbolResolver {
 
-	public override void visit_class (Vala.Class cl) {
-		if (cl is Gtkaml.Class) {
-			var gcl = cl as Gtkaml.Class;
-			foreach (var child_tag in gcl.get_child_tags ())
+	public override void visit_class (Class cl) {
+		if (cl is MarkupClass) {
+			var mcl = cl as MarkupClass;
+			foreach (var child_tag in mcl.get_child_tags ())
 			{
-				message ("found child tag %s", (child_tag as MarkupMember).name);
+				message ("found child tag %s", (child_tag as MarkupMember).member_name);
 			}
 		}
 		base.visit_class (cl);

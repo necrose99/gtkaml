@@ -10,7 +10,7 @@ public interface Gtkaml.MarkupTag : CodeNode {
 	 * Vala namespace inferred from XML prefix
 	 */
 	//TODO:use UnresolvedSymbol/UnresolvedType
-	public abstract string get_markup_namespace ();
+	//public abstract string get_markup_namespace ();
 	
 	/**
 	 * The list of children MarkupTags

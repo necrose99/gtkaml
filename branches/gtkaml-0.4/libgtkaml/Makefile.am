@@ -13,10 +13,13 @@ lib_LTLIBRARIES = \
 BUILT_SOURCES = libgtkaml.stamp
 
 libgtkaml_la_VALASOURCES = \
-	gtkamlmarkupattributevalue.vala \
+	gtkamlmarkupparser.vala \
+	gtkamlmarkupresolver.vala \
+	gtkamlmarkupattribute.vala \
 	gtkamlmarkuptag.vala \
-	gtkamlclass.vala \
-	gtkamlsymbolresolver.vala \
+	gtkamlmarkupclass.vala \
+	gtkamlmarkupsubtag.vala \
+	gtkamlunresolvedmarkupsubtag.vala \
 	gtkamlmarkupmember.vala
 
 libgtkaml_la_SOURCES = \

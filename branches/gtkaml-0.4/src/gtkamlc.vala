@@ -251,7 +251,7 @@ class Vala.Compiler {
 		var genie_parser = new Genie.Parser ();
 		genie_parser.parse (context);
 		
-		var gtkaml_parser = new Gtkaml.Parser ();
+		var gtkaml_parser = new MarkupParser ();
 		gtkaml_parser.parse (context);
 
 
@@ -259,7 +259,7 @@ class Vala.Compiler {
 			return quit ();
 		}
 		
-		var resolver = new Gtkaml.SymbolResolver ();
+		var resolver = new MarkupResolver ();
 		resolver.resolve (context);
 		
 		if (context.report.get_errors () > 0) {
