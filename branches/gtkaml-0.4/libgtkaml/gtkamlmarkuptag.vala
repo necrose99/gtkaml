@@ -7,6 +7,7 @@ using Vala;
 public interface Gtkaml.MarkupTag : CodeNode {
 	
 	public abstract string tag_name {get; set;}
+
 	/**
 	 * Vala namespace inferred from XML prefix
 	 */
@@ -32,7 +33,7 @@ public interface Gtkaml.MarkupTag : CodeNode {
 	 */
 	public abstract void add_markup_attribute (MarkupAttribute markup_attribute);
 	
-	public DataType to_type() { 
+	public DataType to_unresolved_type() { 
 		return new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name));
 	}
 }
