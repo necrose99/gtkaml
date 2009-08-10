@@ -1,7 +1,9 @@
 using GLib;
 using Vala;
 
-
+/**
+ * Markup tag that has no g:private or g:public gtkaml attribute, therefore is local to the construct method
+ */
 public class Gtkaml.MarkupTemp : MarkupSubTag {
 	
 	public MarkupTemp (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
@@ -35,7 +37,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		member_access.creation_member = true;
 		var initializer = new ObjectCreationExpression (member_access, source_reference);
 		
-		//TODO: determine the initialize to call from ImplicitsStore
+		//TODO: determine the initialize to call from MarkupHintsStore
 		initializer.add_argument (new StringLiteral ("\"_Hello\"", source_reference));
 		
 		var variable_type = resolved_type.copy ();

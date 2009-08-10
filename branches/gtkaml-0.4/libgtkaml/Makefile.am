@@ -24,8 +24,8 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupmember.vala \
 	gtkamlmarkuptemp.vala \
 	gtkamlmarkupnamespace.vala \
-	gtkamlmarkupimplicits.vala \
-	gtkamlimplicitsstore.vala \
+	gtkamlmarkuphint.vala \
+	gtkamlmarkuphintsstore.vala \
 	workarounds/gtkamldatatypeparent.vala
 
 libgtkaml_la_SOURCES = \

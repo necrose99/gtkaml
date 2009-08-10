@@ -36,7 +36,9 @@ class Gtkaml.Compiler {
 	[CCode (array_length = false, array_null_terminated = true)]
 	[NoArrayLength]
 	static string[] vapi_directories;
+	static string vapi_filename;
 	static string library;
+	static string gir;
 	[CCode (array_length = false, array_null_terminated = true)]
 	[NoArrayLength]
 	static string[] packages;
@@ -67,13 +69,16 @@ class Gtkaml.Compiler {
 	static string[] defines;
 	static bool quiet_mode;
 	static bool verbose_mode;
+	static string profile;
 
 	private CodeContext context;
 
 	const OptionEntry[] options = {
 		{ "vapidir", 0, 0, OptionArg.FILENAME_ARRAY, ref vapi_directories, "Look for package bindings in DIRECTORY", "DIRECTORY..." },
 		{ "pkg", 0, 0, OptionArg.STRING_ARRAY, ref packages, "Include binding for PACKAGE", "PACKAGE..." },
+		{ "vapi", 0, 0, OptionArg.FILENAME, ref vapi_filename, "Output VAPI file name", "FILE" },
 		{ "library", 0, 0, OptionArg.STRING, ref library, "Library name", "NAME" },
+		{ "gir", 0, 0, OptionArg.STRING, ref gir, "GObject-Introspection repository file name", "NAME-VERSION.gir" },
 		{ "basedir", 'b', 0, OptionArg.FILENAME, ref basedir, "Base source directory", "DIRECTORY" },
 		{ "directory", 'd', 0, OptionArg.FILENAME, ref directory, "Output directory", "DIRECTORY" },
 		{ "version", 0, 0, OptionArg.NONE, ref version, "Display version number", null },
@@ -96,6 +101,7 @@ class Gtkaml.Compiler {
 		{ "Xcc", 'X', 0, OptionArg.STRING_ARRAY, ref cc_options, "Pass OPTION to the C compiler", "OPTION..." },
 		{ "dump-tree", 0, 0, OptionArg.FILENAME, ref dump_tree, "Write code tree to FILE", "FILE" },
 		{ "save-temps", 0, 0, OptionArg.NONE, ref save_temps, "Keep temporary files", null },
+		{ "profile", 0, 0, OptionArg.STRING, ref profile, "Use the given profile instead of the default", "PROFILE" },
 		{ "quiet", 'q', 0, OptionArg.NONE, ref quiet_mode, "Do not print messages to the console", null },
 		{ "verbose", 'v', 0, OptionArg.NONE, ref verbose_mode, "Print additional messages to the console", null },
 		{ "target-glib", 0, 0, OptionArg.STRING, ref target_glib, "Target version of glib for code generation", "MAJOR.MINOR" },
@@ -172,7 +178,6 @@ class Gtkaml.Compiler {
 			}
 		}
 
-		context.library = library;
 		context.assert = !disable_assert;
 		context.checking = enable_checking;
 		context.deprecated = deprecated;
@@ -200,6 +205,16 @@ class Gtkaml.Compiler {
 		context.debug = debug;
 		context.thread = thread;
 		context.save_temps = save_temps;
+		if (profile == "posix") {
+			context.profile = Profile.POSIX;
+			context.add_define ("POSIX");
+		} else if (profile == "gobject-2.0" || profile == "gobject" || profile == null) {
+			// default profile
+			context.profile = Profile.GOBJECT;
+			context.add_define ("GOBJECT");
+		} else {
+			Report.error (null, "Unknown profile %s".printf (profile));
+		}
 
 		if (defines != null) {
 			foreach (string define in defines) {
@@ -207,27 +222,34 @@ class Gtkaml.Compiler {
 			}
 		}
 
-		int glib_major = 2;
-		int glib_minor = 12;
-		if (target_glib != null && target_glib.scanf ("%d.%d", out glib_major, out glib_minor) != 2) {
-			Report.error (null, "Invalid format for --target-glib");
-		}
+		if (context.profile == Profile.POSIX) {
+			/* default package */
+			if (!add_package (context, "posix")) {
+				Report.error (null, "posix not found in specified Vala API directories");
+			}
+		} else if (context.profile == Profile.GOBJECT) {
+			int glib_major = 2;
+			int glib_minor = 12;
+			if (target_glib != null && target_glib.scanf ("%d.%d", out glib_major, out glib_minor) != 2) {
+				Report.error (null, "Invalid format for --target-glib");
+			}
 
-		context.target_glib_major = glib_major;
-		context.target_glib_minor = glib_minor;
-		if (context.target_glib_major != 2) {
-			Report.error (null, "This version of valac only supports GLib 2");
+			context.target_glib_major = glib_major;
+			context.target_glib_minor = glib_minor;
+			if (context.target_glib_major != 2) {
+				Report.error (null, "This version of valac only supports GLib 2");
+			}
+
+			/* default packages */
+			if (!add_package (context, "glib-2.0")) {
+				Report.error (null, "glib-2.0 not found in specified Vala API directories");
+			}
+			if (!add_package (context, "gobject-2.0")) {
+				Report.error (null, "gobject-2.0 not found in specified Vala API directories");
+			}
 		}
 
 		context.codegen = new CCodeGenerator ();
-
-		/* default packages */
-		if (!add_package (context, "glib-2.0")) {
-			Report.error (null, "glib-2.0 not found in specified Vala API directories");
-		}
-		if (!add_package (context, "gobject-2.0")) {
-			Report.error (null, "gobject-2.0 not found in specified Vala API directories");
-		}
 
 		if (packages != null) {
 			foreach (string package in packages) {
@@ -248,8 +270,13 @@ class Gtkaml.Compiler {
 				if (source.has_suffix (".vala") || source.has_suffix (".gs") || source.has_suffix (".gtkaml")) {
 					var source_file = new SourceFile (context, rpath);
 
-					// import the GLib namespace by default (namespace of backend-specific standard library)
-					source_file.add_using_directive (new UsingDirective (new UnresolvedSymbol (null, "GLib", null)));
+					if (context.profile == Profile.POSIX) {
+						// import the Posix namespace by default (namespace of backend-specific standard library)
+						source_file.add_using_directive (new UsingDirective (new UnresolvedSymbol (null, "Posix", null)));
+					} else if (context.profile == Profile.GOBJECT) {
+						// import the GLib namespace by default (namespace of backend-specific standard library)
+						source_file.add_using_directive (new UsingDirective (new UnresolvedSymbol (null, "GLib", null)));
+					}
 
 					context.add_source_file (source_file);
 				} else if (source.has_suffix (".vapi")) {
@@ -322,10 +349,14 @@ class Gtkaml.Compiler {
 		if (context.report.get_errors () > 0) {
 			return quit ();
 		}
-		
-		if (library != null) {
+
+		if (vapi_filename == null && library != null) {
+			// keep backward compatibility with --library option
+			vapi_filename = "%s.vapi".printf (library);
+		}
+
+		if (vapi_filename != null) {
 			var interface_writer = new CodeWriter ();
-			string vapi_filename = "%s.vapi".printf (library);
 
 			// put .vapi file in current directory unless -d has been explicitly specified
 			if (directory != null && !Path.is_absolute (vapi_filename)) {
@@ -333,18 +364,39 @@ class Gtkaml.Compiler {
 			}
 
 			interface_writer.write_file (context, vapi_filename);
+		}
 
+		if (library != null) {
+			if (gir != null) {
+				if (context.profile == Profile.GOBJECT) {
+					long gir_len = gir.len ();
+					unowned string? last_hyphen = gir.rchr (gir_len, '-');
 
-			var gir_writer = new GIRWriter ();
-			string gir_filename = "%s.gir".printf (library);
+					if (last_hyphen == null || !gir.has_suffix (".gir")) {
+						Report.error (null, "GIR file name `%s' is not well-formed, expected NAME-VERSION.gir".printf (gir));
+					} else {
+						long offset = gir.pointer_to_offset (last_hyphen);
+						string gir_namespace = gir.substring (0, offset);
+						string gir_version = gir.substring (offset + 1, gir_len - offset - 5);
+						gir_version.canon ("0123456789.", '?');
+						if (gir_namespace == "" || gir_version == "" || !gir_version[0].isdigit () || gir_version.contains ("?")) {
+							Report.error (null, "GIR file name `%s' is not well-formed, expected NAME-VERSION.gir".printf (gir));
+						} else {
+							var gir_writer = new GIRWriter ();
 
-			// put .gir file in current directory unless -d has been explicitly specified
-			if (directory != null && !Path.is_absolute (gir_filename)) {
-				gir_filename = "%s%c%s".printf (context.directory, Path.DIR_SEPARATOR, gir_filename);
+							// put .gir file in current directory unless -d has been explicitly specified
+							string gir_directory = ".";
+							if (directory != null) {
+								gir_directory = context.directory;
+							}
+
+							gir_writer.write_file (context, gir_directory, gir_namespace, gir_version, library);
+						}
+					}
+				}
+
+				gir = null;
 			}
-
-			gir_writer.write_file (context, gir_filename);
-
 
 			library = null;
 		}

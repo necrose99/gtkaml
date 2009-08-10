@@ -14,11 +14,11 @@ using Vala;
  */
 public class Gtkaml.MarkupResolver : SymbolResolver {
 
-	public ImplicitsStore implicits_store;
+	public MarkupHintsStore markup_hints;
 
 	public new void resolve (CodeContext context) {
-		implicits_store = new ImplicitsStore (context);
-		implicits_store.parse ();
+		markup_hints = new MarkupHintsStore (context);
+		markup_hints.parse ();
 		base.resolve (context);
 	}
 
