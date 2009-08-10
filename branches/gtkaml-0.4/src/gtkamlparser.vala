@@ -50,6 +50,7 @@ public class Gtkaml.Parser : CodeVisitor {
 		return block;
 	}
 
+    /* this parses an expression*/
 	Expression call_vala_parser(string content) throws Error 					{
 		var ctx = new CodeContext ();
 		var source_file = new SourceFile (ctx, "expression.vala", false, content);

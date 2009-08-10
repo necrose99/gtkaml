@@ -12,7 +12,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	public override void generate_public_ast () {
-		generate_temp ();
+		//No public AST for temporary variables
 	}
 
 	public override void resolve (MarkupResolver resolver) {
@@ -21,7 +21,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		
+		generate_temp ();
 	}
 	
 	private void generate_temp () {

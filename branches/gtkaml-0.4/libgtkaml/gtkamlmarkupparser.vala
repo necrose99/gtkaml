@@ -23,6 +23,10 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		}
 	}
 	
+	/** 
+	 * creates appropriate Gtkaml AST nodes (MarkupClass, MarkupSubTag, UnresolvedMarkupSubTag, MarkupMember)
+	 * and calls generate_public_ast () on each.
+	 */
 	void parse_file (SourceFile source_file) {
 
 		// xmlns="Gtk"
