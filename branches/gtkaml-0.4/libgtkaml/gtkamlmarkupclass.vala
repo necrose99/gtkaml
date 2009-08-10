@@ -9,9 +9,13 @@ public class Gtkaml.MarkupClass : MarkupTag, Class {
 	private Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
 	private Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
 	
-	public MarkupClass (string name, SourceReference? source_reference = null)
+	public string tag_name {get; set;}
+	
+	public MarkupClass (string tag_name, SourceReference? source_reference = null)
 	{
-		base (name, source_reference);
+		this.tag_name = tag_name;
+		//TODO: this class in a namespace
+		base (tag_name, source_reference);
 	}
 	
 	//MarkupTag implementation
