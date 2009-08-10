@@ -523,7 +523,7 @@ class Gtkaml.Compiler {
 		}
 		
 		if (version) {
-			stdout.printf ("Gtkaml %s (based on Vala 0.7)\n", "0.4.0 the great rewrite");
+			stdout.printf ("Gtkaml %s (based on Vala http://live.gnome.org/Vala)\n", "0.4.0 pre-alpha");
 			return 0;
 		}
 		

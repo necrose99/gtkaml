@@ -6,13 +6,14 @@ using Vala;
  * along with their default values if present
  */
 public class Gtkaml.MarkupHint {
+	/** the full symbol name of the target hinted symbol*/
 	public string target;
 	
-	/** the class/interface after resolving */
+	/** the target class/interface after resolving */
 	public TypeSymbol symbol; //TODO use this
 	
 	///** cache of the base markup hints */
-	//Gee.List<weak MarkupHint> base_hint_cache; //of course is not used, it's a cache:P
+	//Gee.List<weak MarkupHint> base_hint_cache; //of course is not used, it's a premature optimisation:P!
 	
 	private static string ADD = "add-"; //composition methods
 	private static string NEW = "new-"; //creation methods
