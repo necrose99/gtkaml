@@ -16,7 +16,7 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupattributevalue.vala \
 	gtkamlmarkuptag.vala \
 	gtkamlclass.vala \
-	gtkamlmarkupattribute.vala
+	gtkamlmarkupmember.vala
 
 libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \

@@ -2,11 +2,11 @@ using GLib;
 using Vala;
 
 /**
- * Represents a Class as declared by a Gtkaml root node
+ * Represents a container or widget (with or without gtkaml:name) which is declared as a member
  */
-public class Gtkaml.Class : MarkupTag, Vala.Class {
+public class Gtkaml.MarkupMember : MarkupTag, Property {
 
-	private weak MarkupTag? parent_tag;
+	private MarkupTag? parent_tag;
 	private Gee.List<MarkupTag> child_tags = new Gee.ArrayList<MarkupTag>();
 	
 	
@@ -29,7 +29,6 @@ public class Gtkaml.Class : MarkupTag, Vala.Class {
 		child_tags.add (child_tag);
 		child_tag.set_parent_tag (this);
 	}
-
 	
-}
 
+}
