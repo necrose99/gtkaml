@@ -106,7 +106,7 @@ public class Gtkaml.ImplicitsStore {
 						symbol_implicits.add_implicit_add (add);
 					}
 				
-				} else if (key[4] == '.') { //add method parameters
+				} else if (key[3] == '.') { //add method parameters
 					implicit_name = key.substring (4);
 					#if DEBUGIMPLICITS
 					stderr.printf ("add method '%s' with the following parameters:\n", implicit_name);
@@ -121,10 +121,10 @@ public class Gtkaml.ImplicitsStore {
 							context.report.warn (null, "Add method %s not listed in [%s] implicits 'adds' ".printf (implicit_name, symbol_fullname)); 
 					}	
 				} else {
-					context.report.warn (null, "Unkown '%s' key in [%s] section".printf (key, symbol_fullname));
+					context.report.warn (null, "Unknown '%s' key in [%s] section".printf (key, symbol_fullname));
 				}
 			} else {
-				context.report.warn (null, "Unkown '%s' key in [%s] section".printf (key, symbol_fullname));
+				context.report.warn (null, "Unknown '%s' key in [%s] section".printf (key, symbol_fullname));
 			}
 		}
 		

@@ -25,33 +25,23 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	public override void visit_class (Class cl) {
 	
 		if (cl is MarkupClass) {
-			var mcl = cl as MarkupClass;
-			generate_properties (mcl, mcl);
-			generate_creation_method (mcl);
-			generate_construct (mcl);
-		
-			// CHANTIER
-			foreach (var child_tag in mcl.get_child_tags ())
-			{
-				if (child_tag is MarkupMember)
-					message ("found child tag %s", (child_tag as MarkupMember).member_name);
-				else if (child_tag is UnresolvedMarkupSubTag) 
-					message ("found child tag %s", (child_tag as UnresolvedMarkupSubTag).tag_name);
-			}
+			visit_markup_class (cl as MarkupClass);
 		}
 		base.visit_class (cl);
-	}	
-
-	public override void visit_property (Property prop) {
-		if (prop is MarkupMember) message ("hoooooraaaay");
-		base.visit_property (prop);
+	}
+	
+	public void visit_markup_class (MarkupClass mcl) {
+		generate_properties (mcl, mcl);
+		generate_creation_method (mcl);
+		generate_construct (mcl);
 	}
 
 	private void generate_properties (MarkupClass markup_class, MarkupTag current_tag) {
 		foreach (MarkupSubTag markup_subtag in current_tag.get_child_tags ()) {
 			if (markup_subtag is MarkupMember) {
 				generate_property (markup_class, markup_subtag as MarkupMember);
-			}
+			} 
+			
 			generate_properties(markup_class, markup_subtag);
 		}
 	}
@@ -60,14 +50,12 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, markup_member.to_unresolved_type (), null, markup_member.source_reference);
 		PropertyAccessor setter = new PropertyAccessor (false, true, false, markup_member.to_unresolved_type (), null, markup_member.source_reference);
 		
-		//TODO: are accessors required or not?
-		Property p = new Property (markup_member.member_name, markup_member.to_unresolved_type (), null, null, markup_member.source_reference);
+		Property p = new Property (markup_member.member_name, markup_member.to_unresolved_type (), getter, setter, markup_member.source_reference);
 		p.access = markup_member.access;
 		
-		if (getter == null && setter == null) {
-			var field_type = markup_member.to_unresolved_type ();
-			p.field = new Field ("_%s".printf (p.name), field_type, p.default_expression, p.source_reference);
-		}
+		//private field
+		var field_type = markup_member.to_unresolved_type ();
+		p.field = new Field ("_%s".printf (p.name), field_type, p.default_expression, p.source_reference);
 				
 		markup_class.add_property (p);
 	}
