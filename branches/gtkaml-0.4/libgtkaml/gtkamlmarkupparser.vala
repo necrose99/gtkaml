@@ -24,6 +24,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	}
 	
 	void parse_file (SourceFile source_file) {
+
 		// xmlns="Gtk"
 		var gtk_namespace = new MarkupNamespace (null, "Gtk");
 		gtk_namespace.explicit_prefix = false;
@@ -32,6 +33,8 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		// <VBox g:name="MyVBox">
 		var root = new MarkupClass ("MyVBox");
 		root.add_base_type (new UnresolvedType.from_symbol (new UnresolvedSymbol (gtk_namespace, "VBox")));
+		source_file.add_node (root);
+		context.root.add_class (root);
 		
 		// <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
 		var label = new UnresolvedMarkupSubTag (root, "Label");
@@ -50,8 +53,6 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 		root.add_child_tag (entry);
 		
-		source_file.add_node (root);
-		context.root.add_class (root);
 	}
 }
 
