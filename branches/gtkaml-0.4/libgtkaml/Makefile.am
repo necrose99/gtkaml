@@ -21,7 +21,8 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupsubtag.vala \
 	gtkamlunresolvedmarkupsubtag.vala \
 	gtkamlmarkupmember.vala \
-	gtkamlmarkupnamespace.vala
+	gtkamlmarkupnamespace.vala \
+	gtkamlmarkupimplicits.vala
 
 libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \
