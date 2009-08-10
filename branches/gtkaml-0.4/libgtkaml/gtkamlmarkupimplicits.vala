@@ -1,9 +1,18 @@
 using GLib;
 using Vala;
 
+/**
+ * Contains parameters for constructors and add methods of a given Class/Interface, 
+ * along with their default values if present
+ */
 public class Gtkaml.MarkupImplicits {
 	public string target;
+	
+	/** the class/interface after resolving */
 	public TypeSymbol symbol;
+	
+	/** cache of the base markup implicits */
+	Gee.List<weak MarkupImplicits> base_implicits_cache; //of course is not used, it's a cache:P
 	
 	private static string ADD = "add-";
 	private static string NEW = "new-";
@@ -41,18 +50,24 @@ public class Gtkaml.MarkupImplicits {
 	
 	/* adding parameters to constructor or add method */
 	
-	private void add_implicit_parameter (string implicit_name, string type, string parameter, string? default_value) {
+	private bool add_implicit_parameter (string implicit_name, string type, string parameter, string? default_value) {
 		var implicit_full_name = type + implicit_name;
 		var parameters = implicit_map.get (implicit_full_name);
+		
+		if (parameters == null) {
+			return false;
+		}	
+		
 		parameters.add (new Pair<string, string?> (parameter, default_value));
+		return true;
 	}
 		
-	public void add_constructor_parameter (string constructor_name, string parameter, string? default_value) {
-		add_implicit_parameter (constructor_name, NEW, parameter, default_value);
+	public bool add_constructor_parameter (string constructor_name, string parameter, string? default_value) {
+		return add_implicit_parameter (constructor_name, NEW, parameter, default_value);
 	}
 	
-	public void add_implicit_add_parameter (string implicit_add_name, string parameter, string? default_value) {
-		add_implicit_parameter (implicit_add_name, ADD, parameter, default_value);
+	public bool add_implicit_add_parameter (string implicit_add_name, string parameter, string? default_value) {
+		return add_implicit_parameter (implicit_add_name, ADD, parameter, default_value);
 	}
 	
 	

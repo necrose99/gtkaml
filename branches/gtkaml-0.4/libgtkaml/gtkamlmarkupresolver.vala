@@ -14,6 +14,13 @@ using Vala;
  */
 public class Gtkaml.MarkupResolver : SymbolResolver {
 
+	public ImplicitsStore implicits;
+
+	public new void resolve (CodeContext context) {
+		
+		base.resolve (context);
+	}
+
 	public override void visit_class (Class cl) {
 		if (cl is MarkupClass) {
 			var mcl = cl as MarkupClass;
