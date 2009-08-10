@@ -5,7 +5,7 @@ using Vala;
  * Any markup tag encountered in XML that is not the root, nor has g:public/g:private identifier.
  * Can later morph into a complex attribute
  */
-public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag, MarkupTag, CodeNode {
+public class Gtkaml.UnresolvedMarkupSubTag : CodeNode, MarkupTag, MarkupSubTag {
 
 	private weak MarkupTag parent_tag;
 	private weak MarkupClass parent_class;
