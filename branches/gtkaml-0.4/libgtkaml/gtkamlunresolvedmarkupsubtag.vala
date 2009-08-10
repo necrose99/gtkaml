@@ -12,9 +12,12 @@ public class Gtkaml.UnresolvedMarkupSubTag : CodeNode, MarkupTag, MarkupSubTag {
 	private Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
 	private Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
 	
-	public UnresolvedMarkupSubTag (MarkupClass parent_class, SourceReference? source_reference = null)
+	public string tag_name {get; set;}
+	
+	public UnresolvedMarkupSubTag (MarkupClass parent_class, string tag_name, SourceReference? source_reference = null)
 	{
 		this.parent_class = parent_class;
+		this.tag_name = tag_name;
 		this.source_reference = source_reference;
 	}	
 	
