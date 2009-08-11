@@ -32,7 +32,7 @@ Specifies a name under which the current tag becomes a private class member.
 Mutually exclusive with `class:public`.
 
 === g:existing ===
-Specifies that the current widget doesn't get constructed, but it configures a an existing widget.
+Specifies that the current widget doesn't get constructed, but it configures a an existing widget. Also, it gets added to the parent container, unless it's `standalone` too.
 
 The value is the identifier/expression under which the existing widget is reachable.
 
