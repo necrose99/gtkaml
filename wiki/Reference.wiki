@@ -1,4 +1,5 @@
 #summary gtkaml and Gtk specifics
+#labels Featured
 
 = Introduction =
 
