@@ -4,4 +4,14 @@
 add methods:
 *add_with_properties*
 
-Due to a [6 limitation] in Gtkaml, the Gtk.Container is using `add_with_properties` instead of add.
+Due to a [http://code.google.com/p/gtkaml/issues/detail?id=7 limitation] in Gtkaml 0.2.x, the `Container` is using `add_with_properties` instead of `add`.
+
+This is the only method for adding widgets to a `Container` so it's implicitly chosen:
+
+{{{
+<Container>
+  <Button />
+</Button>
+}}}
+
+==
