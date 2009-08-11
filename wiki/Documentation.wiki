@@ -1,0 +1,19 @@
+#summary gtkaml and Gtk specifics
+
+= Introduction =
+
+Gtkaml has a couple of its own keywords (attributes), but relies heavily on existing Gtk widgets (or other libraries).
+
+
+= gtkaml keywords =
+
+This is the complete list of gtkaml keywords as of 0.2.x:
+
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:name name]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:namespace namespace]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:implements implements]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:public public]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:private private]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:standalone standalone]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:construct construct]
+[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:preconstruct preconstruct]
