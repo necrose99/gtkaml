@@ -49,7 +49,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		variable_type.nullable = false;
 		variable_type.is_dynamic = false;
 
-		//FIXME: use variable_type instead of null.. but why does it look like nullable?		
+		//FIXME: use variable_type instead of type inference.. but why does it look like nullable?		
 		var local_variable = new LocalVariable (null, me,  initializer, source_reference);
 		var local_declaration = new DeclarationStatement (local_variable, source_reference);
 		

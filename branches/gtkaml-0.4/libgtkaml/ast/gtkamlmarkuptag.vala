@@ -64,7 +64,10 @@ public abstract class Gtkaml.MarkupTag {
 		this.tag_name = tag_name;
 		this.tag_namespace = tag_namespace;
 		this.source_reference = source_reference;
+		
 		this.data_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name, source_reference));
+		this.data_type.value_owned = true;
+		
 		_data_type_parent = new DataTypeParent (data_type);
 	}
 
