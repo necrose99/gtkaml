@@ -2,7 +2,7 @@
 
 == Container ==
 add methods:
-*add_with_properties*
+[http://references.valadoc.org/gtk+-2.0/Gtk.Container.add_with_properties.html add_with_properties]
 
 Due to a [http://code.google.com/p/gtkaml/issues/detail?id=7 limitation] in Gtkaml 0.2.x, the `Container` is using `add_with_properties` instead of `add`.
 
@@ -14,4 +14,14 @@ This is the only method for adding widgets to a `Container` so it's implicitly c
 </Button>
 }}}
 
-==
+== ScrolledWindow ==
+add methods: 
+[http://references.valadoc.org/gtk+-2.0/Gtk.Container.add_with_properties.html add_with_properties],
+[http://references.valadoc.org/gtk+-2.0/Gtk.ScrolledWindow.add_with_viewport.html add_with_viewport].
+
+The order above means that implicitly `add_with_properties` will be used. To use `add_with_viewport` write:
+{{{
+<ScrolledWindow>
+   <Button add-with-viewport="true" />
+</ScrolledWindow>
+}}}
