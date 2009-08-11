@@ -8,14 +8,15 @@ Gtkaml has a couple of its own keywords (attributes), but relies heavily on exis
 == gtkaml keywords ==
 
 This is the complete list of gtkaml keywords as of 0.2.x:
-[http://code.google.com/p/gtkaml/wiki/GtkamlReference#g:name name]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:namespace namespace]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:implements implements]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:public public]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:private private]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:standalone standalone]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:construct construct]
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:preconstruct preconstruct]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:name name]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:namespace namespace]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:implements implements]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:public public]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:private private]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:existing existing]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:standalone standalone]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:construct construct]
+[http://code.google.com/p/gtkaml/wiki/GtkamlKeywords#g:preconstruct preconstruct]
 
 == Gtk+ bindings ==
 
