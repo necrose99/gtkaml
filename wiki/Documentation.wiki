@@ -5,10 +5,9 @@
 Gtkaml has a couple of its own keywords (attributes), but relies heavily on existing Gtk widgets (or other libraries).
 
 
-= gtkaml keywords =
+== gtkaml keywords ==
 
 This is the complete list of gtkaml keywords as of 0.2.x:
-
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:name name]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:namespace namespace]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:implements implements]
@@ -17,3 +16,13 @@ This is the complete list of gtkaml keywords as of 0.2.x:
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:standalone standalone]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:construct construct]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:preconstruct preconstruct]
+
+== Gtk+ bindings ==
+
+Gtk+ classes are further 'annotated' in [http://code.google.com/p/gtkaml/source/browse/trunk/data/Gtk.implicits Gtk.implicits] with the following information:
+ * *containers* : implicit methods to pick for 'add-to-container' meaning (e.g. subtags of a tag are added like this)
+ * *constructor parameters* meaningful name (where needed) and/or default values
+
+`Gtk.implicits` is automatically picked up by `gtkaml` when you're using the Vala namespace "Gtk" by assigning it an XML namespace/prefix (see `xmlns` in [Example the example])
+
+Here's a list of containser
