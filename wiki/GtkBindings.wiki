@@ -102,7 +102,7 @@ The same appliy for `MenuBar` and `Menu` which extend `MenuShell`.
 </MenuBar>
 }}}
 
-== !Notebook ==
+== Notebook ==
 add methods: 
 [http://references.valadoc.org/gtk+-2.0/Gtk.Notebook.append_page.html append_page]
 [http://references.valadoc.org/gtk+-2.0/Gtk.Notebook.append_page_menu.html append_page_menu]
