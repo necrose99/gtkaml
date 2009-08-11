@@ -27,3 +27,13 @@ Gtk+ classes are further 'annotated' in [http://code.google.com/p/gtkaml/source/
 `Gtk.implicits` is automatically picked up by `gtkaml` when you're using the Vala namespace "Gtk" by assigning it an XML namespace/prefix (see `xmlns` in [Example the example])
 
 Here's a list of Gtk containers which are annotated: 
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Container Container]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#ScrolledWindow ScrolledWindow]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Box Box]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Box VBox]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Box HBox]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Fixed Fixed]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Paned Paned]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Paned HPaned]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Paned VPaned]
+[http://code.google.com/p/gtkaml/wiki/GtkBindings#Notebook Notebook]
