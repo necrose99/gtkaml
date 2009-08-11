@@ -30,13 +30,13 @@ The order above means that implicitly `add_with_properties` will be used. To use
 Also, `add_with_properites` is only mentioned for `ScrolledWindow` so that it takes precedence over the more-specific `add_with_viewport`.
 
 == Box ==
-== VBox ==
-== HBox ==
 add methods:
 [http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_start.html pack_start], 
-[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_end.html pack_end]
+[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_end.html pack_end] + inherited from `Container`
 
 You can specify any of `expand`, `fill`, and `padding` on the child widget. The default values are: `expand="true"`, `fill="true"`, `padding="0"`.
+
+Of course these add methods apply for `HBox` and `VBox` which implement from `Box`.
 
 {{{
 <HBox>
