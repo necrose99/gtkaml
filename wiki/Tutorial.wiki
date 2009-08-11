@@ -10,7 +10,8 @@ This is a quick walk-trough on how to code in gtkaml and Vala.
 I am not trying to compare against one of the 6 examples [http://www.vector-seven.com/2008/01/23/gtk-hello-world-in-six-different-languages/ here]
 
 {{{
-<Window xmlns="Gtk" xmlns:gtkaml="http://gtkaml.org/0.1" gtkaml:name="HelloWorldWindow" title="Hello World" delete_event="{Gtk.main_quit}">
+<Window xmlns="Gtk" gtkaml:name="HelloWorldWindow" title="Hello World" 
+delete-event="{Gtk.main_quit}" xmlns:gtkaml="http://gtkaml.org/0.2" >
 <![CDATA[
    public static int main (string[] args)
    {
@@ -31,13 +32,13 @@ If you have another namespace you would like included, use `xmlns:myns="Myns"` a
 
 The `gtkaml:name` is the name of the class you're defining. You can prefix it with a namespace (e.g `gtkaml:class='Myns.HelloWorldWindow'`) or use `gtkaml:namespace="Myns"` for that. 
 
-The `xmlns:gtkaml="http://gtkaml.org/0.1"` is the declaration of the gtkaml prefix for this kind of meta-informations. You can have it renamed (e.g. xmlns:class="http://gtkaml.org/0.1"` if you think `class:name`, `class:namespace` is more readable.
+The `xmlns:gtkaml="http://gtkaml.org/0.2"` is the declaration of the gtkaml prefix for this kind of meta-informations. You can have it renamed (e.g. `xmlns:class="http://gtkaml.org/0.2"` if you think `class:name`, `class:namespace` is more readable.
 
 `title` is a property of the Gtk.Window. The value of the `title` attribute is known to be string so you can just write the characters there. Same for numeric types (`spacing="0"`) and booleans (`visible="true"`). 
 
-`destroy` is a signal of the Gtk.Window. It is triggered when the window is closed. The value specifies that the main Gtk quit function should be added as handler.
+`delete-event` is a signal of the Gtk.Window. It is triggered when the window is closed. The value specifies that the main Gtk quit function should be added as handler.
 
-`<![CDATA[` is an xml construction that allows you to write otherwise invalid characters (like '`<`'). gtkaml uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
+`<![CDATA[` is an XML construction that allows you to write otherwise invalid characters (like '`<`'). `gtkaml` uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
 
 ===Compiling the example===
 Let's say you save the above in a file named `tutorial.gtkaml`
@@ -59,4 +60,4 @@ gcc `pkg-config --cflags gtk+-2.0` tutorial.h tutorial.c -o tutorial `pkg-config
 ===A more complex user interface===
 We will leave the `main ()` function out for the moment. You can write it in another file which is your application's entry point. We will focus on our custom window.
 
-We will write a window with a simple menu (File->Open, Save, Exit), a text editing widget and a status bar. Also, a handcrafted about box - all in a single file.
+TODO
