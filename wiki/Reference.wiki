@@ -8,7 +8,7 @@ Gtkaml has a couple of its own keywords (attributes), but relies heavily on exis
 == gtkaml keywords ==
 
 This is the complete list of gtkaml keywords as of 0.2.x:
-[http://code.google.com/p/gtkaml/wiki/Gtkaml#g:name name]
+[http://code.google.com/p/gtkaml/wiki/GtkamlReference#g:name name]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:namespace namespace]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:implements implements]
 [http://code.google.com/p/gtkaml/wiki/Gtkaml#g:public public]
