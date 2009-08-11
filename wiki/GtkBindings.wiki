@@ -32,7 +32,8 @@ Also, `add_with_properites` is only mentioned for `ScrolledWindow` so that it ta
 == Box ==
 add methods:
 [http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_start.html pack_start], 
-[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_end.html pack_end] + inherited from `Container`
+[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_end.html pack_end]
+
 
 You can specify any of `expand`, `fill`, and `padding` on the child widget. The default values are: `expand="true"`, `fill="true"`, `padding="0"`.
 
@@ -44,3 +45,29 @@ Of course these add methods apply for `HBox` and `VBox` which implement from `Bo
   <Button pack-end="true" expand="false" />
 </HBox>
 }}}
+
+== Fixed ==
+add methods: [http://references.valadoc.org/gtk+-2.0/Gtk.Fixed.put.html put]
+
+You need to specify `x` and `y` for this method.
+{{{
+<Fixed>
+  <Button x="10" y="10" />
+</Fixed>
+}}}
+
+== Paned ==
+add methods:
+[http://references.valadoc.org/gtk+-2.0/Gtk.Paned.add1.html add1],
+[http://references.valadoc.org/gtk+-2.0/Gtk.Paned.add2.html add2],
+[http://references.valadoc.org/gtk+-2.0/Gtk.Paned.pack1.html pack1],
+[http://references.valadoc.org/gtk+-2.0/Gtk.Paned.pack2.html pack2],
+
+For `pack1` and `pack2` you need to specify `resize` and `shrink` boolean parameters.
+{{{
+<HPaned>
+  <Button />             <!-- by default uses add1() -->
+  <Button add2="true" /> <!-- note: you need to specify add2() explicitly -->
+</HPaned>
+}}}
+
