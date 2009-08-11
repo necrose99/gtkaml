@@ -6,7 +6,8 @@ add methods:
 
 Due to a [http://code.google.com/p/gtkaml/issues/detail?id=7 limitation] in Gtkaml 0.2.x, the `Container` is using `add_with_properties` instead of `add`.
 
-This is the only method for adding widgets to a `Container` so it's implicitly chosen:
+This is the only method for adding widgets to a `Container` so it's implicitly chosen.
+All classes that extend `Container` have the ability to use its add method by default.
 
 {{{
 <Container>
@@ -14,7 +15,7 @@ This is the only method for adding widgets to a `Container` so it's implicitly c
 </Button>
 }}}
 
-== ScrolledWindow ==
+== !ScrolledWindow ==
 add methods: 
 [http://references.valadoc.org/gtk+-2.0/Gtk.Container.add_with_properties.html add_with_properties],
 [http://references.valadoc.org/gtk+-2.0/Gtk.ScrolledWindow.add_with_viewport.html add_with_viewport].
@@ -24,4 +25,22 @@ The order above means that implicitly `add_with_properties` will be used. To use
 <ScrolledWindow>
    <Button add-with-viewport="true" />
 </ScrolledWindow>
+}}}
+
+Also, `add_with_properites` is only mentioned for `ScrolledWindow` so that it takes precedence over the more-specific `add_with_viewport`.
+
+== Box ==
+== VBox ==
+== HBox ==
+add methods:
+[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_start.html pack_start], 
+[http://references.valadoc.org/gtk+-2.0/Gtk.Box.pack_end.html pack_end]
+
+You can specify any of `expand`, `fill`, and `padding` on the child widget. The default values are: `expand="true"`, `fill="true"`, `padding="0"`.
+
+{{{
+<HBox>
+  <Button fill="false" /> <!-- pack_start () used by default -->
+  <Button pack-end="true" expand="false" />
+</HBox>
 }}}
