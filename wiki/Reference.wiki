@@ -25,4 +25,4 @@ Gtk+ classes are further 'annotated' in [http://code.google.com/p/gtkaml/source/
 
 `Gtk.implicits` is automatically picked up by `gtkaml` when you're using the Vala namespace "Gtk" by assigning it an XML namespace/prefix (see `xmlns` in [Example the example])
 
-Here's a list of containser
+Here's a list of Gtk containers which are annotated: 
