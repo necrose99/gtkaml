@@ -25,10 +25,10 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		generate_temp ();
+		generate_construct_local ();
 	}
 	
-	private void generate_temp() {		
+	private void generate_construct_local() {		
 		
 		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
 		MemberAccess namespace_access = null;

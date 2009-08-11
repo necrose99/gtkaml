@@ -2,8 +2,7 @@ using GLib;
 using Vala;
 
 /**
- * TODO:
- * Gtkaml SymbolResolver's  responsibilities:
+ * TODO: Gtkaml SymbolResolver's  responsibilities:
  * - determine if an attribute is a field or a signal and use = or += appropiately
  * Literal attribute values:
  * - determine the type of the literal field attribute (boolean, string and enum)

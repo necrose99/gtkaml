@@ -9,11 +9,13 @@ using Vala;
  * - (optionally) resolve
  * - generate
  */ 
-public abstract class Gtkaml.MarkupTag {
+public abstract class Gtkaml.MarkupTag : Object {
 	
 	private Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
 	private Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
 
+	/** not-ignorable text nodes concatenated */
+	public string text {get; set;}
 	/** the actual tag encountered */	
 	public string tag_name {get; set;}
 	/** the Vala namespace */
@@ -37,28 +39,6 @@ public abstract class Gtkaml.MarkupTag {
 		}
 	}
 			
-	/**
-	 * Called when parsing.
-	 * This only generates placeholder Vala AST so that the Parser can move on.
-	 * e.g. the class itself, its public properties go here.
-	 */
-	public abstract void generate_public_ast ();
-
-	/**
-	 * Called when Gtkaml is resolving. 
-	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp)
-	 */
-	public virtual void resolve (MarkupResolver resolver) {
-		assert (data_type.parent_node is DataTypeParent);
-		resolver.visit_data_type (data_type);
-	}
-	
-	/** 
-	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
-	 * Final AST generation phase (all AST)
-	 */
-	public abstract void generate (MarkupResolver resolver);
-	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;
 		this.tag_name = tag_name;
@@ -71,6 +51,27 @@ public abstract class Gtkaml.MarkupTag {
 		_data_type_parent = new DataTypeParent (data_type);
 	}
 
+	/**
+	 * Called when parsing.
+	 * This only generates placeholder Vala AST so that the Parser can move on.
+	 * e.g. the class itself, its public properties go here.
+	 */
+	public abstract void generate_public_ast ();
+
+	/**
+	 * Called when Gtkaml is resolving. 
+	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp)
+	 */
+	public virtual void resolve (MarkupResolver resolver) {
+		resolver.visit_data_type (data_type);
+	}
+	
+	/** 
+	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
+	 * Final AST generation phase (all AST)
+	 */
+	public abstract void generate (MarkupResolver resolver);
+	
 	public Gee.ReadOnlyList<MarkupSubTag> get_child_tags () {
 		return new Gee.ReadOnlyList<MarkupSubTag> (child_tags);
 	}
