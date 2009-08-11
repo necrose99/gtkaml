@@ -84,7 +84,7 @@ You need to specify `x` and `y` for `put`, which is the default method.
 == Window ==
 `Window` just inherits whatever `Bin` and `Container` have as add methods.
 
-== MenuShell ==
+== !MenuShell ==
 add methods: 
 [http://references.valadoc.org/gtk+-2.0/Gtk.MenuShell.append.html append]
 [http://references.valadoc.org/gtk+-2.0/Gtk.MenuShell.prepend.html prepend]
@@ -102,3 +102,4 @@ The same appliy for `MenuBar` and `Menu` which extend `MenuShell`.
 </MenuBar>
 }}}
 
+TODO
