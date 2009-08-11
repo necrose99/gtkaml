@@ -71,3 +71,34 @@ For `pack1` and `pack2` you need to specify `resize` and `shrink` boolean parame
 </HPaned>
 }}}
 
+== Layout ==
+add methods: [http://references.valadoc.org/gtk+-2.0/Gtk.Layout.put.html put]
+
+You need to specify `x` and `y` for `put`, which is the default method.
+{{{
+<Layout>
+  <Button x="10" y="10" />
+</Layout>
+}}}
+
+== Window ==
+`Window` just inherits whatever `Bin` and `Container` have as add methods.
+
+== MenuShell ==
+add methods: 
+[http://references.valadoc.org/gtk+-2.0/Gtk.MenuShell.append.html append]
+[http://references.valadoc.org/gtk+-2.0/Gtk.MenuShell.prepend.html prepend]
+[http://references.valadoc.org/gtk+-2.0/Gtk.MenuShell.insert.html insert]
+
+Default is `append` which requires no parameters. `insert` requires `position` on child widget.
+
+The same appliy for `MenuBar` and `Menu` which extend `MenuShell`.
+
+{{{
+<MenuBar>
+  <MenuItem />
+  <MenuItem prepend="true" />
+  <MenuItem position="0" />    <!-- uses insert() -->
+</MenuBar>
+}}}
+
