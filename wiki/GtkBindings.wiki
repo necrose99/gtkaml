@@ -120,9 +120,11 @@ To specify `tab-label` you either use `{code}` to write an expression (like the 
   <Button tab-label="{label0}" /> <!-- using a code expression  -->
   <Button>
      <tab-label>
-        <Label label="label1" />  <!-- using a complex attribute -->
+        <Label label="My Other Tab" />  <!-- using a complex attribute -->
      <tab-label/>
   <Button/>
 </Notebook>
+
+
 
 TODO
