@@ -17,6 +17,7 @@ class Gtkaml.DataTypeParent : Symbol {
 	}
 	
 	public DataTypeParent (DataType data_type) {
+		base (data_type.to_string () + "_parent_workaround", null);
 		this.data_type = data_type;
 	}
 	

@@ -29,7 +29,7 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 					}
 				}
 			} else stderr.printf ("Teapa %s\n", parent_tag.resolved_type.data_type.to_string ());
-			//TODO: search through fields
+			//TODO: search through fields too?
 		}
 		
 		var markup_temp = new MarkupTemp (parent_tag, tag_name, tag_namespace, source_reference);

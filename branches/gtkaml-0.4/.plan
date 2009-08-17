@@ -19,6 +19,7 @@ resolve ()
 
 resolve_hints ():
 3. cherry-pick creation and composition methods => parameter resolution
+  Given a data type, set aside creation parameters. These will be used with base() or base.parameter etc.
 
 4. recurse step 3. over children
 
@@ -28,5 +29,6 @@ resolve_attributes ():
 
 
 =====TODO======!!!
-WTF's the difference between Symbol and DataType
+WTF's the difference between Symbol and DataType?
+ Short answer: A symbol has one or more data types
 Define the exact order of determining attributes, complex attributes etc. given that some (g:preconstruct for example) are built-in!!

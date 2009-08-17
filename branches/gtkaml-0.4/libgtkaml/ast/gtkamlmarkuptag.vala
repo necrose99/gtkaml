@@ -39,6 +39,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		}
 	}
 	
+	protected Gee.List<MarkupAttribute> creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;
 		this.tag_name = tag_name;

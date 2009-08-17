@@ -10,7 +10,7 @@ public class Gtkaml.MarkupHint {
 	public string target;
 	
 	/** the target class/interface after resolving */
-	public TypeSymbol symbol; //TODO use this
+	//public TypeSymbol symbol; //TODO use this
 	
 	///** cache of the base markup hints */
 	//Gee.List<weak MarkupHint> base_hint_cache; //of course is not used, it's a premature optimisation:P!

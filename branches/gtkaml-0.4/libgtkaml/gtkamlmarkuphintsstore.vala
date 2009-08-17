@@ -35,10 +35,10 @@ public class Gtkaml.MarkupHintsStore {
 		}
 	}
 	
-	public void determine_creation_method (MarkupResolver markup_resolver, MarkupClass markup_class) {
-		//MarkupHint markup_hint = markup_hints.get (markup_class.get_full_name ());
-		//TODO: needs
-		//...
+	public Gee.List<Method> list_creation_methods (MarkupResolver markup_resolver, ObjectTypeSymbol type) {
+		//TODO:recursively concatenate lists from base types
+		type.get_full_name ();
+		return new Gee.ArrayList<Method>();
 	}
 	
 	void parse_package (string package_filename) {
