@@ -1,14 +1,32 @@
-AST >>> parse tree (CST)
-AST has parameters; resolved data types; creation and composition methods
+CST /parse tree:
 
-1. resolve own data type 
+parse ();
+
+generate_public_ast ();
+
+???
+=============================
+Profit!
+=============================
+AST:
+
+resolve ()
+1. if it's not (a candidate for) attribute, resolve own data type 
 1.1 if exists, it's MarkupTemp 
 1.2 if not exists, it's a ComplexAttribute (w/ text as children, or MarkupRoot node). Add to parent.
 
 2. recurse step 1. over children
 
+resolve_hints ():
 3. cherry-pick creation and composition methods => parameter resolution
 
 4. recurse step 3. over children
 
-5. attribute resolution
+resolve_attributes ():
+5. attribute resolution. Recurse over children
+(hint: ComplexAttribute should not derive from MarkupTag. Instead, it should *have* a MarkupRoot)
+
+
+=====TODO======!!!
+WTF's the difference between Symbol and DataType
+Define the exact order of determining attributes, complex attributes etc. given that some (g:preconstruct for example) are built-in!!
