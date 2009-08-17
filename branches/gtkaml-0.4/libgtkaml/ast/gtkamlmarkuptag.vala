@@ -11,8 +11,8 @@ using Vala;
  */ 
 public abstract class Gtkaml.MarkupTag : Object {
 	
-	private Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
-	private Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
+	protected Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
+	protected Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
 
 	/** not-ignorable text nodes concatenated */
 	public string text {get; set;}
@@ -38,7 +38,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 			return _data_type_parent.data_type;
 		}
 	}
-			
+	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;
 		this.tag_name = tag_name;

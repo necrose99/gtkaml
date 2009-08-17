@@ -4,7 +4,9 @@ using Vala;
 /** the parser for the moment simulates the following gtkaml file:
  *
  * <VBox xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk" g:name="MyVBox">  
- *       <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
+ *       <Label with-mnemonic="true" expand="false" fill="false" padding="0">
+ *             <label>_Hello</label>
+ *       </Label>
  *       <Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
  * </VBox>
  */
@@ -45,7 +47,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 		// <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
 		var label = new UnresolvedMarkupSubTag (root.markup_root, "Label", gtk_namespace, new SourceReference (source_file, 2, 6, 2, 91));
-		label.add_markup_attribute (new SimpleMarkupAttribute ("label", "_Hello"));
+		//label.add_markup_attribute (new SimpleMarkupAttribute ("label", "_Hello"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("with-mnemonic", "true"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("expand", "false"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("fill", "false"));
@@ -54,8 +56,10 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 		root.markup_root.add_child_tag (label);
 		
+		var label_label = new UnresolvedMarkupSubTag (label, "label", gtk_namespace, new SourceReference (source_file, 3, 6, 3, 91));
+		
 		//<Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
-		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 3, 6, 3, 79));
+		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 5, 6, 5, 79));
 		entry.add_markup_attribute (new SimpleMarkupAttribute ("label", "ok"));
 		entry.add_markup_attribute (new SimpleMarkupAttribute ("clicked", "entry.text=\"text changed\""));
 		entry.generate_public_ast ();
