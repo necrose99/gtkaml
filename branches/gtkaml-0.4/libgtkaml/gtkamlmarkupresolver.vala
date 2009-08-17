@@ -34,10 +34,23 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		generate_markup_tag (mcl.markup_root);
 	}
 	
-	public void resolve_markup_tag (MarkupTag markup_tag) {
-		markup_tag.resolve (this);
-		foreach (MarkupTag child_tag in markup_tag.get_child_tags ())
-			resolve_markup_tag (child_tag);
+	/** processes tag hierarchy. Removes unresolved ones after this step */
+	public bool resolve_markup_tag (MarkupTag markup_tag) {
+		MarkupTag? resolved_tag = markup_tag.resolve (this);
+		
+		if (resolved_tag != null) {
+			Gee.List<MarkupSubTag> to_remove = new Gee.ArrayList<MarkupSubTag> ();
+
+			foreach (var child_tag in resolved_tag.get_child_tags ()) {
+				if (false == resolve_markup_tag (child_tag)) {
+					to_remove.add (child_tag);
+				}
+			}
+		
+			foreach (var remove in to_remove)
+				resolved_tag.remove_child_tag (remove);
+		}		
+		return resolved_tag != null;
 	}
 	
 	public void generate_markup_tag (MarkupTag markup_tag) {

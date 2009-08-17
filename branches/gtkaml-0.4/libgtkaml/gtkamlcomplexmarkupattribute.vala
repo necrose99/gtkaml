@@ -12,7 +12,7 @@ public class Gtkaml.ComplexMarkupAttribute: MarkupTag, MarkupAttribute {
 		assert_not_reached();
 	}
 	
-	public override void resolve (MarkupResolver resolver) {
+	public override MarkupTag? resolve (MarkupResolver resolver) {
 		assert_not_reached();
 	}	
 	

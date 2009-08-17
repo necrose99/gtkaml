@@ -20,8 +20,8 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	
 	}
 
-	public override void resolve (MarkupResolver resolver) {
-		base.resolve (resolver);
+	public override MarkupTag? resolve (MarkupResolver resolver) {
+		return base.resolve (resolver);
 	}
 	
 	public override void generate (MarkupResolver resolver) {

@@ -57,6 +57,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		root.markup_root.add_child_tag (label);
 		
 		var label_label = new UnresolvedMarkupSubTag (label, "label", gtk_namespace, new SourceReference (source_file, 3, 6, 3, 91));
+		label.add_child_tag (label_label);
 		
 		//<Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
 		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 5, 6, 5, 79));

@@ -60,10 +60,12 @@ public abstract class Gtkaml.MarkupTag : Object {
 
 	/**
 	 * Called when Gtkaml is resolving. 
-	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp)
+	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp).
+	 * Tags to remove must return 'false' here so that the SymbolResolver can remove them later
 	 */
-	public virtual void resolve (MarkupResolver resolver) {
+	public virtual MarkupTag? resolve (MarkupResolver resolver) {
 		resolver.visit_data_type (data_type);
+		return this;
 	}
 	
 	/** 
@@ -81,14 +83,22 @@ public abstract class Gtkaml.MarkupTag : Object {
 		child_tag.parent_tag = this;
 	}
 	
-	public void replace_child_tag (MarkupSubTag old_child, MarkupSubTag new_child)
-	{
+	/** replaces a child tag and moves all its attributes and subtags to the new one */
+	public void replace_child_tag (MarkupSubTag old_child, MarkupSubTag new_child) {
 		for (int i = 0; i < child_tags.size; i++) {
 			if (child_tags[i] == old_child) {
+				foreach (MarkupSubTag child_tag in child_tags[i].get_child_tags ())
+					new_child.add_child_tag (child_tag);
+				foreach (MarkupAttribute attribute in child_tags[i].get_markup_attributes ())
+					new_child.add_markup_attribute (attribute);				
 				child_tags[i] = new_child;
 				return;
 			}
 		}
+	}
+	
+	public void remove_child_tag (MarkupSubTag old_child) {
+		child_tags.remove (old_child);
 	}
 
 	public Gee.ReadOnlyList<MarkupAttribute> get_markup_attributes () {

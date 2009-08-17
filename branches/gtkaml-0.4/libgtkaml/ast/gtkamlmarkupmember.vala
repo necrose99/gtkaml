@@ -22,9 +22,9 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		generate_property ();
 	}
 	
-	public override void resolve (MarkupResolver resolver) {
+	public override MarkupTag? resolve (MarkupResolver resolver) {
 		//TODO
-		base.resolve (resolver);
+		return base.resolve (resolver);
 	}
 	
 	public override void generate (MarkupResolver resolver) {
