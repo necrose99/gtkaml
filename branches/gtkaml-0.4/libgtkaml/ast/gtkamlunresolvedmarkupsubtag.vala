@@ -7,7 +7,7 @@ using Vala;
  */
 public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 
-	public override string me { get { assert_not_reached(); return ":D"; } }
+	public override string me { get { assert_not_reached(); } }
 
 	public UnresolvedMarkupSubTag (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{

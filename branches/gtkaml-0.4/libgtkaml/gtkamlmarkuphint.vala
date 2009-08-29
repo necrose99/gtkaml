@@ -30,6 +30,20 @@ public class Gtkaml.MarkupHint {
 		this.hint_list = new Gee.ArrayList<Pair<string, Gee.List<Pair<string, string?>>>> ();
 	}
 	
+	/*
+	public Gee.List<string> get_creation_methods ()	{
+		Gee.List<string> methods = new Gee.ArrayList<string> ();
+		foreach (var method_pair in hint_list) {
+			if (method_pair.name.has_prefix (NEW))
+				methods.add (method_pair.name.substring (4));
+		} 
+		return methods;
+	}
+	*/
+	public Gee.List<Pair<string, string?>> get_creation_method_parameters (string name) {
+		return hint_map.get (MarkupHint.NEW + name);
+	}
+	
 	/* adding a creation or an composition method */
 	
 	private void add_hint (string hint_name, string type) {

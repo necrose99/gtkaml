@@ -34,12 +34,28 @@ public class Gtkaml.MarkupHintsStore {
 			}
 		}
 	}
-	
-	public Gee.List<Method> list_creation_methods (MarkupResolver markup_resolver, ObjectTypeSymbol type) {
-		//TODO:recursively concatenate lists from base types
-		type.get_full_name ();
-		return new Gee.ArrayList<Method>();
-	}
+
+	public Gee.List<SimpleMarkupAttribute> merge_parameters (string full_type_name, Method m) {
+		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
+		var hint = markup_hints.get (full_type_name);
+		Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
+		if (hint != null && parameter_hints != null) {
+			//parralell foreach
+			int i = 0;
+			foreach (var formal_parameter in m.get_parameters ()) {
+				assert ( i < parameter_hints.size );
+				SimpleMarkupAttribute parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type );
+				parameters.add (parameter);
+				i++;
+			}
+		} else {
+			foreach (var formal_parameter in m.get_parameters ()) {
+				SimpleMarkupAttribute parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
+				parameters.add (parameter);
+			}
+		}
+		return parameters;
+	}	
 	
 	void parse_package (string package_filename) {
 		KeyFile key_file = new KeyFile ();
@@ -76,7 +92,7 @@ public class Gtkaml.MarkupHintsStore {
 				if (key.has_prefix ("new.")) 
 					hint_method_name = key.substring (4);
 				else
-					hint_method_name = "";
+					hint_method_name = "new";
 
 				#if DEBUGMARKUPHINTS
 				stderr.printf ("creation method '%s' with the following parameters:\n", hint_method_name);
