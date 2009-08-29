@@ -38,21 +38,26 @@ public class Gtkaml.MarkupHintsStore {
 	public Gee.List<SimpleMarkupAttribute> merge_parameters (string full_type_name, Method m) {
 		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
 		var hint = markup_hints.get (full_type_name);
-		Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
-		if (hint != null && parameter_hints != null) {
-			//parralell foreach
-			int i = 0;
-			foreach (var formal_parameter in m.get_parameters ()) {
-				assert ( i < parameter_hints.size );
-				SimpleMarkupAttribute parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type );
-				parameters.add (parameter);
-				i++;
+		if (hint != null) {
+			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
+			if (parameter_hints != null) {
+				//actual merge. with two parralell foreach
+				int i = 0;
+				foreach (var formal_parameter in m.get_parameters ()) {
+					assert ( i < parameter_hints.size );
+					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type );
+					parameters.add (parameter);
+					i++;
+				}
+				return parameters;
+			} else {
+				stderr.printf ("%s.%s has no hints\n", full_type_name, m.name);
 			}
-		} else {
-			foreach (var formal_parameter in m.get_parameters ()) {
-				SimpleMarkupAttribute parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
-				parameters.add (parameter);
-			}
+		}	
+		stderr.printf ("%s has no hints\n", full_type_name);
+		foreach (var formal_parameter in m.get_parameters ()) {
+			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
+			parameters.add (parameter);
 		}
 		return parameters;
 	}	

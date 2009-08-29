@@ -101,6 +101,8 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		do {
 			var current_candidate = candidates.get (i);
 
+			stderr.printf ("Testing %s against %s\n", markup_tag.resolved_type.data_type.get_full_name (), current_candidate.name);
+
 			var parameters = markup_hints.merge_parameters (markup_tag.resolved_type.data_type.get_full_name(), current_candidate);
 			int matches = 0;
 			foreach (var parameter in parameters) {
