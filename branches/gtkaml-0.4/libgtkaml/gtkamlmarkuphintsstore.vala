@@ -50,11 +50,8 @@ public class Gtkaml.MarkupHintsStore {
 					i++;
 				}
 				return parameters;
-			} else {
-				stderr.printf ("%s.%s has no hints\n", full_type_name, m.name);
-			}
+			} 
 		}	
-		stderr.printf ("%s has no hints\n", full_type_name);
 		foreach (var formal_parameter in m.get_parameters ()) {
 			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
 			parameters.add (parameter);

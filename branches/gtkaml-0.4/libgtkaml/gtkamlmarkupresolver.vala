@@ -113,18 +113,12 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		
 		do {
 			var current_candidate = candidates.get (i);
-
-			stderr.printf ("Testing %s against %s\n", markup_tag.resolved_type.data_type.get_full_name (), current_candidate.name);
-
 			var parameters = markup_hints.merge_parameters (markup_tag.resolved_type.data_type.get_full_name(), current_candidate);
 			int matches = 0;
+
 			foreach (var parameter in parameters) {
-				stderr.printf ("Hint parameter: %s.", parameter.attribute_name );
 				if ( (null != markup_tag.get_attribute (parameter.attribute_name)) || parameter.attribute_value != null) {
-					stderr.printf (" matched\n");
 					matches ++;
-				} else {
-					stderr.printf (" NOT matched\n");
 				}
 			}
 			
@@ -146,7 +140,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		} while ( i < candidates.size );
 
 		if (max_match_method.get_parameters ().size == max) { 
-			stderr.printf ("matched: %s\n", max_match_method.name);
+			stderr.printf ("matched: %s.%s\n", markup_tag.tag_name, max_match_method.name);
 		} else {
 			var required = "";
 			foreach (var parameter in min_match_method.get_parameters ()) required += "'" + parameter.name + "' ";
