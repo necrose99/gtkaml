@@ -90,11 +90,24 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	private void resolve_creation_method (MarkupTag markup_tag) {
 		Gee.List<CreationMethod> candidates = get_creation_methods (markup_tag.resolved_type);
 		
+		//corner case: one of the creation method's name is present with the value "true"
+		foreach (var candidate in candidates) {
+			var explicit = markup_tag.get_attribute (candidate.name);
+			if (explicit != null) {
+				stderr.printf ("Explicitly requesting %s\n", candidate.name);
+				markup_tag.remove_attribute (explicit);
+				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates.add (candidate);
+				break;//before foreach complains
+			}
+		}
+		
 		//TODO: go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
 		//so that we know the best match method, if found, otherwise the minimum number of arguments to specify
 
 		int min = 100; CreationMethod min_match_method = candidates.get (0);
 		int max = -1; CreationMethod max_match_method = candidates.get (0);
+		Gee.List<SimpleMarkupAttribute> matched_method_merged_parameters;
 		
 		var i = 0;
 		
@@ -106,9 +119,12 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			var parameters = markup_hints.merge_parameters (markup_tag.resolved_type.data_type.get_full_name(), current_candidate);
 			int matches = 0;
 			foreach (var parameter in parameters) {
-				stderr.printf ("Hint parameter: %s\n", parameter.attribute_name );
+				stderr.printf ("Hint parameter: %s.", parameter.attribute_name );
 				if ( (null != markup_tag.get_attribute (parameter.attribute_name)) || parameter.attribute_value != null) {
+					stderr.printf (" matched\n");
 					matches ++;
+				} else {
+					stderr.printf (" NOT matched\n");
 				}
 			}
 			
@@ -122,6 +138,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				if (parameters.size > max) {
 					max = parameters.size;
 					max_match_method = current_candidate;
+					matched_method_merged_parameters = parameters;
 				}
 			}
 

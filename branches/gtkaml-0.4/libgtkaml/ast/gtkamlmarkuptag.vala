@@ -112,10 +112,15 @@ public abstract class Gtkaml.MarkupTag : Object {
 	}
 
 	public MarkupAttribute? get_attribute (string name) {
-		foreach (var attribute in markup_attributes)
-			if (attribute.attribute_name == name)
+		foreach (var attribute in markup_attributes) {
+			if (attribute.attribute_name == name) 
 				return attribute;
+		}
 		return null;
+	}
+	
+	public void remove_attribute (MarkupAttribute attribute) {
+		markup_attributes.remove (attribute);
 	}
 }
 

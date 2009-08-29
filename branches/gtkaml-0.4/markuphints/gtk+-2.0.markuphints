@@ -22,84 +22,84 @@
 ## You specify an aditional folder for gtkamlc too look in with --implicitsdir
 ## And the files configuring the same namespace NS have their definitions merged
 
-[Label]
+[Gtk.Label]
 ## rename the parameter 'str' to 'label'
 new = label
 new.with_mnemonic = label
 
-[MenuItem]
+[Gtk.MenuItem]
 ## rename the parameter 'str' to 'label'
 new.with_label = label
 new.with_mnemonic = label
 
-[Container]
+[Gtk.Container]
 ## see issue #7 - we can't use add () for the moment because its a signal
 adds=add_with_properties
 
-[ScrolledWindow]
+[Gtk.ScrolledWindow]
 ## actually add_with_properties reffers to Container.add_with_properties
 ## Here we just make it the first to pick by default
 adds = add_with_properties;add_with_viewport
 new = hadjustment={null};vadjustment={null}
 
-[Box]
+[Gtk.Box]
 adds = pack_start;pack_end;pack_start_defaults;pack_end_defaults
 ## defaulting as per pack_start_defaults/pack_end_defaults
 add.pack_start = widget;expand=true;fill=true;padding=0
 add.pack_end   = widget;expand=true;fill=true;padding=0
 
-[VBox]
+[Gtk.VBox]
 ## default values
 new = homogeneous=false;spacing=0
 
-[HBox]
+[Gtk.HBox]
 ## default values
 new = homogeneous=false;spacing=0
 
-[Fixed]
+[Gtk.Fixed]
 adds = put
 
-[Paned]
+[Gtk.Paned]
 adds = add1;add2;pack1;pack2
 
-[Layout]
+[Gtk.Layout]
 adds = put
 
-[Window]
+[Gtk.Window]
 ## defaulting to toplevel window
 new = type={WindowType.TOPLEVEL}
 
-[MenuShell]
+[Gtk.MenuShell]
 adds = append;prepend;insert;
 ## renaming parameter 
 add.insert = position
 
-[ImageMenuItem]
+[Gtk.ImageMenuItem]
 ## defaulting the accel_group attribute to null
 new.from_stock = stock_id;accel_group={null}
 
-[Notebook]
+[Gtk.Notebook]
 adds = append_page;append_page_menu;prepend_page;prepend_page_menu;insert_page;insert_page_menu
 
-[Socket]
+[Gtk.Socket]
 adds = add_id
 
-[Table]
+[Gtk.Table]
 adds = attach;attach_defaults; 
 ## renaming parameters
 new = n_rows;n_columns;homogeneous
 
-[Toolbar]
+[Gtk.Toolbar]
 adds = insert
 
-[TreeView]
+[Gtk.TreeView]
 adds = append_column;remove_column;insert_column
 
-[TreeViewColumn]
+[Gtk.TreeViewColumn]
 adds = pack_start;pack_end;add_attribute
 
-[Dialog]
+[Gtk.Dialog]
 adds = add_action_widget
 
-[ActionGroup]
+[Gtk.ActionGroup]
 adds = add_action;add_action_with_accel

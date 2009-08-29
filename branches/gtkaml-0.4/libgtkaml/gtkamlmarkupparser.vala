@@ -47,8 +47,8 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 		// <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
 		var label = new UnresolvedMarkupSubTag (root.markup_root, "Label", gtk_namespace, new SourceReference (source_file, 2, 6, 2, 91));
-		//label.add_markup_attribute (new SimpleMarkupAttribute ("label", "_Hello"));
-		label.add_markup_attribute (new SimpleMarkupAttribute ("with-mnemonic", "true"));
+		label.add_markup_attribute (new SimpleMarkupAttribute ("label", "_Hello"));
+		label.add_markup_attribute (new SimpleMarkupAttribute ("with_mnemonic", "true"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("expand", "false"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("fill", "false"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("padding", "0"));
