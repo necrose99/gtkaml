@@ -39,7 +39,11 @@ public abstract class Gtkaml.MarkupTag : Object {
 		}
 	}
 	
-	protected Gee.List<MarkupAttribute> creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	/** attributes explicitly found as creation parameters + default ones.
+		All in the original order.
+	 */
+	public Gee.List<MarkupAttribute> creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	public CreationMethod creation_method;
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
 		this.markup_class = markup_class;
@@ -50,7 +54,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		this.data_type = new UnresolvedType.from_symbol (new UnresolvedSymbol (tag_namespace, tag_name, source_reference));
 		this.data_type.value_owned = true;
 		
-		_data_type_parent = new DataTypeParent (data_type);
+		this._data_type_parent = new DataTypeParent (data_type);
+		this.creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
 	}
 
 	/**

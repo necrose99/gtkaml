@@ -101,19 +101,20 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				break;//before foreach complains
 			}
 		}
+		//we now have a list of creation methods, or a single creation method explicitly requested.
 		
-		//TODO: go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
+		//go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
 		//so that we know the best match method, if found, otherwise the minimum number of arguments to specify
 
 		int min = 100; CreationMethod min_match_method = candidates.get (0);
 		int max = -1; CreationMethod max_match_method = candidates.get (0);
-		Gee.List<SimpleMarkupAttribute> matched_method_merged_parameters;
+		Gee.List<SimpleMarkupAttribute> matched_method_parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
 		
 		var i = 0;
 		
 		do {
 			var current_candidate = candidates.get (i);
-			var parameters = markup_hints.merge_parameters (markup_tag.resolved_type.data_type.get_full_name(), current_candidate);
+			var parameters = markup_hints.get_default_parameters (markup_tag.resolved_type.data_type.get_full_name(), current_candidate);
 			int matches = 0;
 
 			foreach (var parameter in parameters) {
@@ -132,7 +133,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				if (parameters.size > max) {
 					max = parameters.size;
 					max_match_method = current_candidate;
-					matched_method_merged_parameters = parameters;
+					matched_method_parameters = parameters;
 				}
 			}
 
@@ -140,7 +141,19 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		} while ( i < candidates.size );
 
 		if (max_match_method.get_parameters ().size == max) { 
-			stderr.printf ("matched: %s.%s\n", markup_tag.tag_name, max_match_method.name);
+			markup_tag.creation_method = max_match_method;
+			//save the CreationMethodParameters:
+			foreach (var parameter in matched_method_parameters) {
+				if (parameter.attribute_value == null) {
+					//for the explicit ones, include the original attribute
+					var explicit_attribute = markup_tag.get_attribute (parameter.attribute_name);
+					markup_tag.creation_parameters.add (explicit_attribute);
+					markup_tag.remove_attribute (explicit_attribute);
+				} else {
+					//for the default ones, include the default attribute
+					markup_tag.creation_parameters.add (parameter);
+				}
+			}
 		} else {
 			var required = "";
 			foreach (var parameter in min_match_method.get_parameters ()) required += "'" + parameter.name + "' ";

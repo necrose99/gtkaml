@@ -35,13 +35,13 @@ public class Gtkaml.MarkupHintsStore {
 		}
 	}
 
-	public Gee.List<SimpleMarkupAttribute> merge_parameters (string full_type_name, Method m) {
+	public Gee.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Method m) {
 		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
 		var hint = markup_hints.get (full_type_name);
 		if (hint != null) {
 			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
 			if (parameter_hints != null) {
-				//actual merge. with two parralell foreach
+				//actual merge. with two parralell foreaches
 				int i = 0;
 				foreach (var formal_parameter in m.get_parameters ()) {
 					assert ( i < parameter_hints.size );
