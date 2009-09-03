@@ -1,6 +1,7 @@
 using GLib;
 using Vala;
 
+////TODO: ComplexAttribute should not derive from MarkupTag. Instead, it should *have* a MarkupRoot
 public class Gtkaml.ComplexMarkupAttribute: MarkupTag, MarkupAttribute {
 
 	public string attribute_name {get { assert_not_reached (); }}
