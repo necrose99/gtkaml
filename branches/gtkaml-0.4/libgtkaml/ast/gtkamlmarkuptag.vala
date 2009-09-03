@@ -81,10 +81,102 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 */
 	public abstract void generate (MarkupResolver resolver);
 	
-	public Gee.ReadOnlyList<MarkupSubTag> get_child_tags () {
-		return new Gee.ReadOnlyList<MarkupSubTag> (child_tags);
+	/**
+	 * picks up creation method parameters and determines the creation method, if applicable
+	 */
+	public virtual void resolve_creation_method (MarkupResolver resolver) {
+		var candidates = get_creation_method_candidates ();
+		
+		//go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
+		//so that we know the best match method, if found, otherwise the minimum number of arguments to specify
+
+		int min = 100; CreationMethod min_match_method = candidates.get (0);
+		int max = -1; CreationMethod max_match_method = candidates.get (0);
+		Gee.List<SimpleMarkupAttribute> matched_method_parameters = new Gee.ArrayList<MarkupAttribute> ();
+		
+		var i = 0;
+		
+		do {
+			var current_candidate = candidates.get (i);
+			var parameters = resolver.get_default_parameters (this, current_candidate);
+			int matches = 0;
+
+			foreach (var parameter in parameters) {
+				if ( (null != get_attribute (parameter.attribute_name)) || parameter.attribute_value != null) {
+					matches ++;
+				}
+			}
+			
+			if (matches < parameters.size) {  //does not match
+				if (parameters.size < min) {
+					min = parameters.size;
+					min_match_method = current_candidate;
+				}
+			} else {
+				assert (matches == parameters.size);
+				if (parameters.size > max) {
+					max = parameters.size;
+					max_match_method = current_candidate;
+					matched_method_parameters = parameters;
+				}
+			}
+
+			i++;
+		} while ( i < candidates.size );
+
+		if (max_match_method.get_parameters ().size == max) { 
+			this.creation_method = max_match_method;
+			//save the CreationMethodParameters:
+			foreach (var parameter in matched_method_parameters) {
+				if (parameter.attribute_value == null) {
+					//for the explicit ones, include the original attribute
+					var explicit_attribute = get_attribute (parameter.attribute_name);
+					this.creation_parameters.add (explicit_attribute);
+					remove_attribute (explicit_attribute);
+				} else {
+					//for the default ones, include the default attribute
+					this.creation_parameters.add (parameter);
+				}
+			}
+		} else {
+			var required = "";
+			foreach (var parameter in min_match_method.get_parameters ()) required += "'" + parameter.name + "' ";
+			Report.error (source_reference, "at least %s are required\n".printf (required));
+		}
+		
 	}
 	
+	/**
+	 * returns the list of possible creation methods, or a void list if base() is unavailable
+	 */
+	public virtual Gee.List<CreationMethod> get_creation_method_candidates () {
+		assert (resolved_type.data_type is Class);
+		
+		Gee.List<CreationMethod> candidates = new Gee.ArrayList<CreationMethod> ();
+		foreach (Method m in (resolved_type.data_type as Class).get_methods ()) {
+			if (m is CreationMethod) candidates.add (m as CreationMethod);
+		}
+		
+		//corner case: one of the creation method's name is present with the value "true"
+		foreach (var candidate in candidates) {
+			var explicit = get_attribute (candidate.name);
+			if (explicit != null) {
+				stderr.printf ("Explicitly requesting %s\n", candidate.name);
+				remove_attribute (explicit);
+				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates.add (candidate);
+				break;//before foreach complains
+			}
+		}
+		
+		assert (candidates.size > 0);
+		return candidates;
+	}
+	
+	public Gee.ReadOnlyList<MarkupSubTag> get_child_tags () {
+		return new Gee.ReadOnlyList<MarkupSubTag> (child_tags);
+	}	
+		
 	public void add_child_tag (MarkupSubTag child_tag) {
 		child_tags.add (child_tag);
 		child_tag.parent_tag = this;

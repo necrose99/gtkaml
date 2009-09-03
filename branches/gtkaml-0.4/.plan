@@ -20,7 +20,7 @@ resolve ()
 resolve_hints ():
 3. cherry-pick creation and composition methods => parameter resolution
   Given a data type, set aside creation parameters. These will be used with base() or base.parameter etc.
-//YOU ARE HERE. todo: a formal parameter struct? remove stderr.printfs?
+//YOU ARE HERE. todo: add creation method Vala AST. remove stderr.printfs?
 4. recurse step 3. over children
 
 resolve_attributes ():
