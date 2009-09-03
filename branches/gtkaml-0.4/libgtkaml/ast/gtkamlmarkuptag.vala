@@ -219,5 +219,26 @@ public abstract class Gtkaml.MarkupTag : Object {
 	public void remove_attribute (MarkupAttribute attribute) {
 		markup_attributes.remove (attribute);
 	}
+	
+	///Common AST techniques
+	
+	/** 
+	 * returns ns.ns.ns.Class member access
+	 */
+	protected Expression get_class_expression () {
+		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
+		MemberAccess namespace_access = null;
+		UnresolvedSymbol ns = tag_namespace;
+		while (ns is UnresolvedSymbol) {
+			namespace_access = new MemberAccess(namespace_access, ns.name, source_reference);
+			ns = ns.inner;
+		}
+		var member_access = new MemberAccess (namespace_access, tag_name, source_reference);
+		member_access.creation_member = true;
+		
+		return member_access;
+	}
+	
+	
 }
 

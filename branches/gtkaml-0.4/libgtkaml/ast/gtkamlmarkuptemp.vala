@@ -39,6 +39,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		}
 		var member_access = new MemberAccess (namespace_access, tag_name, source_reference);
 		member_access.creation_member = true;
+		
 		var initializer = new ObjectCreationExpression (member_access, source_reference);
 		
 		//TODO: determine the initialize to call from MarkupHintsStore
