@@ -175,6 +175,7 @@ By using the 'notify' event of GLib.Object we can re-evaluate a property value o
   * text runs
   * pango and cairo markup
   * clutter markup
+  * hildon markup (maemo)
 
 ==Goals for 1.0==
   * all of the above, tested and stable
