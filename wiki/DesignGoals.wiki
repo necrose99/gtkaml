@@ -177,5 +177,10 @@ By using the 'notify' event of GLib.Object we can re-evaluate a property value o
   * clutter markup
   * hildon markup (maemo)
 
+Side projects:
+  * converter from glade/gtkbuilder (based on libglade?)
+  * gtkamlpad for fast previewing
+  * bindable collections libraries & widgets
+
 ==Goals for 1.0==
   * all of the above, tested and stable
