@@ -161,7 +161,6 @@ public abstract class Gtkaml.MarkupTag : Object {
 		foreach (var candidate in candidates) {
 			var explicit = get_attribute (candidate.name);
 			if (explicit != null) {
-				stderr.printf ("Explicitly requesting %s\n", candidate.name);
 				remove_attribute (explicit);
 				candidates = new Gee.ArrayList<CreationMethod> ();
 				candidates.add (candidate);
@@ -225,8 +224,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/** 
 	 * returns ns.ns.ns.Class member access
 	 */
-	protected Expression get_class_expression () {
-		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
+	protected MemberAccess get_class_expression () {
 		MemberAccess namespace_access = null;
 		UnresolvedSymbol ns = tag_namespace;
 		while (ns is UnresolvedSymbol) {
@@ -234,7 +232,6 @@ public abstract class Gtkaml.MarkupTag : Object {
 			ns = ns.inner;
 		}
 		var member_access = new MemberAccess (namespace_access, tag_name, source_reference);
-		member_access.creation_member = true;
 		
 		return member_access;
 	}

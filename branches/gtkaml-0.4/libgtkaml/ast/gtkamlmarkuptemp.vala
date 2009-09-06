@@ -29,21 +29,19 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	private void generate_construct_local() {		
-		
-		//convert unresolvedsymbol.inner.inner.innner to memberaccess.inner.inner.inner
-		MemberAccess namespace_access = null;
-		UnresolvedSymbol ns = tag_namespace;
-		while (ns is UnresolvedSymbol) {
-			namespace_access = new MemberAccess(namespace_access, ns.name, source_reference);
-			ns = ns.inner;
+		var creation_method_access = get_class_expression ();
+		if (creation_method.name != "new") {
+			creation_method_access = new MemberAccess (creation_method_access, creation_method.name, source_reference);
 		}
-		var member_access = new MemberAccess (namespace_access, tag_name, source_reference);
-		member_access.creation_member = true;
+		creation_method_access.creation_member = true;
 		
-		var initializer = new ObjectCreationExpression (member_access, source_reference);
+		var initializer = new ObjectCreationExpression (creation_method_access, source_reference);
+		if (creation_method.name != "new") {
+			initializer.constructor = creation_method;
+		}
 		
 		//TODO: determine the initialize to call from MarkupHintsStore
-		initializer.add_argument (new StringLiteral ("\"_Hello\"", source_reference));
+		initializer.add_argument(new StringLiteral ("\"_Hello\"", source_reference));
 		
 		DataType variable_type = resolved_type.copy ();
 		variable_type.value_owned = true;
