@@ -6,7 +6,7 @@ public class Gtkaml.ComplexMarkupAttribute: MarkupTag, MarkupAttribute {
 
 	public string attribute_name {get { assert_not_reached (); }}
 	public Expression attribute_expression {get { assert_not_reached(); }}
-	public DataType target_type {get { assert_not_reached (); }}
+	public DataType target_type {get; set;}
 	
 	public override string me { get { assert_not_reached(); }}
 	
@@ -22,5 +22,7 @@ public class Gtkaml.ComplexMarkupAttribute: MarkupTag, MarkupAttribute {
 		assert_not_reached();
 	}
 
-
+	public Expression get_expression () {
+		assert_not_reached();
+	}
 }

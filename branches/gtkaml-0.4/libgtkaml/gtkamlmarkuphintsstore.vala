@@ -41,6 +41,7 @@ public class Gtkaml.MarkupHintsStore {
 		if (hint != null) {
 			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
 			if (parameter_hints != null) {
+				assert (parameter_hints.size == m.get_parameters ().size);
 				//actual merge. with two parralell foreaches
 				int i = 0;
 				foreach (var formal_parameter in m.get_parameters ()) {

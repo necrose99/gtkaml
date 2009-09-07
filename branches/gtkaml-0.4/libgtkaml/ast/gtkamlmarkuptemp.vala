@@ -41,7 +41,9 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		}
 		
 		//TODO: determine the initialize to call from MarkupHintsStore
-		initializer.add_argument(new StringLiteral ("\"_Hello\"", source_reference));
+		foreach (var parameter in creation_parameters) {
+			initializer.add_argument (parameter.get_expression ());
+		}
 		
 		DataType variable_type = resolved_type.copy ();
 		variable_type.value_owned = true;

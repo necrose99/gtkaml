@@ -128,9 +128,10 @@ public abstract class Gtkaml.MarkupTag : Object {
 			this.creation_method = max_match_method;
 			//save the CreationMethodParameters:
 			foreach (var parameter in matched_method_parameters) {
-				if (parameter.attribute_value == null) {
-					//for the explicit ones, include the original attribute
-					var explicit_attribute = get_attribute (parameter.attribute_name);
+				MarkupAttribute explicit_attribute = null;
+				if (null != (explicit_attribute = get_attribute (parameter.attribute_name))) {
+					//for the explicit ones, copy the data type from the default attribute
+					explicit_attribute.target_type = parameter.target_type;
 					this.creation_parameters.add (explicit_attribute);
 					remove_attribute (explicit_attribute);
 				} else {
