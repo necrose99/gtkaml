@@ -14,4 +14,24 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		this.parent_tag = parent_tag;
 	}
 
+	/**
+	 * returns the list of possible creation methods, containing a single element if explicitly requested
+	 */
+	public override Gee.List<CreationMethod> get_creation_method_candidates () {
+		var candidates = base.get_creation_method_candidates ();
+		
+		//for subtags: one of the creation method's name is present with the value "true"
+		foreach (var candidate in candidates) {
+			var explicit = get_attribute (candidate.name);
+			if (explicit != null) {
+				remove_attribute (explicit);
+				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates.add (candidate);
+				break;//before foreach complains
+			}
+		}
+
+		return candidates;
+	}
+
 }

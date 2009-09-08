@@ -148,27 +148,16 @@ public abstract class Gtkaml.MarkupTag : Object {
 	}
 	
 	/**
-	 * returns the list of possible creation methods, or a void list if base() is unavailable
+	 * returns the list of possible creation methods
 	 */
 	public virtual Gee.List<CreationMethod> get_creation_method_candidates () {
 		assert (resolved_type.data_type is Class);
-		
+
 		Gee.List<CreationMethod> candidates = new Gee.ArrayList<CreationMethod> ();
 		foreach (Method m in (resolved_type.data_type as Class).get_methods ()) {
 			if (m is CreationMethod) candidates.add (m as CreationMethod);
 		}
-		
-		//corner case: one of the creation method's name is present with the value "true"
-		foreach (var candidate in candidates) {
-			var explicit = get_attribute (candidate.name);
-			if (explicit != null) {
-				remove_attribute (explicit);
-				candidates = new Gee.ArrayList<CreationMethod> ();
-				candidates.add (candidate);
-				break;//before foreach complains
-			}
-		}
-		
+
 		assert (candidates.size > 0);
 		return candidates;
 	}
