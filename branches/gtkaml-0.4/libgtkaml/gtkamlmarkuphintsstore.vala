@@ -35,7 +35,7 @@ public class Gtkaml.MarkupHintsStore {
 		}
 	}
 
-	public Gee.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Method m) {
+	public Gee.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Method m, SourceReference? source_reference = null) {
 		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
 		var hint = markup_hints.get (full_type_name);
 		if (hint != null) {
@@ -46,7 +46,7 @@ public class Gtkaml.MarkupHintsStore {
 				int i = 0;
 				foreach (var formal_parameter in m.get_parameters ()) {
 					assert ( i < parameter_hints.size );
-					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type );
+					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type, source_reference );
 					parameters.add (parameter);
 					i++;
 				}

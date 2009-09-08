@@ -69,8 +69,8 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		return resolved_tag != null;
 	}
 	
-	public Gee.List<SimpleMarkupAttribute> get_default_parameters (MarkupTag markup_tag, Method method) {
-		return markup_hints.get_default_parameters (markup_tag.resolved_type.data_type.get_full_name(), method);
+	public Gee.List<SimpleMarkupAttribute> get_default_parameters (MarkupTag markup_tag, Method method, SourceReference? source_reference = null) {
+		return markup_hints.get_default_parameters (markup_tag.resolved_type.data_type.get_full_name(), method, source_reference);
 	}
 	
 	private void generate_markup_tag (MarkupTag markup_tag) {

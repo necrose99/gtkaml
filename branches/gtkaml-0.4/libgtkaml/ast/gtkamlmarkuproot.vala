@@ -46,15 +46,14 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		
 		var block = new Block (markup_class.source_reference);
 
-		//if we should call base ()
-		//unfortunately the detection is not possible before vala symbol resolving:-S
-//		if (markup_class.base_class.default_construction_method.has_construct_function) {
+		//unfortunately base/construct detection is not possible before vala symbol resolving:-S
+		//if (markup_class.base_class.default_construction_method.has_construct_function) {
 			var base_call = new MethodCall (new BaseAccess (markup_class.source_reference), markup_class.source_reference);
 			foreach (var parameter in creation_parameters) { 
 				base_call.add_argument (parameter.get_expression ());
 			}
 			block.add_statement (new ExpressionStatement (base_call, markup_class.source_reference));
-//		}
+		//}
 		
 		creation_method.body = block;
 		

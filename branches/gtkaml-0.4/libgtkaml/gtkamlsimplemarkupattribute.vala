@@ -25,6 +25,7 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		this._attribute_name = attribute_name;
 		this.attribute_value = attribute_value;
 		this.target_type = target_type;
+		this.source_reference = source_reference;
 	}
 	
 	public Expression get_expression () {
@@ -33,6 +34,7 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		if (type_name == "string") {
 			return new StringLiteral ("\"" + attribute_value + "\"", source_reference);
 		} else if (type_name == "bool") {
+			//TODO: full boolean check 
 			return new BooleanLiteral (attribute_value == "true", source_reference);
 		} else if (type_name == "int") {
 			return new IntegerLiteral (attribute_value, source_reference);
