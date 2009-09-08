@@ -20,24 +20,44 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	}
 
 	/**
+	 * returns the list of possible creation methods, in root's case, only the default creation method
+	 */
+	public override Gee.List<CreationMethod> get_creation_method_candidates () {
+		var candidates = base.get_creation_method_candidates ();
+		foreach (var candidate in candidates) {
+			if (candidate.name == "new") {
+				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates.add (candidate);
+				break;//before foreach complains
+			}
+		}
+		assert (candidates.size == 1);
+		return candidates;
+	}
+
+
+
+	/**
 	 * generate creation method with base () call
 	 */
 	private void generate_creation_method (MarkupResolver resolver) {
 		CreationMethod creation_method = new CreationMethod(markup_class.name, null, markup_class.source_reference);
 		creation_method.access = SymbolAccessibility.PUBLIC;
 		
-		//TODO: determine the base() to call from MarkupHintsStore
-		//TODO: take into account the fact that, if the arguments are actually {code} expressions or complex attributes
-		//      .. they can't be used in this scenario:(
-		var base_call = new MethodCall (new BaseAccess (markup_class.source_reference), markup_class.source_reference);
-		base_call.add_argument (new BooleanLiteral (false, markup_class.source_reference));
-		base_call.add_argument (new IntegerLiteral ("0", markup_class.source_reference));
-
 		var block = new Block (markup_class.source_reference);
-		block.add_statement (new ExpressionStatement (base_call, markup_class.source_reference));
+
+		//if we should call base ()
+		//unfortunately the detection is not possible before vala symbol resolving:-S
+//		if (markup_class.base_class.default_construction_method.has_construct_function) {
+			var base_call = new MethodCall (new BaseAccess (markup_class.source_reference), markup_class.source_reference);
+			foreach (var parameter in creation_parameters) { 
+				base_call.add_argument (parameter.get_expression ());
+			}
+			block.add_statement (new ExpressionStatement (base_call, markup_class.source_reference));
+//		}
+		
 		creation_method.body = block;
 		
-		//FIXME: add this after vala base() bug is solved - otherwise, refactor to use setters,..
 		markup_class.add_method (creation_method);
 	}
 

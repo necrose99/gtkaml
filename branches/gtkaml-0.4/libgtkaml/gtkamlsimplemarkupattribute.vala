@@ -29,8 +29,16 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 	
 	public Expression get_expression () {
 		assert (target_type != null);
-		if (target_type.data_type.get_full_name () == "string")
+		var type_name = target_type.data_type.get_full_name ();
+		if (type_name == "string") {
 			return new StringLiteral ("\"" + attribute_value + "\"", source_reference);
+		} else if (type_name == "bool") {
+			return new BooleanLiteral (attribute_value == "true", source_reference);
+		} else if (type_name == "int") {
+			return new IntegerLiteral (attribute_value, source_reference);
+		} else {
+			stderr.printf ("UPS %s type found\n", target_type.data_type.get_full_name ());
+		}
 		assert_not_reached();
 	}
 
