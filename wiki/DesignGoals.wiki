@@ -179,7 +179,7 @@ By using the 'notify' event of GLib.Object we can re-evaluate a property value o
 
 Side projects:
   * converter from glade/gtkbuilder (based on libglade?)
-  * gtkamlpad for fast previewing
+  * gtkamlpad for fast previewing (converter _to_ gtkbuilder?)
   * bindable collections libraries & widgets
 
 ==Goals for 1.0==
