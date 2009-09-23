@@ -1,6 +1,15 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2009-09-23) gtkaml 0.2.8 ===
+Based on valacompiler 0.7.6.  
+
+Some Vala GTK examples are showed in `examples/vala`  
+
+Fixes:
+  * #7  "Container.add instead of add_with_parameters"
+  * #19 "existing vbox missing spacing"
+
 === (2009-08-06) gtkaml 0.2.7.1 ===
 Fixed bug preventing usage with valacompiler 0.7.5
 
