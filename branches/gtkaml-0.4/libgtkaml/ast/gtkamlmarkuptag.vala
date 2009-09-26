@@ -40,6 +40,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	}
 
 	private string _full_name;
+	/** shortcut for resolved_type.data_type.get_full_name () -> for debugging */
 	public string full_name { get {	return _full_name; } }
 	
 	/** attributes explicitly found as creation parameters + default ones.
@@ -150,8 +151,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 	}
 
 	/**
-         * decides weather to halt on error or just issue an warning
-         */
+     * decides weather to halt on error or just issue an warning
+     */
 	virtual void resolve_creation_method_failed (Method min_match_method){
 		var required = "";
 		var parameters = min_match_method.get_parameters ();
@@ -242,6 +243,24 @@ public abstract class Gtkaml.MarkupTag : Object {
 		return member_access;
 	}
 	
-	
+	/**
+	 * parses a vala source string temporary stored in .gtkaml/what.vala
+	 * TODO: move this in a 'helper' class for this compilation unit so that we can later remove .gtkaml/ files
+	 * TODO: use current dir
+	 */
+	private SourceFile temp_source_file;
+	protected Namespace call_vala_parser(string source, string what) {
+		var ctx = new CodeContext ();
+		var filename = ".gtkaml/" + what + ".vala";
+		
+		DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
+		FileUtils.set_contents (filename, source);
+		temp_source_file = new SourceFile (ctx, filename, false, source);
+		ctx.add_source_file (temp_source_file);
+		
+		var parser = new Parser ();
+		parser.parse (ctx);
+		return ctx.root;
+	}
 }
 

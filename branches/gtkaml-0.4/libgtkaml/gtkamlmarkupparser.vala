@@ -8,6 +8,12 @@ using Vala;
  *             <label>_Hello</label>
  *       </Label>
  *       <Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
+ * <![CDATA[
+ * 		 public static int main (string[] argv) {
+ * 			Gtk.init (ref argv);
+ * 			return 0;
+ * 		 }
+ * ]]>
  * </VBox>
  */
 public class Gtkaml.MarkupParser : CodeVisitor {
@@ -40,6 +46,12 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		// <VBox g:name="MyVBox">
 		var root = new MarkupClass ("VBox", gtk_namespace, "MyVBox", new SourceReference (source_file, 1, 0, 1, 66));
 		root.access = SymbolAccessibility.PUBLIC;
+		// <![CDATA[ ...
+		root.markup_root.text = """	public static int main (string[] argv) {
+		Gtk.init (ref argv);
+		return 0;
+	}
+""";
 		root.markup_root.generate_public_ast ();
 		
 		source_file.add_node (root);

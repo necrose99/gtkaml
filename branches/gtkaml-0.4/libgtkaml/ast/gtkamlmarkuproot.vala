@@ -13,6 +13,7 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		markup_class.add_base_type (data_type.copy ());
 		markup_class.constructor = new Constructor (markup_class.source_reference);
 		markup_class.constructor.body = new Block (markup_class.source_reference);	
+		parse_class_members (this.text);
 	}
 
 	public override void generate (MarkupResolver resolver) {
@@ -45,7 +46,16 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		required += "'" + parameters[i].name + "'";
 		Report.warning (source_reference, "at least %s required for %s instantiation.\n".printf (required, full_name));
 	}
-	
+
+	private void parse_class_members (string source) {
+		var classes = call_vala_parser ("public class %s { %s }".printf ("Temp", source), "%s-members".printf (tag_name)).get_classes();
+		foreach (var x in classes.get(0).get_methods ()) {
+			if (!(x is CreationMethod))  {
+				stderr.printf ("adding %s\n", x.name);
+				markup_class.add_method (x);
+			}
+		}
+	}
 
 	/**
 	 * generate creation method with base () call
