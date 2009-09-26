@@ -67,7 +67,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 * This only generates placeholder Vala AST so that the Parser can move on.
 	 * e.g. the class itself, its public properties go here.
 	 */
-	public abstract void generate_public_ast ();
+	public abstract void generate_public_ast (MarkupParser parser);
 
 	/**
 	 * Called when Gtkaml is resolving. 
@@ -243,24 +243,5 @@ public abstract class Gtkaml.MarkupTag : Object {
 		return member_access;
 	}
 	
-	/**
-	 * parses a vala source string temporary stored in .gtkaml/what.vala
-	 * TODO: move this in a 'helper' class for this compilation unit so that we can later remove .gtkaml/ files
-	 * TODO: use current dir
-	 */
-	private SourceFile temp_source_file;
-	protected Namespace call_vala_parser(string source, string what) {
-		var ctx = new CodeContext ();
-		var filename = ".gtkaml/" + what + ".vala";
-		
-		DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
-		FileUtils.set_contents (filename, source);
-		temp_source_file = new SourceFile (ctx, filename, false, source);
-		ctx.add_source_file (temp_source_file);
-		
-		var parser = new Parser ();
-		parser.parse (ctx);
-		return ctx.root;
-	}
 }
 

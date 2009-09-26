@@ -10,7 +10,7 @@ public class Gtkaml.ComplexMarkupAttribute: MarkupTag, MarkupAttribute {
 	
 	public override string me { get { assert_not_reached(); }}
 	
-	public override void generate_public_ast () {
+	public override void generate_public_ast (MarkupParser parser) {
 		assert_not_reached();
 	}
 	

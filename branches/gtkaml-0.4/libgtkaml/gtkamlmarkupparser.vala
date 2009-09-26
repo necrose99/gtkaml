@@ -19,6 +19,7 @@ using Vala;
 public class Gtkaml.MarkupParser : CodeVisitor {
 
 	private CodeContext context;
+	private Gee.List<SourceFile> temp_source_files = new Gee.ArrayList<SourceFile> ();
 
 	public void parse (CodeContext context) {
 		this.context = context;
@@ -30,6 +31,25 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 			parse_file (source_file);
 		}
 	}
+	
+	/**
+	 * parses a vala source string temporary stored in .gtkaml/what.vala
+	 */
+	protected Namespace call_vala_parser(string source, string what) {
+		var ctx = new CodeContext ();
+		var filename = ".gtkaml/" + what + ".vala";
+		
+		DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
+		FileUtils.set_contents (filename, source);
+		var temp_source_file = new SourceFile (ctx, filename, false, source);
+		temp_source_files.add (temp_source_file);
+		ctx.add_source_file (temp_source_file);
+		
+		var parser = new Parser ();
+		parser.parse (ctx);
+		return ctx.root;
+	}
+
 	
 	//Note to self: the parser engine should be able to tell tags with content beforehand (SimpleAttributes)
 	/** 
@@ -52,7 +72,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		return 0;
 	}
 """;
-		root.markup_root.generate_public_ast ();
+		root.markup_root.generate_public_ast (this);
 		
 		source_file.add_node (root);
 		context.root.add_class (root);
@@ -64,7 +84,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		label.add_markup_attribute (new SimpleMarkupAttribute ("expand", "false"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("fill", "false"));
 		label.add_markup_attribute (new SimpleMarkupAttribute ("padding", "0"));
-		label.generate_public_ast ();
+		label.generate_public_ast (this);
 		
 		root.markup_root.add_child_tag (label);
 		
@@ -75,7 +95,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		var entry = new MarkupMember (root.markup_root, "Entry", gtk_namespace, "entry", SymbolAccessibility.PUBLIC, new SourceReference (source_file, 5, 6, 5, 79));
 		entry.add_markup_attribute (new SimpleMarkupAttribute ("label", "ok"));
 		entry.add_markup_attribute (new SimpleMarkupAttribute ("clicked", "entry.text=\"text changed\""));
-		entry.generate_public_ast ();
+		entry.generate_public_ast (this);
 		
 		root.markup_root.add_child_tag (entry);
 		

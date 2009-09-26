@@ -8,14 +8,17 @@ using Vala;
 public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 
 	public override string me { get { assert_not_reached(); } }
+	
+	private weak MarkupParser parser;
 
 	public UnresolvedMarkupSubTag (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}	
 	
-	public override void generate_public_ast () {
-		//No public AST for future temps or attributes
+	public override void generate_public_ast (MarkupParser parser) {
+		//No public AST yet, saving parser reference for future temps or attributes
+		this.parser = parser;
 	}
 	
 	public override MarkupTag? resolve (MarkupResolver resolver) {
@@ -34,7 +37,7 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 		
 		var markup_temp = new MarkupTemp (parent_tag, tag_name, tag_namespace, source_reference);
 		parent_tag.replace_child_tag (this, markup_temp);
-		markup_temp.generate_public_ast (); //catch up with others
+		markup_temp.generate_public_ast (parser); //catch up with others
 		return markup_temp.resolve (resolver);
 	}
 	

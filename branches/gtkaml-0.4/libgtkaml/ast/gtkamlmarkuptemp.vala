@@ -16,8 +16,8 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		temp_name = markup_class.get_temp_name ();
 	}
 	
-	public override void generate_public_ast () {
-	
+	public override void generate_public_ast (MarkupParser parser) {
+		//nothing public about temps
 	}
 
 	public override MarkupTag? resolve (MarkupResolver resolver) {

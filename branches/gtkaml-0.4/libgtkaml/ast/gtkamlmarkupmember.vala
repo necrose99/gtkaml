@@ -18,7 +18,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 
 	public override string me { get { return member_name; }}
 
-	public override void generate_public_ast () {
+	public override void generate_public_ast (MarkupParser parser) {
 		generate_property ();
 	}
 	
