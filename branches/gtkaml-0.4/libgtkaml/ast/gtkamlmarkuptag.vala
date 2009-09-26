@@ -72,7 +72,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
 	 * Called when Gtkaml is resolving. 
 	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp).
-	 * Tags to remove must return 'false' here so that the SymbolResolver can remove them later
+	 * Tags to remove must return 'null' here so that the SymbolResolver can remove them later
 	 */
 	public virtual MarkupTag? resolve (MarkupResolver resolver) {
 		resolver.visit_data_type (data_type);

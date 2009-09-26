@@ -43,3 +43,18 @@ Resolver is not reentrant
 BooleanLiteral _requires_ source reference
 writing creation method names in CodeWriter (patch exists)
 
+diff --git a/vala/valacodewriter.vala b/vala/valacodewriter.vala
+index 55dd513..756e325 100644
+--- a/vala/valacodewriter.vala
++++ b/vala/valacodewriter.vala
+@@ -1353,6 +1353,10 @@ public class Vala.CodeWriter : CodeVisitor {
+ 	public override void visit_object_creation_expression (ObjectCreationExpression expr) {
+ 		write_string ("new ");
+ 		write_type (expr.type_reference);
++		if (expr.constructor != null) {
++			write_string (".");
++			write_string (expr.constructor.name);
++		}
+ 		write_string (" (");
+ 
+ 		bool first = true;
