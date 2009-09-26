@@ -128,7 +128,6 @@ public abstract class Gtkaml.MarkupTag : Object {
 			this.creation_method = max_match_method;
 			//save the CreationMethodParameters:
 			foreach (var parameter in matched_method_parameters) {
-				stderr.printf ("%s=%s(%s)\n", parameter.attribute_name, parameter.attribute_value, parameter.target_type.to_string ());
 				MarkupAttribute explicit_attribute = null;
 				if (null != (explicit_attribute = get_attribute (parameter.attribute_name))) {
 					//for the explicit ones, copy the data type from the default attribute
