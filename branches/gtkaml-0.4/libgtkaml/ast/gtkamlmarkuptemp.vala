@@ -17,7 +17,7 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	public override void generate_public_ast (MarkupParser parser) {
-		//nothing public about temps
+		assert_not_reached (); //nothing public about temps
 	}
 
 	public override MarkupTag? resolve (MarkupResolver resolver) {

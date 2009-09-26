@@ -3,22 +3,19 @@ using Vala;
 
 /**
  * Any markup tag encountered in XML that is not the root, nor has g:public/g:private identifier.
- * Can later morph into a complex attribute
+ * Can later morph into a complex attribute or into a temp
  */
 public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 
 	public override string me { get { assert_not_reached(); } }
 	
-	private weak MarkupParser parser;
-
 	public UnresolvedMarkupSubTag (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null)
 	{
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}	
 	
 	public override void generate_public_ast (MarkupParser parser) {
-		//No public AST yet, saving parser reference for future temps or attributes
-		this.parser = parser;
+		//No public AST for unkown stuff
 	}
 	
 	public override MarkupTag? resolve (MarkupResolver resolver) {
@@ -37,7 +34,6 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 		
 		var markup_temp = new MarkupTemp (parent_tag, tag_name, tag_namespace, source_reference);
 		parent_tag.replace_child_tag (this, markup_temp);
-		markup_temp.generate_public_ast (parser); //catch up with others
 		return markup_temp.resolve (resolver);
 	}
 	
