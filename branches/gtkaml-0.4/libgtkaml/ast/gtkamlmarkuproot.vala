@@ -16,7 +16,9 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	}
 
 	public override void generate (MarkupResolver resolver) {
+		#if 0
 		generate_creation_method (resolver);
+		#endif
 	}
 
 	/**
