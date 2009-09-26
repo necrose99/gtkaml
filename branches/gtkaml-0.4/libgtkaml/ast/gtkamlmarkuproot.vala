@@ -16,9 +16,7 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	}
 
 	public override void generate (MarkupResolver resolver) {
-		#if 0
-		generate_creation_method (resolver);
-		#endif
+
 	}
 
 	/**
@@ -51,6 +49,7 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 
 	/**
 	 * generate creation method with base () call
+	 * DISABLED
 	 */
 	private void generate_creation_method (MarkupResolver resolver) {
 		CreationMethod creation_method = new CreationMethod(markup_class.name, null, markup_class.source_reference);
