@@ -38,6 +38,9 @@ public abstract class Gtkaml.MarkupTag : Object {
 			return _data_type_parent.data_type;
 		}
 	}
+
+	private string _full_name;
+	public string full_name { get {	return _full_name; } }
 	
 	/** attributes explicitly found as creation parameters + default ones.
 		All in the original order.
@@ -72,6 +75,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 */
 	public virtual MarkupTag? resolve (MarkupResolver resolver) {
 		resolver.visit_data_type (data_type);
+		_full_name = resolved_type.data_type.get_full_name ();
 		return this;
 	}
 	
@@ -156,7 +160,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 			required += "'" + parameters[i].name + "',";
 		}
 		required += "'" + parameters[i].name + "'";
-		Report.error (source_reference, "at least %s required for %s instantiation.\n".printf (required, resolved_type.data_type.get_full_name ()));
+		Report.error (source_reference, "at least %s required for %s instantiation.\n".printf (required, full_name));
 	}
 	
 	/**
