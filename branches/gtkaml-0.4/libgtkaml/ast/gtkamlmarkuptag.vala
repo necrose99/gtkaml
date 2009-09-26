@@ -140,11 +140,23 @@ public abstract class Gtkaml.MarkupTag : Object {
 				}
 			}
 		} else {
-			var required = "";
-			foreach (var parameter in min_match_method.get_parameters ()) required += "'" + parameter.name + "' ";
-			Report.error (source_reference, "at least %s are required\n".printf (required));
+			resolve_creation_method_failed (min_match_method);
 		}
 		
+	}
+
+	/**
+         * decides weather to halt on error or just issue an warning
+         */
+	virtual void resolve_creation_method_failed (Method min_match_method){
+		var required = "";
+		var parameters = min_match_method.get_parameters ();
+		int i = 0;
+		for (; i < parameters.size - 1; i++ ) {
+			required += "'" + parameters[i].name + "',";
+		}
+		required += "'" + parameters[i].name + "'";
+		Report.error (source_reference, "at least %s required for %s instantiation.\n".printf (required, resolved_type.data_type.get_full_name ()));
 	}
 	
 	/**
