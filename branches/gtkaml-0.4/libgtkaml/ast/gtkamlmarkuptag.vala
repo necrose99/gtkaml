@@ -103,7 +103,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 		
 		do {
 			var current_candidate = candidates.get (i);
-			var parameters = resolver.get_default_parameters (this, current_candidate, source_reference);
+			var parameters = resolver.get_default_creation_method_parameters (this, current_candidate, source_reference);
 			int matches = 0;
 
 			foreach (var parameter in parameters) {
@@ -167,7 +167,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
 	 * returns the list of possible creation methods
 	 */
-	public virtual Gee.List<CreationMethod> get_creation_method_candidates () {
+	internal virtual Gee.List<CreationMethod> get_creation_method_candidates () {
 		assert (resolved_type.data_type is Class);
 
 		Gee.List<CreationMethod> candidates = new Gee.ArrayList<CreationMethod> ();

@@ -21,10 +21,6 @@ resolve_hints ():
 3. cherry-pick creation and composition methods => parameter resolution
   Given a data type, set aside creation parameters. These will be used with base() or base.parameter etc.
 (DONE for creation methods of temps. TODO for all tags, and for composition methods)
-TODO:
-- break creation method into - detection (so that base () can complain no explicit method allowed) 
-                         and - matching
-- write construct and creation method assignments
 4. recurse step 3. over children
 
 resolve_attributes ():

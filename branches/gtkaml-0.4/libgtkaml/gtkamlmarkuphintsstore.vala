@@ -34,31 +34,6 @@ public class Gtkaml.MarkupHintsStore {
 			}
 		}
 	}
-
-	public Gee.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Method m, SourceReference? source_reference = null) {
-		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
-		var hint = markup_hints.get (full_type_name);
-		if (hint != null) {
-			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
-			if (parameter_hints != null) {
-				assert (parameter_hints.size == m.get_parameters ().size);
-				//actual merge. with two parralell foreaches
-				int i = 0;
-				foreach (var formal_parameter in m.get_parameters ()) {
-					assert ( i < parameter_hints.size );
-					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type, source_reference );
-					parameters.add (parameter);
-					i++;
-				}
-				return parameters;
-			} 
-		}	
-		foreach (var formal_parameter in m.get_parameters ()) {
-			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
-			parameters.add (parameter);
-		}
-		return parameters;
-	}	
 	
 	void parse_package (string package_filename) {
 		KeyFile key_file = new KeyFile ();
