@@ -65,6 +65,8 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				
 			//attributes last
 			resolved_tag.resolve_creation_method (this);
+			if (resolved_tag is MarkupSubTag)
+				(resolved_tag as MarkupSubTag).resolve_composition_method (this);
 		}		
 		return resolved_tag != null;
 	}
@@ -138,36 +140,41 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			Gee.List<string> names = hint.get_composition_method_names ();
 			foreach (var name in names) {
 				Member? m = resolve_composition_method (parent_tag_symbol, name);
-				if (m == null)
+				if (m == null) {
 					Report.error (null, "Invalid composition method hint: %s does not belong to %s".printf (name, parent_tag_symbol.get_full_name ()) );
-				else
+				} else {
+					stderr.printf (" FOUND!\n");
 					candidates.add (m as Member);
+				}
 			}
 		}
 		if (parent_tag_symbol is Class) {
 			Class parent_class = parent_tag_symbol as Class;
-			foreach (Member m in get_composition_method_candidates (parent_class.base_class))
-				candidates.add (m);
-			foreach (var base_type in parent_class.get_base_types ()) {
+			if (parent_class.base_class != null)
+				foreach (Member m in get_composition_method_candidates (parent_class.base_class))
+					candidates.add (m);
+			foreach (var base_type in parent_class.get_base_types ())
 				foreach (Member m in get_composition_method_candidates (base_type.data_type))
 					candidates.add (m);
-			}
 		} 
 		return candidates;
 	}
 	
 	/** returns method or signal */
 	private Member? resolve_composition_method (TypeSymbol type, string name) {
+		stderr.printf ("\rsearching %s in %s..", name, type.name);
 		if (type is Class) {
 			Class class_type = type as Class;
 			foreach (var m in class_type.get_methods ())
 				if (m.name == name) return m;
 			foreach (var s in class_type.get_signals ())
 				if (s.name == name) return s;
-			Member? m = resolve_composition_method (class_type.base_class, name);
-			if (m != null) return m;
+			if (class_type.base_class != null) {
+				Member? m = resolve_composition_method (class_type.base_class, name);
+				if (m != null) return m;
+			}
 			foreach (var base_type in class_type.get_base_types ()) {
-				m = resolve_composition_method (base_type.data_type, name);
+				Member ?m = resolve_composition_method (base_type.data_type, name);
 				if (m != null) return m;
 			}
 		} else

@@ -34,7 +34,7 @@ new.with_mnemonic = label
 
 [Gtk.Container]
 ## see issue #7 - we can't use add () for the moment because its a signal
-adds=add_with_properties
+adds=add
 
 [Gtk.ScrolledWindow]
 ## actually add_with_properties reffers to Container.add_with_properties
@@ -43,7 +43,7 @@ adds = add_with_properties;add_with_viewport
 new = hadjustment={null};vadjustment={null}
 
 [Gtk.Box]
-adds = pack_start;pack_end;pack_start_defaults;pack_end_defaults
+adds = pack_start;pack_end
 ## defaulting as per pack_start_defaults/pack_end_defaults
 add.pack_start = widget;expand=true;fill=true;padding=0
 add.pack_end   = widget;expand=true;fill=true;padding=0

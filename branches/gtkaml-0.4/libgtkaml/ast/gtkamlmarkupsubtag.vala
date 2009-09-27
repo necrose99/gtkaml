@@ -14,11 +14,8 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		this.parent_tag = parent_tag;
 	}
 
-	/**
-	 * returns the list of this tag's composition methods/signals
-	 */
-	Gee.List<Member> get_composition_method_candidates (MarkupResolver resolver) {
-		return resolver.get_composition_method_candidates (this.parent_tag.resolved_type.data_type as TypeSymbol);
+	public void resolve_composition_method (MarkupResolver resolver) {
+		var candidates = resolver.get_composition_method_candidates (this.parent_tag.resolved_type.data_type as TypeSymbol);
 	}
 
 	/**
