@@ -143,7 +143,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				if (m == null) {
 					Report.error (null, "Invalid composition method hint: %s does not belong to %s".printf (name, parent_tag_symbol.get_full_name ()) );
 				} else {
+					#if DEBUGMARKUPHINTS
 					stderr.printf (" FOUND!\n");
+					#endif
 					candidates.add (m as Member);
 				}
 			}
@@ -162,7 +164,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	
 	/** returns method or signal */
 	private Member? resolve_composition_method (TypeSymbol type, string name) {
+		#if DEBUGMARKUPHINTS
 		stderr.printf ("\rsearching %s in %s..", name, type.name);
+		#endif
 		if (type is Class) {
 			Class class_type = type as Class;
 			foreach (var m in class_type.get_methods ())
