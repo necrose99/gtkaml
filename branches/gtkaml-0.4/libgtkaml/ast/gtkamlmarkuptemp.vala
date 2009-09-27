@@ -13,7 +13,6 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	{
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 		//FIXME: get_temp_name is weird
-		markup_class.get_temp_name ();
 		temp_name = markup_class.get_temp_name ();
 	}
 	

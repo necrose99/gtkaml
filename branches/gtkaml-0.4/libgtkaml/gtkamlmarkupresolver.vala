@@ -139,7 +139,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		if (hint != null) {
 			Gee.List<string> names = hint.get_composition_method_names ();
 			foreach (var name in names) {
-				Member? m = resolve_composition_method (parent_tag_symbol, name);
+				Member? m = search_method_or_signal (parent_tag_symbol, name);
 				if (m == null) {
 					Report.error (null, "Invalid composition method hint: %s does not belong to %s".printf (name, parent_tag_symbol.get_full_name ()) );
 				} else {
@@ -163,7 +163,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	}
 	
 	/** returns method or signal */
-	private Member? resolve_composition_method (TypeSymbol type, string name) {
+	private Member? search_method_or_signal (TypeSymbol type, string name) {
 		#if DEBUGMARKUPHINTS
 		stderr.printf ("\rsearching %s in %s..", name, type.name);
 		#endif
@@ -174,11 +174,11 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			foreach (var s in class_type.get_signals ())
 				if (s.name == name) return s;
 			if (class_type.base_class != null) {
-				Member? m = resolve_composition_method (class_type.base_class, name);
+				Member? m = search_method_or_signal (class_type.base_class, name);
 				if (m != null) return m;
 			}
 			foreach (var base_type in class_type.get_base_types ()) {
-				Member ?m = resolve_composition_method (base_type.data_type, name);
+				Member ?m = search_method_or_signal (base_type.data_type, name);
 				if (m != null) return m;
 			}
 		} else
