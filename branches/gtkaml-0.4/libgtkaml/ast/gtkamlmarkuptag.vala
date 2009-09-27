@@ -80,6 +80,13 @@ public abstract class Gtkaml.MarkupTag : Object {
 		return this;
 	}
 	
+	/**
+	 * Called when Gtkaml is resolving, after recursing over children
+	 */
+	public virtual void resolve_attributes (MarkupResolver resolver) {
+		resolve_creation_method (resolver);
+	}
+	
 	/** 
 	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
 	 * Final AST generation phase (all AST)

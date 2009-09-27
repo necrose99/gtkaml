@@ -14,7 +14,12 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		this.parent_tag = parent_tag;
 	}
 
-	public void resolve_composition_method (MarkupResolver resolver) {
+	public override void resolve_attributes (MarkupResolver resolver) {
+		base.resolve_attributes (resolver);
+		resolve_composition_method (resolver);
+	}
+
+	void resolve_composition_method (MarkupResolver resolver) {
 		var candidates = resolver.get_composition_method_candidates (this.parent_tag.resolved_type.data_type as TypeSymbol);
 	}
 

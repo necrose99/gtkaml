@@ -64,9 +64,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				resolved_tag.remove_child_tag (remove);
 				
 			//attributes last
-			resolved_tag.resolve_creation_method (this);
-			if (resolved_tag is MarkupSubTag)
-				(resolved_tag as MarkupSubTag).resolve_composition_method (this);
+			resolved_tag.resolve_attributes (this);
 		}		
 		return resolved_tag != null;
 	}
