@@ -33,7 +33,9 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			Report.error (source_reference, "No composition methods found for adding %s to a %s".printf (full_name, parent_tag.full_name));
 			return;
 		}
-
+		stderr.printf ("candidates:");
+		foreach (var c in candidates) stderr.printf ("%s,", c.name);
+		stderr.printf ("\n");
 		//go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
 		//so that we know the best match method, if found, otherwise the minimum number of arguments to specify
 
