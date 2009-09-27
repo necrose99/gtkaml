@@ -47,6 +47,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 		All in the original order.
 	 */
 	public Gee.List<MarkupAttribute> creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	/** resolved creation method */
 	public CreationMethod creation_method;
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
@@ -110,7 +111,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 		
 		do {
 			var current_candidate = candidates.get (i);
-			var parameters = resolver.get_default_creation_method_parameters (this, current_candidate, source_reference);
+			var parameters = resolver.get_default_parameters (full_name, new Callable(current_candidate), source_reference);
 			int matches = 0;
 
 			foreach (var parameter in parameters) {
@@ -152,7 +153,14 @@ public abstract class Gtkaml.MarkupTag : Object {
 				}
 			}
 		} else {
-			resolve_creation_method_failed (min_match_method);
+			var required = "";
+			var parameters = min_match_method.get_parameters ();
+			i = 0;
+			for (; i < parameters.size - 1; i++ ) {
+				required += "'" + parameters[i].name + "',";
+			}
+			required += "'" + parameters[i].name + "'";
+			resolve_creation_method_failed (source_reference, "at least %s required for %s instantiation.".printf (required, full_name));
 		}
 		
 	}
@@ -160,15 +168,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
      * decides weather to halt on error or just issue an warning
      */
-	virtual void resolve_creation_method_failed (Method min_match_method){
-		var required = "";
-		var parameters = min_match_method.get_parameters ();
-		int i = 0;
-		for (; i < parameters.size - 1; i++ ) {
-			required += "'" + parameters[i].name + "',";
-		}
-		required += "'" + parameters[i].name + "'";
-		Report.error (source_reference, "at least %s required for %s instantiation.".printf (required, full_name));
+	virtual void resolve_creation_method_failed (SourceReference source_reference, string message) {
+		Report.error (source_reference, message);
 	}
 	
 	/**

@@ -28,7 +28,8 @@ libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupnamespace.vala \
 	gtkamlmarkuphint.vala \
 	gtkamlmarkuphintsstore.vala \
-	workarounds/gtkamldatatypeparent.vala
+	workarounds/gtkamldatatypeparent.vala \
+	workarounds/gtkamlcallable.vala
 
 libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \

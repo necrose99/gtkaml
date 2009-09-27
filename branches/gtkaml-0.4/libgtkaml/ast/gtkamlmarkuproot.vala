@@ -36,16 +36,10 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		return candidates;
 	}
 
-	override void resolve_creation_method_failed (Method min_match_method){
-		var required = "";
-		var parameters = min_match_method.get_parameters ();
-		int i = 0;
-		for (; i < parameters.size - 1; i++ ) {
-			required += "'" + parameters[i].name + "',";
-		}
-		required += "'" + parameters[i].name + "'";
-		Report.warning (source_reference, "at least %s required for %s instantiation.\n".printf (required, full_name));
+	override void resolve_creation_method_failed (SourceReference source_reference, string message) {
+		Report.warning (source_reference, message);
 	}
+
 
 	private void parse_class_members (MarkupParser parser, string source) {
 		var classes = parser.call_vala_parser ("public class %s { %s }".printf ("Temp", source), "%s-members".printf (tag_name)).get_classes();
