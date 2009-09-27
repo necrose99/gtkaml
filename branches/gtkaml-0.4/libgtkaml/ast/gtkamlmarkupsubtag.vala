@@ -39,12 +39,23 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 		int min = 100; Callable min_match_method = candidates.get (0);
 		int max = -1; Callable max_match_method = candidates.get (0);
+		SimpleMarkupAttribute max_self = new SimpleMarkupAttribute("not-intialized-warning-was-true",null);
 		Gee.List<SimpleMarkupAttribute> matched_method_parameters = new Gee.ArrayList<MarkupAttribute> ();
 		
 		var i = 0;
 		
 		do {
 			var current_candidate = candidates.get (i);
+			
+			SimpleMarkupAttribute self;
+			if (current_candidate.get_parameters ().size == 0) {
+				Report.warning (null, "%s composition method has no parameters".printf (current_candidate.name));
+				continue;
+			} else {
+				self = new SimpleMarkupAttribute (current_candidate.get_parameters ().get(0).name, "{"+me+"}", source_reference);
+				add_markup_attribute (self);
+			}
+			
 			var parameters = resolver.get_default_parameters (full_name, current_candidate, source_reference);
 			int matches = 0;
 
@@ -63,16 +74,20 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 				assert (matches == parameters.size);
 				if (parameters.size > max) {
 					max = parameters.size;
+					max_self = self;
 					max_match_method = current_candidate;
 					matched_method_parameters = parameters;
 				}
 			}
 
 			i++;
+			
+			remove_attribute (self);
 		} while ( i < candidates.size );
 
 		if (max_match_method.get_parameters ().size == max) { 
 			this.composition_method = max_match_method;
+			add_markup_attribute (max_self);
 			//save the CreationMethodParameters:
 			foreach (var parameter in matched_method_parameters) {
 				MarkupAttribute explicit_attribute = null;
@@ -86,6 +101,10 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 					this.composition_parameters.add (parameter);
 				}
 			}
+			string message = "using %s ( ";
+			foreach (var p in composition_parameters)
+				message += p.attribute_name + "=" + (p as SimpleMarkupAttribute).attribute_value + " ";
+			stderr.printf (message + "\n", composition_method.name);
 		} else {
 			var required = "";
 			var parameters = min_match_method.get_parameters ();
