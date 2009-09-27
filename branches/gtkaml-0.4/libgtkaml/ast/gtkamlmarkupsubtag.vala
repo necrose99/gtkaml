@@ -21,6 +21,10 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 	void resolve_composition_method (MarkupResolver resolver) {
 		var candidates = resolver.get_composition_method_candidates (this.parent_tag.resolved_type.data_type as TypeSymbol);
+		if (candidates.size == 0) {
+			Report.error (source_reference, "No composition methods found for adding %s to a %s".printf (full_name, parent_tag.full_name));
+			return;
+		}
 	}
 
 	/**

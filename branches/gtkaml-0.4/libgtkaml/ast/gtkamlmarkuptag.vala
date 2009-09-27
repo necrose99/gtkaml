@@ -168,7 +168,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 			required += "'" + parameters[i].name + "',";
 		}
 		required += "'" + parameters[i].name + "'";
-		Report.error (source_reference, "at least %s required for %s instantiation.\n".printf (required, full_name));
+		Report.error (source_reference, "at least %s required for %s instantiation.".printf (required, full_name));
 	}
 	
 	/**
