@@ -34,7 +34,7 @@ libgtkaml_la_VALASOURCES = \
 libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \
 	$(libgtkaml_la_VALASOURCES:.vala=.c) \
-	$(libgtkaml_la_VALASOURCES:.vala=.h)
+	gtkaml.h
 
 libgtkaml.stamp: $(libgtkaml_la_VALASOURCES)
 	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 $^
