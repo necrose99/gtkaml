@@ -22,4 +22,7 @@ public class Gtkaml.Callable {
 	}
 	
 	public string name { get { return member.name; } }
+	
+	public Symbol? parent_symbol { get { return member.parent_symbol; } }
+	}
 }

@@ -53,13 +53,13 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			if (current_candidate.get_parameters ().size == 0) {
 				Report.warning (null, "%s composition method has no parameters".printf (current_candidate.name));
 				continue;
-			} else {
-				self = new SimpleMarkupAttribute (current_candidate.get_parameters ().get(0).name, "{"+me+"}", source_reference);
-				add_markup_attribute (self);
 			}
-			
-			var parameters = resolver.get_default_parameters (full_name, current_candidate, source_reference);
+
+			var parameters = resolver.get_default_parameters (current_candidate.parent_symbol.get_full_name (), current_candidate, source_reference);
 			int matches = 0;
+
+			self = new SimpleMarkupAttribute (parameters.get(0).attribute_name, "{"+me+"}", source_reference);
+			add_markup_attribute (self);
 
 			foreach (var parameter in parameters) {
 				if ( (null != get_attribute (parameter.attribute_name)) || parameter.attribute_value != null) {
@@ -68,18 +68,22 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			}
 			
 			if (matches < parameters.size) {  //does not match
+				stderr.printf ("%d<%d => %s does not match..", matches, parameters.size, current_candidate.name);
 				if (parameters.size < min) {
+					stderr.printf ("new minimum reached\n");
 					min = parameters.size;
 					min_match_method = current_candidate;
-				}
+				} else stderr.printf ("\n");
 			} else {
+				stderr.printf ("%d=%d => %s does match..", matches, parameters.size, current_candidate.name);
 				assert (matches == parameters.size);
 				if (parameters.size > max) {
+					stderr.printf ("new maximum reached\n");
 					max = parameters.size;
 					max_self = self;
 					max_match_method = current_candidate;
 					matched_method_parameters = parameters;
-				}
+				} else stderr.printf ("\n");
 			}
 
 			i++;

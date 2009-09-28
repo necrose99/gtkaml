@@ -80,7 +80,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		var hint = markup_hints.markup_hints.get (full_type_name);
 		if (hint != null) {
 			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
-			if (parameter_hints != null) {
+			if (parameter_hints == null) parameter_hints = hint.get_composition_method_parameters (m.name); //FIXME this if is disturbing
+			if (parameter_hints != null && parameter_hints.size != 0) {
+				stderr.printf ("found hints: "); foreach (var pair in parameter_hints) stderr.printf ("%s=%s ", pair.name, pair.value); stderr.printf ("\n");
 				assert (parameter_hints.size == m.get_parameters ().size);
 				//actual merge. with two parralell foreaches
 				int i = 0;
@@ -91,8 +93,8 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 					i++;
 				}
 				return parameters;
-			} 
-		}	
+			} else stderr.printf ("No hints for %s.%s\n", full_type_name, m.name);
+		} else stderr.printf ("No hints for %s\n", full_type_name);	
 		foreach (var formal_parameter in m.get_parameters ()) {
 			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
 			parameters.add (parameter);
