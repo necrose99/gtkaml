@@ -126,7 +126,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 	/**
 	 * returns the list of possible creation methods, containing a single element if explicitly requested
 	 */
-	public override Gee.List<CreationMethod> get_creation_method_candidates () {
+	internal override Gee.List<CreationMethod> get_creation_method_candidates () {
 		var candidates = base.get_creation_method_candidates ();
 		
 		//for subtags: one of the creation method's name is present with the value "true"
