@@ -18,34 +18,9 @@ The default installation path for MSYS is *C:/msys/1.0*
 Now you should already have an msys shortcut on your desktop to start the rxvt terminal and play with shell commands like `ls -l` et co.;)
 
 ===gtkaml prerequisites===
-gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/download-windows.html www.gtk.org]. 
+gtkaml requires gtk-2.0, which is available for download at [http://www.gtk.org/download-windows.html www.gtk.org].
 
-Take your time to read about the packages, then download the _required_ packages (ticked) _and_ their *-dev* counterparts, plus `pkg-config` and `iconv` (with -dev too)
-
-You should have a bunch of **.zip files by now (here is what you might expect currently, but please check the http://www.gtk.org site for updates):
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.16/glib-2.16.1.zip glib-2.16.1.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.16/glib-dev-2.16.1.zip glib-dev-2.16.1.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-2.12.9.zip gtk+-2.12.9.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.12/gtk+-dev-2.12.9.zip gtk+-dev-2.12.9.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.20/pango-1.20.0.zip pango-1.20.0.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.20/pango-dev-1.20.0.zip pango-dev-1.20.0.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.22/atk-1.22.0.zip atk-1.22.0.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.22/atk-dev-1.22.0.zip atk-dev-1.22.0.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-1.4.14.zip cairo-1.4.14.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/cairo-dev-1.4.14.zip cairo-dev-1.4.14.zip]
-
-And their dependencies:
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config-0.23-2.zip pkg-config-0.23-2.zip]
-  * [http://www.zlib.net/zlib123-dll.zip zlib123-dll.zip]
-  * [http://www.gimp.org/~tml/gimp/win32/libiconv-1.9.1.bin.woe32.zip libiconv-1.9.1.bin.woe32.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-0.17-1.zip  gettext-runtime-0.17-1.zip]
-  * [http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-dev-0.17-1.zip gettext-runtime-dev-0.17-1.zip]
-  * [http://downloads.sourceforge.net/gnuwin32/libpng-1.2.8-bin.zip libpng-1.2.8-bin.zip]
-  * [http://downloads.sourceforge.net/gnuwin32/libpng-1.2.8-lib.zip libpng-1.2.8-lib.zip]
-  * [http://gnuwin32.sourceforge.net/downlinks/jpeg-bin-zip.php jpeg-bin.zip]
-  * [http://gnuwin32.sourceforge.net/downlinks/jpeg-lib-zip.php jpeg-lib.zip]
-  * [http://gnuwin32.sourceforge.net/downlinks/tiff-bin-zip.php tiff-bin.zip]
-  * [http://gnuwin32.sourceforge.net/downlinks/tiff-lib-zip.php tiff-lib.zip]
+Just get the developer bundle.
 
 Make a folder named *C:/usr* (or C:/libs or how you prefer) and unzip _all_ the files there. They usually come with sub-directories like `include`, `bin`, `share` and `lib` and they will nicely overlap just like on a UNIX `/usr` folder.
 
