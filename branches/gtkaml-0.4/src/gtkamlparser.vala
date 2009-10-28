@@ -64,7 +64,7 @@ public class Gtkaml.Parser : CodeVisitor {
 		message ("%d ", root.get_constants ().size);
 		message ("%d ", root.get_methods ().size);
 		message ("%d ", root.get_namespaces ().size);
-		Gee.List <LocalVariable> locals = new Gee.ArrayList<LocalVariable>();
+		Vala.List <LocalVariable> locals = new Vala.ArrayList<LocalVariable>();
 		root.get_defined_variables (locals);
 		message ("%d ", locals.size );
 		message ("%d ", root.get_delegates ().size);

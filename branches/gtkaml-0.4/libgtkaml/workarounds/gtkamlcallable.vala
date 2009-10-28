@@ -14,7 +14,7 @@ public class Gtkaml.Callable {
 		assert (member is Vala.Signal || member is Method);
 	}
 	
-	public Gee.List<FormalParameter> get_parameters ()
+	public Vala.List<FormalParameter> get_parameters ()
 	{
 		if (member is Method)
 			return ((Method)member).get_parameters ();
@@ -24,5 +24,4 @@ public class Gtkaml.Callable {
 	public string name { get { return member.name; } }
 	
 	public Symbol? parent_symbol { get { return member.parent_symbol; } }
-	}
 }

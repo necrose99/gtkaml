@@ -19,7 +19,7 @@ using Vala;
 public class Gtkaml.MarkupParser : CodeVisitor {
 
 	private CodeContext context;
-	private Gee.List<SourceFile> temp_source_files = new Gee.ArrayList<SourceFile> ();
+	private Vala.List<SourceFile> temp_source_files = new Vala.ArrayList<SourceFile> ();
 
 	public void parse (CodeContext context) {
 		this.context = context;

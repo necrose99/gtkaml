@@ -23,11 +23,11 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	/**
 	 * returns the list of possible creation methods, in root's case, only the default creation method
 	 */
-	internal override Gee.List<CreationMethod> get_creation_method_candidates () {
+	internal override Vala.List<CreationMethod> get_creation_method_candidates () {
 		var candidates = base.get_creation_method_candidates ();
 		foreach (var candidate in candidates) {
 			if (candidate.name == "new") {
-				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates = new Vala.ArrayList<CreationMethod> ();
 				candidates.add (candidate);
 				break;//before foreach complains
 			}

@@ -33,7 +33,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		generate_markup_tag (mcl.markup_root);
 	}
 	
-	public Gee.List<DataType> get_what_extends (DataType type) {
+	public Vala.List<DataType> get_what_extends (DataType type) {
 		if (type is Class) {
 			return (type as Class).get_base_types ();
 		} 
@@ -42,7 +42,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			return (type as Interface).get_prerequisites (); 
 		}
 		else
-			return new Gee.ArrayList<DataType> ();
+			return new Vala.ArrayList<DataType> ();
 	}
 	
 	/** processes tag hierarchy. Removes unresolved ones after this step */
@@ -51,7 +51,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		MarkupTag? resolved_tag = markup_tag.resolve (this);
 		
 		if (resolved_tag != null) {
-			Gee.List<MarkupSubTag> to_remove = new Gee.ArrayList<MarkupSubTag> ();
+			Vala.List<MarkupSubTag> to_remove = new Vala.ArrayList<MarkupSubTag> ();
 
 			//recurse
 			foreach (var child_tag in resolved_tag.get_child_tags ()) {
@@ -75,11 +75,11 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			generate_markup_tag (child_tag);
 	}
 		
-	public Gee.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Callable m, SourceReference? source_reference = null) {
-		var parameters = new Gee.ArrayList<SimpleMarkupAttribute> ();
+	public Vala.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Callable m, SourceReference? source_reference = null) {
+		var parameters = new Vala.ArrayList<SimpleMarkupAttribute> ();
 		var hint = markup_hints.markup_hints.get (full_type_name);
 		if (hint != null) {
-			Gee.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
+			Vala.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
 			if (parameter_hints == null) parameter_hints = hint.get_composition_method_parameters (m.name); //FIXME this if is disturbing
 			if (parameter_hints != null && parameter_hints.size != 0) {
 				stderr.printf ("found hints: "); foreach (var pair in parameter_hints) stderr.printf ("%s=%s ", pair.name, pair.value); stderr.printf ("\n");
@@ -102,11 +102,11 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		return parameters;
 	}	
 
-	public Gee.List<Callable> get_composition_method_candidates (TypeSymbol parent_tag_symbol) {
-		Gee.List<Callable> candidates = new Gee.ArrayList<Callable> ();
+	public Vala.List<Callable> get_composition_method_candidates (TypeSymbol parent_tag_symbol) {
+		Vala.List<Callable> candidates = new Vala.ArrayList<Callable> ();
 		var hint = markup_hints.markup_hints.get (parent_tag_symbol.get_full_name ());
 		if (hint != null) {
-			Gee.List<string> names = hint.get_composition_method_names ();
+			Vala.List<string> names = hint.get_composition_method_names ();
 			foreach (var name in names) {
 				Member? m = search_method_or_signal (parent_tag_symbol, name);
 				if (m == null) {

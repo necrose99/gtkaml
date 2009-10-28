@@ -13,25 +13,25 @@ public class Gtkaml.MarkupHint {
 	//public TypeSymbol symbol; //TODO use this
 	
 	///** cache of the base markup hints */
-	//Gee.List<weak MarkupHint> base_hint_cache; //of course is not used, it's a premature optimisation:P!
+	//Vala.List<weak MarkupHint> base_hint_cache; //of course is not used, it's a premature optimisation:P!
 	
 	private static string ADD = "add-"; //composition methods
 	private static string NEW = "new-"; //creation methods
 	
 	/* maps for directly navigating to a given creation/composition method*/
-	private Gee.Map<string, Gee.List<Pair<string,string?>>> hint_map;
+	private Vala.Map<string, Vala.List<Pair<string,string?>>> hint_map;
 	
 	/* lists for preserving .markuphints file order */
-	private Gee.List<Pair<string, Gee.List<Pair<string, string?>>>> hint_list;
+	private Vala.List<Pair<string, Vala.List<Pair<string, string?>>>> hint_list;
 	
 	public MarkupHint (string target) {
 		this.target = target;
-		this.hint_map = new Gee.HashMap<string, Gee.List<Pair<string,string?>>> (str_hash, str_equal);
-		this.hint_list = new Gee.ArrayList<Pair<string, Gee.List<Pair<string, string?>>>> ();
+		this.hint_map = new Vala.HashMap<string, Vala.List<Pair<string,string?>>> (str_hash, str_equal);
+		this.hint_list = new Vala.ArrayList<Pair<string, Vala.List<Pair<string, string?>>>> ();
 	}
 	
-	public Gee.List<string> get_composition_method_names ()	{
-		Gee.List<string> methods = new Gee.ArrayList<string> ();
+	public Vala.List<string> get_composition_method_names ()	{
+		Vala.List<string> methods = new Vala.ArrayList<string> ();
 		foreach (var method_pair in hint_list) {
 			if (method_pair.name.has_prefix (MarkupHint.ADD))
 				methods.add (method_pair.name.substring (MarkupHint.ADD.length));
@@ -39,11 +39,11 @@ public class Gtkaml.MarkupHint {
 		return methods;
 	}
 	
-	public Gee.List<Pair<string, string?>> get_creation_method_parameters (string name) {
+	public Vala.List<Pair<string, string?>> get_creation_method_parameters (string name) {
 		return hint_map.get (MarkupHint.NEW + name);
 	}
 
-	public Gee.List<Pair<string, string?>> get_composition_method_parameters (string name) {
+	public Vala.List<Pair<string, string?>> get_composition_method_parameters (string name) {
 		return hint_map.get (MarkupHint.ADD + name);
 	}
 	
@@ -52,9 +52,9 @@ public class Gtkaml.MarkupHint {
 	private void add_hint (string hint_name, string type) {
 		var full_hint_name = type + hint_name;
 		if (!hint_map.contains (full_hint_name)) {
-			var parameters_list = new Gee.ArrayList<Pair<string, string?>> ();
+			var parameters_list = new Vala.ArrayList<Pair<string, string?>> ();
 			hint_map.set (full_hint_name, parameters_list);
-			hint_list.add (new Pair<string, Gee.List<Pair<string, string?>>> (full_hint_name, parameters_list));
+			hint_list.add (new Pair<string, Vala.List<Pair<string, string?>>> (full_hint_name, parameters_list));
 		}
 	}
 	

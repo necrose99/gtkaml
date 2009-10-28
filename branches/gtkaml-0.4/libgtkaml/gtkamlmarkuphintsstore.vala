@@ -5,12 +5,12 @@ using Vala;
  * stores a map between *.markuphints symbols like [Gtk.Window] and their markup hints
  */
 public class Gtkaml.MarkupHintsStore {
-	public Gee.Map<string, MarkupHint> markup_hints;
+	public Vala.Map<string, MarkupHint> markup_hints;
 	public CodeContext context;
 
 	public MarkupHintsStore (CodeContext context) {
 		this.context = context;
-		markup_hints = new Gee.HashMap<string, MarkupHint> (str_hash, str_equal);
+		markup_hints = new Vala.HashMap<string, MarkupHint> (str_hash, str_equal);
 	}
 
 	public void parse () {

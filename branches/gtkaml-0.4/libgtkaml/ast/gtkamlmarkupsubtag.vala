@@ -12,7 +12,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 	/** attributes explicitly found as composition parameters + default ones.
 		All in the original order.
 	 */
-	public Gee.List<MarkupAttribute> composition_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	public Vala.List<MarkupAttribute> composition_parameters = new Vala.ArrayList<MarkupAttribute> ();
 	/** resolved composition method */
 	public Callable composition_method;
 
@@ -42,7 +42,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		int min = 100; Callable min_match_method = candidates.get (0);
 		int max = -1; Callable max_match_method = candidates.get (0);
 		SimpleMarkupAttribute max_self = new SimpleMarkupAttribute("not-intialized-warning-was-true",null);
-		Gee.List<SimpleMarkupAttribute> matched_method_parameters = new Gee.ArrayList<MarkupAttribute> ();
+		Vala.List<SimpleMarkupAttribute> matched_method_parameters = new Vala.ArrayList<MarkupAttribute> ();
 		
 		var i = 0;
 		
@@ -126,7 +126,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 	/**
 	 * returns the list of possible creation methods, containing a single element if explicitly requested
 	 */
-	internal override Gee.List<CreationMethod> get_creation_method_candidates () {
+	internal override Vala.List<CreationMethod> get_creation_method_candidates () {
 		var candidates = base.get_creation_method_candidates ();
 		
 		//for subtags: one of the creation method's name is present with the value "true"
@@ -134,7 +134,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			var explicit = get_attribute (candidate.name);
 			if (explicit != null) {
 				remove_attribute (explicit);
-				candidates = new Gee.ArrayList<CreationMethod> ();
+				candidates = new Vala.ArrayList<CreationMethod> ();
 				candidates.add (candidate);
 				break;//before foreach complains
 			}

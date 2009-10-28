@@ -11,8 +11,8 @@ using Vala;
  */ 
 public abstract class Gtkaml.MarkupTag : Object {
 	
-	protected Gee.List<MarkupSubTag> child_tags = new Gee.ArrayList<MarkupSubTag> ();
-	protected Gee.List<MarkupAttribute> markup_attributes = new Gee.ArrayList<MarkupAttribute> ();
+	protected Vala.List<MarkupSubTag> child_tags = new Vala.ArrayList<MarkupSubTag> ();
+	protected Vala.List<MarkupAttribute> markup_attributes = new Vala.ArrayList<MarkupAttribute> ();
 
 	/** not-ignorable text nodes concatenated */
 	public string text {get; set;}
@@ -46,7 +46,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/** attributes explicitly found as creation parameters + default ones.
 		All in the original order.
 	 */
-	public Gee.List<MarkupAttribute> creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+	public Vala.List<MarkupAttribute> creation_parameters = new Vala.ArrayList<MarkupAttribute> ();
 	/** resolved creation method */
 	public CreationMethod creation_method;
 	
@@ -60,7 +60,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 		this.data_type.value_owned = true;
 		
 		this._data_type_parent = new DataTypeParent (data_type);
-		this.creation_parameters = new Gee.ArrayList<MarkupAttribute> ();
+		this.creation_parameters = new Vala.ArrayList<MarkupAttribute> ();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 
 		int min = 100; CreationMethod min_match_method = candidates.get (0);
 		int max = -1; CreationMethod max_match_method = candidates.get (0);
-		Gee.List<SimpleMarkupAttribute> matched_method_parameters = new Gee.ArrayList<MarkupAttribute> ();
+		Vala.List<SimpleMarkupAttribute> matched_method_parameters = new Vala.ArrayList<MarkupAttribute> ();
 		
 		var i = 0;
 		
@@ -175,10 +175,10 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
 	 * returns the list of possible creation methods
 	 */
-	internal virtual Gee.List<CreationMethod> get_creation_method_candidates () {
+	internal virtual Vala.List<CreationMethod> get_creation_method_candidates () {
 		assert (resolved_type.data_type is Class);
 
-		Gee.List<CreationMethod> candidates = new Gee.ArrayList<CreationMethod> ();
+		Vala.List<CreationMethod> candidates = new Vala.ArrayList<CreationMethod> ();
 		foreach (Method m in (resolved_type.data_type as Class).get_methods ()) {
 			if (m is CreationMethod) candidates.add (m as CreationMethod);
 		}
@@ -187,8 +187,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		return candidates;
 	}
 	
-	public Gee.ReadOnlyList<MarkupSubTag> get_child_tags () {
-		return new Gee.ReadOnlyList<MarkupSubTag> (child_tags);
+	public Vala.ReadOnlyList<MarkupSubTag> get_child_tags () {
+		return new Vala.ReadOnlyList<MarkupSubTag> (child_tags);
 	}	
 		
 	public void add_child_tag (MarkupSubTag child_tag) {
@@ -214,8 +214,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		child_tags.remove (old_child);
 	}
 
-	public Gee.ReadOnlyList<MarkupAttribute> get_markup_attributes () {
-		return new Gee.ReadOnlyList<MarkupAttribute> (markup_attributes);
+	public Vala.ReadOnlyList<MarkupAttribute> get_markup_attributes () {
+		return new Vala.ReadOnlyList<MarkupAttribute> (markup_attributes);
 	}
 	
 	public void add_markup_attribute (MarkupAttribute markup_attribute) {
