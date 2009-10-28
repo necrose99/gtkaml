@@ -33,9 +33,6 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			Report.error (source_reference, "No composition methods found for adding %s to a %s".printf (full_name, parent_tag.full_name));
 			return;
 		}
-		stderr.printf ("candidates:");
-		foreach (var c in candidates) stderr.printf ("%s,", c.name);
-		stderr.printf ("\n");
 		//go through each method, updating max&max_match_method if it matches and min&min_match_method otherwise
 		//so that we know the best match method, if found, otherwise the minimum number of arguments to specify
 
@@ -68,22 +65,18 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			}
 			
 			if (matches < parameters.size) {  //does not match
-				stderr.printf ("%d<%d => %s does not match..", matches, parameters.size, current_candidate.name);
 				if (parameters.size < min) {
-					stderr.printf ("new minimum reached\n");
 					min = parameters.size;
 					min_match_method = current_candidate;
-				} else stderr.printf ("\n");
+				}
 			} else {
-				stderr.printf ("%d=%d => %s does match..", matches, parameters.size, current_candidate.name);
 				assert (matches == parameters.size);
 				if (parameters.size > max) {
-					stderr.printf ("new maximum reached\n");
 					max = parameters.size;
 					max_self = self;
 					max_match_method = current_candidate;
 					matched_method_parameters = parameters;
-				} else stderr.printf ("\n");
+				}
 			}
 
 			i++;
@@ -107,10 +100,6 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 					this.composition_parameters.add (parameter);
 				}
 			}
-			string message = "using %s ( ";
-			foreach (var p in composition_parameters)
-				message += p.attribute_name + "=" + (p as SimpleMarkupAttribute).attribute_value + " ";
-			stderr.printf (message + "\n", composition_method.name);
 		} else {
 			var required = "";
 			var parameters = min_match_method.get_parameters ();
