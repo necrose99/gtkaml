@@ -1,6 +1,8 @@
 AM_CPPFLAGS = \
 	$(GLIB_CFLAGS) \
-	$(VALA_CFLAGS) 
+	$(VALA_CFLAGS) \
+	-DPACKAGE_DATADIR=\"$(pkgdatadir)\"
+
 
 libgtkaml_la_LIBADD = \
 	$(GLIB_LIBS) \
@@ -35,6 +37,13 @@ libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \
 	$(libgtkaml_la_VALASOURCES:.vala=.c) \
 	gtkaml.h
+
+gtkamlincludedir = $(includedir)/gtkaml-1.0
+
+gtkamlinclude_HEADERS = \
+	gtkaml.h \
+	$(NULL)
+
 
 libgtkaml.stamp: $(libgtkaml_la_VALASOURCES)
 	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 $^

@@ -16,7 +16,7 @@ AC_SUBST(CFLAGS)
 AC_SUBST(LDFLAGS)
 
 #similar to CFLAGS, use VALAFLAGS from environment
-AC_DEFINE([VALAFLAGS], VALAFLAGS, "valac flags")
+AC_SUBST(VALAFLAGS)
 
 AC_HEADER_STDC
 
@@ -38,6 +38,7 @@ AC_SUBST(VALA_LIBS)
 
 AC_CONFIG_FILES([
 Makefile
+gtkaml-1.0.pc
 src/Makefile
 libgtkaml/Makefile
 ])
