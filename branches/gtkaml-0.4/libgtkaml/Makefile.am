@@ -3,6 +3,10 @@ AM_CPPFLAGS = \
 	$(VALA_CFLAGS) \
 	-DPACKAGE_DATADIR=\"$(pkgdatadir)\"
 
+vapidir = $(datadir)/vala/vapi
+dist_vapi_DATA = \
+	gtkaml-1.0.vapi \
+	gtkaml-1.0.deps
 
 libgtkaml_la_LIBADD = \
 	$(GLIB_LIBS) \
@@ -44,6 +48,8 @@ gtkamlinclude_HEADERS = \
 	gtkaml.h \
 	$(NULL)
 
+gtkaml-1.0.vapi : gtkaml.vapi
+	cat $^ > $@
 
 libgtkaml.stamp: $(libgtkaml_la_VALASOURCES)
 	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 $^
