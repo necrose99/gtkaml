@@ -1,0 +1,10 @@
+<VBox xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk" g:name="MyVBox">  
+      <Label label="_Hello" with-mnemonic="true" expand="false" fill="false" padding="0" />
+      <Entry label="ok" g:public='entry' clicked='entry.text="text changed"' />
+<![CDATA[
+	public static int main (string[] argv) {
+		Gtk.init (ref argv);
+		return 0;
+	}
+]]>
+</VBox>
