@@ -111,7 +111,7 @@ class Gtkaml.TreeParser {
 			} else
 			if (attr->ns->href != gtkaml_uri) {
 				throw new ParseError.SYNTAX ("Attribute prefix not expected: %s".printf (attr->ns->href));
-			}
+			} 
 		}
 	}
 	
@@ -160,7 +160,12 @@ class Gtkaml.TreeParser {
 int main (string[] argv)
 {
 	try {
-		new Gtkaml.TreeParser (new CodeContext ()).parse_file (argv[1]);
+		var code_context = new CodeContext();
+		Vala.CodeContext.push (code_context);
+		new Gtkaml.TreeParser (code_context).parse_file (argv[1]);
+		
+		var code_writer = new CodeWriter (true, true);
+		code_writer.write_file (code_context, "out.vala");
 		return 0;
 	} catch {
 		return -1;
