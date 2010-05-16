@@ -70,7 +70,7 @@ public class Gtkaml.MarkupHintsStore {
 				if (key.has_prefix ("new.")) 
 					hint_method_name = key.substring (4);
 				else
-					hint_method_name = "new";
+					hint_method_name = ".new";
 
 				#if DEBUGMARKUPHINTS
 				stderr.printf ("creation method '%s' with the following parameters:\n", hint_method_name);

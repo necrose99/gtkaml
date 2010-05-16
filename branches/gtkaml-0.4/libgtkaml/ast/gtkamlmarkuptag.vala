@@ -177,10 +177,17 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 */
 	internal virtual Vala.List<CreationMethod> get_creation_method_candidates () {
 		assert (resolved_type.data_type is Class);
-
+		#if DEBUGMARKUPHINTS
+		stderr.printf ("Searching for creation method candidates for %s:\n", resolved_type.data_type.get_full_name ()); 
+		#endif
 		Vala.List<CreationMethod> candidates = new Vala.ArrayList<CreationMethod> ();
 		foreach (Method m in (resolved_type.data_type as Class).get_methods ()) {
-			if (m is CreationMethod) candidates.add (m as CreationMethod);
+			if (m is CreationMethod) { 
+				candidates.add (m as CreationMethod);
+				#if DEBUGMARKUPHINTS
+				stderr.printf ("Found candidate '%s'\n", m.name );
+				#endif
+			}
 		}
 
 		assert (candidates.size > 0);

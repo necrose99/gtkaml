@@ -81,6 +81,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		if (hint != null) {
 			Vala.List <Pair<string, string?>> parameter_hints = hint.get_creation_method_parameters (m.name);
 			if (parameter_hints == null) parameter_hints = hint.get_composition_method_parameters (m.name); //FIXME this if is disturbing
+			#if DEBUGMARKUPHINTS
+			stderr.printf ("Found %d parameters\n", parameter_hints.size);
+			#endif
 			if (parameter_hints != null && parameter_hints.size != 0) {
 				assert (parameter_hints.size == m.get_parameters ().size);
 				//actual merge. with two parralell foreaches
@@ -103,6 +106,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 
 	public Vala.List<Callable> get_composition_method_candidates (TypeSymbol parent_tag_symbol) {
 		Vala.List<Callable> candidates = new Vala.ArrayList<Callable> ();
+		#if DEBUGMARKUPHINTS
+		stderr.printf ("Searching for composition method candidates for %s\n", parent_tag_symbol.get_full_name ());
+		#endif
 		var hint = markup_hints.markup_hints.get (parent_tag_symbol.get_full_name ());
 		if (hint != null) {
 			Vala.List<string> names = hint.get_composition_method_names ();

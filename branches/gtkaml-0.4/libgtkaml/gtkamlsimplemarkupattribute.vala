@@ -36,7 +36,7 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		} else if (type_name == "bool") {
 			//TODO: full boolean check 
 			return new BooleanLiteral (attribute_value == "true", source_reference);
-		} else if (type_name == "int") {
+		} else if (type_name == "int" || type_name == "uint") {
 			return new IntegerLiteral (attribute_value, source_reference);
 		} else {
 			stderr.printf ("UPS %s type found\n", target_type.data_type.get_full_name ());

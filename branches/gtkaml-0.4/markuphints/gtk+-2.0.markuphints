@@ -85,7 +85,7 @@ adds = append_page;append_page_menu;prepend_page;prepend_page_menu;insert_page;i
 adds = add_id
 
 [Gtk.Table]
-adds = attach;attach_defaults; 
+adds = attach;attach_defaults
 ## renaming parameters
 new = n_rows;n_columns;homogeneous
 
