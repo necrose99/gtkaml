@@ -107,8 +107,12 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		for (Xml.Node* node = scanner.node->children; node != null; node = node->next)
 		{
 			if (node->type != ElementType.ELEMENT_NODE) continue;
+			
 			scanner.node = node;
-			parse_markup_subtag(scanner, parent_tag);
+			if (scanner.node->ns->href == scanner.gtkaml_uri)
+				parse_gtkaml_tag (scanner, parent_tag);
+			else
+				parse_markup_subtag(scanner, parent_tag);
 		}
 	}
 	
@@ -134,6 +138,9 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		parse_markup_subtags (scanner, markup_tag);
 	}
 
+	void parse_gtkaml_tag (MarkupScanner scanner, MarkupTag parent_tag) {
+		message ("found gtkaml tag %s".printf (scanner.node->name)); //TODO
+	}
 	
 	/**
 	 * parses a vala source string temporary stored in .gtkaml/what.vala
