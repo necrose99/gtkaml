@@ -1,6 +1,7 @@
 AM_CPPFLAGS = \
 	$(GLIB_CFLAGS) \
 	$(VALA_CFLAGS) \
+	$(LIBXML2_CFLAGS) \
 	-DPACKAGE_DATADIR=\"$(pkgdatadir)\"
 
 vapidir = $(datadir)/vala/vapi
@@ -10,7 +11,8 @@ dist_vapi_DATA = \
 
 libgtkaml_la_LIBADD = \
 	$(GLIB_LIBS) \
-	$(VALA_LIBS)
+	$(VALA_LIBS) \
+	$(LIBXML2_LIBS)
 
 lib_LTLIBRARIES = \
 	libgtkaml.la
@@ -20,6 +22,7 @@ BUILT_SOURCES = libgtkaml.stamp
 
 libgtkaml_la_VALASOURCES = \
 	gtkamlmarkupparser.vala \
+	gtkamlmarkupscanner.vala \
 	gtkamlmarkupresolver.vala \
 	gtkamlmarkupattribute.vala \
 	gtkamlsimplemarkupattribute.vala \
@@ -52,7 +55,7 @@ gtkaml-1.0.vapi : gtkaml.vapi
 	cat $^ > $@
 
 libgtkaml.stamp: $(libgtkaml_la_VALASOURCES)
-	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 $^
+	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 --pkg libxml-2.0 $^
 	touch $@
 
 EXTRA_DIST = $(libgtkaml_la_VALASOURCES)
