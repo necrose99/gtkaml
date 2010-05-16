@@ -187,8 +187,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		return candidates;
 	}
 	
-	public Vala.ReadOnlyList<MarkupSubTag> get_child_tags () {
-		return new Vala.ReadOnlyList<MarkupSubTag> (child_tags);
+	public Vala.List<MarkupSubTag> get_child_tags () {
+		return child_tags;
 	}	
 		
 	public void add_child_tag (MarkupSubTag child_tag) {
@@ -214,8 +214,8 @@ public abstract class Gtkaml.MarkupTag : Object {
 		child_tags.remove (old_child);
 	}
 
-	public Vala.ReadOnlyList<MarkupAttribute> get_markup_attributes () {
-		return new Vala.ReadOnlyList<MarkupAttribute> (markup_attributes);
+	public Vala.List<MarkupAttribute> get_markup_attributes () {
+		return markup_attributes;
 	}
 	
 	public void add_markup_attribute (MarkupAttribute markup_attribute) {

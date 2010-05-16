@@ -35,7 +35,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	/**
 	 * parses a vala source string temporary stored in .gtkaml/what.vala
 	 */
-	protected Namespace call_vala_parser(string source, string what) {
+	internal Namespace call_vala_parser(string source, string what) {
 		var ctx = new CodeContext ();
 		var filename = ".gtkaml/" + what + ".vala";
 		
