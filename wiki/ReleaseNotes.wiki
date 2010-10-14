@@ -1,6 +1,16 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2010-10-15) gtkaml 0.2.11 and 0.2.12 ===
+Changes in 0.2.11:
+ - fixed building with libvala-0.10
+ - fixed a crash in reporting parsing errors
+ - fixed build warnings
+ - added test case3  / example for instantiating a non-visual class
+
+Changes in 0.2.12
+ - fixed building with libvala-0.12
+
 === (2010-05-15) gtkaml 0.2.10 ===
 Fixes compiling under valacompiler 0.8.1
 
