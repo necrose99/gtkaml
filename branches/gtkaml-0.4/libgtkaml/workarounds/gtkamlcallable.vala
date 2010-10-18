@@ -7,11 +7,11 @@ using Vala;
 
 public class Gtkaml.Callable {
 	
-	public Member member {get; private set;}
+	public Symbol member {get; private set;}
 	
-	public Callable (Member member) {
-		this.member = member;
+	public Callable (Symbol member) {
 		assert (member is Vala.Signal || member is Method);
+		this.member = member;
 	}
 	
 	public Vala.List<FormalParameter> get_parameters ()

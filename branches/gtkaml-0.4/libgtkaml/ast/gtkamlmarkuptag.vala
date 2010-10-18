@@ -168,7 +168,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
      * decides weather to halt on error or just issue an warning
      */
-	virtual void resolve_creation_method_failed (SourceReference source_reference, string message) {
+	protected virtual void resolve_creation_method_failed (SourceReference source_reference, string message) {
 		Report.error (source_reference, message);
 	}
 	

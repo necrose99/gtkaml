@@ -90,7 +90,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 				int i = 0;
 				foreach (var formal_parameter in m.get_parameters ()) {
 					assert ( i < parameter_hints.size );
-					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.parameter_type, source_reference );
+					var parameter = new SimpleMarkupAttribute.with_type ( parameter_hints.get (i).name, parameter_hints.get (i).value, formal_parameter.variable_type, source_reference );
 					parameters.add (parameter);
 					i++;
 				}
@@ -98,7 +98,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			}
 		}
 		foreach (var formal_parameter in m.get_parameters ()) {
-			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.parameter_type );
+			var parameter = new SimpleMarkupAttribute.with_type ( formal_parameter.name, null, formal_parameter.variable_type );
 			parameters.add (parameter);
 		}
 		return parameters;
@@ -113,7 +113,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		if (hint != null) {
 			Vala.List<string> names = hint.get_composition_method_names ();
 			foreach (var name in names) {
-				Member? m = search_method_or_signal (parent_tag_symbol, name);
+				Symbol? m = search_method_or_signal (parent_tag_symbol, name);
 				if (m == null) {
 					Report.error (null, "Invalid composition method hint: %s does not belong to %s".printf (name, parent_tag_symbol.get_full_name ()) );
 				} else {
@@ -137,7 +137,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	}
 	
 	/** returns method or signal */
-	private Member? search_method_or_signal (TypeSymbol type, string name) {
+	private Symbol? search_method_or_signal (TypeSymbol type, string name) {
 		#if DEBUGMARKUPHINTS
 		stderr.printf ("\rsearching %s in %s..", name, type.name);
 		#endif
@@ -148,11 +148,11 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			foreach (var s in class_type.get_signals ())
 				if (s.name == name) return s;
 			if (class_type.base_class != null) {
-				Member? m = search_method_or_signal (class_type.base_class, name);
+				Symbol? m = search_method_or_signal (class_type.base_class, name);
 				if (m != null) return m;
 			}
 			foreach (var base_type in class_type.get_base_types ()) {
-				Member ?m = search_method_or_signal (base_type.data_type, name);
+				Symbol? m = search_method_or_signal (base_type.data_type, name);
 				if (m != null) return m;
 			}
 		} else

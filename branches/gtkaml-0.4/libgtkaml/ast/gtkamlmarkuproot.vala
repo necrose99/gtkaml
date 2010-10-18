@@ -36,7 +36,7 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		return candidates;
 	}
 
-	override void resolve_creation_method_failed (SourceReference source_reference, string message) {
+	protected override void resolve_creation_method_failed (SourceReference source_reference, string message) {
 		Report.warning (source_reference, message);
 	}
 

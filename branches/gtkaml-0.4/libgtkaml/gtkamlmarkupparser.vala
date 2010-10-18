@@ -151,7 +151,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 		DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
 		FileUtils.set_contents (filename, source);
-		var temp_source_file = new SourceFile (ctx, filename, false, source);
+		var temp_source_file = new SourceFile (ctx, SourceFileType.SOURCE, filename, source);
 		temp_source_files.add (temp_source_file);
 		ctx.add_source_file (temp_source_file);
 		
