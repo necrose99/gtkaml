@@ -43,6 +43,7 @@ Makefile
 gtkaml-1.0.pc
 src/Makefile
 libgtkaml/Makefile
+libgtkaml/gtkaml-1.0.deps
 ])
 
 AC_OUTPUT
