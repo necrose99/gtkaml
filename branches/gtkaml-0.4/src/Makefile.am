@@ -16,7 +16,7 @@ gtkamlc_SOURCES = \
 	$(gtkamlc_VALASOURCES:.vala=.c) 
 
 gtkamlc.stamp : $(gtkamlc_VALASOURCES)
-	$(VALAC) -C $(VALAFLAGS) --vapidir ../libgtkaml --pkg gtkaml-1.0 --pkg libxml-2.0 --pkg libvala-$(VALA_VERSION) --pkg glib-2.0 $^
+	$(VALAC) -C $(VALAFLAGS) --vapidir ../libgtkaml --pkg gtkaml-1.0 --pkg libxml-2.0 --pkg libvala-$(VALA_VERSION) --pkg glib-2.0 --pkg config $^
 	touch $@
 
 gtkamlc_LDADD = \
