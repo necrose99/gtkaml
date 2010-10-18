@@ -55,7 +55,7 @@ gtkaml-1.0.vapi : gtkaml.vapi
 	cat $^ > $@
 
 libgtkaml.stamp: $(libgtkaml_la_VALASOURCES)
-	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg vala-1.0 --pkg libxml-2.0 $^
+	$(VALAC) -C $(VALAFLAGS) -H gtkaml.h --library gtkaml --pkg glib-2.0 --pkg libvala-$(VALA_VERSION) --pkg libxml-2.0 $^
 	touch $@
 
 EXTRA_DIST = $(libgtkaml_la_VALASOURCES)

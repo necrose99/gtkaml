@@ -10,7 +10,7 @@ vapidir=@datadir@/vala/vapi
 Name: Gtkaml
 Description: The Gtkaml markup parser
 Version: @VERSION@
-Requires: vala-1.0
+Requires: vala-0.12
 Libs: -L${libdir} -lgtkaml
 Cflags: -I${includedir}/gtkaml-1.0
 
