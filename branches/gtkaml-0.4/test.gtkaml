@@ -4,6 +4,10 @@
 <![CDATA[
 	public static int main (string[] argv) {
 		Gtk.init (ref argv);
+		var w = new Gtk.Window ();
+		w.add (new MyVBox());
+		w.show_all ();
+		Gtk.main ();
 		return 0;
 	}
 ]]>
