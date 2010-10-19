@@ -31,10 +31,12 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		string class_name = parse_identifier (scanner.node->get_ns_prop ("name", scanner.gtkaml_uri));
 		string base_name = parse_identifier (scanner.node->name);
 		MarkupClass markup_class = new MarkupClass (base_name, base_ns, class_name, scanner.get_src ());
-		//TODO: create another NS in lieu of user_namespace
-		Namespace user_namespace = context.root;
-		user_namespace.add_class (markup_class);
-		scanner.source_file.add_node (markup_class);
+		markup_class.access = SymbolAccessibility.PUBLIC;
+		//TODO: create another NS in lieu of target_namespace
+		Namespace target_namespace = context.root;
+		
+		target_namespace.add_class (markup_class);
+		//scanner.source_file.add_node (markup_class);
 
 		parse_using_directives (scanner);
 
@@ -59,7 +61,8 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	
 	void parse_using_directive (MarkupScanner scanner, string ns) {
 		var ns_sym = new UnresolvedSymbol (null, parse_identifier(ns), scanner.get_src ());
-		scanner.source_file.add_using_directive (new UsingDirective (ns_sym, ns_sym.source_reference));
+		var ns_ref = new UsingDirective (ns_sym, ns_sym.source_reference);
+		//scanner.source_file.add_using_directive (ns_ref);
 	}
 
 	MarkupNamespace parse_namespace (MarkupScanner scanner) {
