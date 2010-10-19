@@ -62,7 +62,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	void parse_using_directive (MarkupScanner scanner, string ns) {
 		var ns_sym = new UnresolvedSymbol (null, parse_identifier(ns), scanner.get_src ());
 		var ns_ref = new UsingDirective (ns_sym, ns_sym.source_reference);
-		//scanner.source_file.add_using_directive (ns_ref);
+		scanner.source_file.add_using_directive (ns_ref);
 	}
 
 	MarkupNamespace parse_namespace (MarkupScanner scanner) {
