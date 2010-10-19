@@ -125,7 +125,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		if (scanner.node->get_ns_prop ("public", scanner.gtkaml_uri) != null) {
 			identifier = parse_identifier (scanner.node->get_ns_prop ("public", scanner.gtkaml_uri));
 			markup_tag = new MarkupMember (parent_tag /*TODO:WTF*/, scanner.node->name, parse_namespace (scanner), identifier, SymbolAccessibility.PUBLIC, scanner.get_src ());
-		}
+		} else
 		if (scanner.node->get_ns_prop ("private", scanner.gtkaml_uri) != null) {
 			if (identifier != null) throw new ParseError.SYNTAX ("Cannot specify both private and public");
 			identifier = parse_identifier (scanner.node->get_ns_prop ("private", scanner.gtkaml_uri));

@@ -28,7 +28,7 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		//TODO	
+		//TODO
 	}
 	
 	private void generate_property () {
