@@ -13,11 +13,11 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		markup_class.add_base_type (data_type.copy ());
 		markup_class.constructor = new Constructor (markup_class.source_reference);
 		markup_class.constructor.body = new Block (markup_class.source_reference);	
-		generate_creation_method (resolver);
 		parse_class_members (parser, this.text);
 	}
 
 	public override void generate (MarkupResolver resolver) {
+		generate_creation_method (resolver);
 	}
 
 	/**
