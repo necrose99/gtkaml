@@ -6,7 +6,6 @@ using Vala;
  */
 public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 	public string attribute_name {get { return _attribute_name; }}
-	public Expression attribute_expression { get { return _attribute_expression; }}
 	public DataType target_type { get; set; }
 
 	private SourceReference? source_reference;
@@ -28,7 +27,17 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		this.source_reference = source_reference;
 	}
 	
+	public SimpleMarkupAttribute.with_expression (string attribute_name, Expression expression, SourceReference? source_reference)
+	{
+		this._attribute_name = attribute_name;
+		this._attribute_expression = expression;
+		this.source_reference = source_reference;
+	}
+	
 	public Expression get_expression () {
+		if (_attribute_expression != null)
+			return _attribute_expression;
+			
 		assert (target_type != null);
 		var type_name = target_type.data_type.get_full_name ();
 		if (type_name == "string") {
@@ -39,7 +48,7 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		} else if (type_name == "int" || type_name == "uint") {
 			return new IntegerLiteral (attribute_value, source_reference);
 		} else {
-			stderr.printf ("UPS %s type found\n", target_type.data_type.get_full_name ());
+			stderr.printf ("Error: attribute literal of '%s' type found\n", target_type.data_type.get_full_name ());
 		}
 		assert_not_reached();
 	}

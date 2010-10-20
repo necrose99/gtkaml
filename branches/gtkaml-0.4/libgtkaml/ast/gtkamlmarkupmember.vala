@@ -23,21 +23,39 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 	}
 	
 	public override MarkupTag? resolve (MarkupResolver resolver) {
-		//TODO
 		return base.resolve (resolver);
 	}
 	
 	public override void generate (MarkupResolver resolver) {
-		//TODO
+		generate_construct_member ();
+		generate_add ();
 	}
 	
 	private void generate_property () {
-		PropertyAccessor getter = new PropertyAccessor (true, false, false, data_type.copy (), null, source_reference);
-		PropertyAccessor setter = new PropertyAccessor (false, true, false, data_type.copy (), null, source_reference);
+		var variable_type = data_type.copy ();
+		variable_type.value_owned = false;
+		PropertyAccessor getter = new PropertyAccessor (true, false, false, variable_type, null, source_reference);
 		
-		Property p = new Property (member_name, data_type.copy (), getter, setter, source_reference);
+		variable_type = data_type.copy ();
+		variable_type.value_owned = false;
+		PropertyAccessor setter = new PropertyAccessor (false, true, false, variable_type, null, source_reference);
+		
+		variable_type = data_type.copy ();
+		variable_type.value_owned = false;
+		Property p = new Property (member_name, variable_type, getter, setter, source_reference);
 		p.access = access;
 		
+		p.field = new Field ("_%s".printf (p.name), variable_type.copy (), p.initializer, p.source_reference);
+		p.field.access = SymbolAccessibility.PRIVATE;
+		
 		markup_class.add_property (p);
+	}
+	
+	private void generate_construct_member ()
+	{
+		var initializer = get_initializer ();
+		var assignment = new Assignment (new MemberAccess.simple (me, source_reference), initializer, AssignmentOperator.SIMPLE, source_reference);
+		
+		markup_class.constructor.body.add_statement (new ExpressionStatement (assignment, source_reference));
 	}
 }
