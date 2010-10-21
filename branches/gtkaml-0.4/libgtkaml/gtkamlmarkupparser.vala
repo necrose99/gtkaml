@@ -66,8 +66,6 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	}
 
 	MarkupNamespace parse_namespace (MarkupScanner scanner) {
-		message (scanner.node->name);
-		message ("%s %s".printf (scanner.node->ns->prefix, scanner.node->ns->href));
 		MarkupNamespace ns = new MarkupNamespace (null, scanner.node->ns->href);
 		ns.explicit_prefix = (scanner.node->ns->prefix != null);
 		return ns;
@@ -85,7 +83,6 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	
 	void parse_attributes (MarkupScanner scanner, MarkupTag markup_tag) {
 		for (Attr* attr = scanner.node->properties; attr != null; attr = attr->next) {
-			message ("attribute %s, value %s, type %d, ns %x".printf (attr->name, attr->children->content, attr->type, (uint)attr->ns));
 			if (attr->ns == null) {
 				var attribute = new SimpleMarkupAttribute (attr->name, attr->children->content, scanner.get_src ());
 				markup_tag.add_markup_attribute (attribute);
