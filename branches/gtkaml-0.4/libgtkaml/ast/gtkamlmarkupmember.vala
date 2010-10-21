@@ -33,15 +33,12 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 	
 	private void generate_property () {
 		var variable_type = data_type.copy ();
-		variable_type.value_owned = false;
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, variable_type, null, source_reference);
 		
 		variable_type = data_type.copy ();
-		variable_type.value_owned = false;
 		PropertyAccessor setter = new PropertyAccessor (false, true, false, variable_type, null, source_reference);
 		
 		variable_type = data_type.copy ();
-		variable_type.value_owned = false;
 		Property p = new Property (member_name, variable_type, getter, setter, source_reference);
 		p.access = access;
 		
