@@ -23,11 +23,29 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 	public override void resolve_attributes (MarkupResolver resolver) {
 		base.resolve_attributes (resolver);
+		#if DEBUGMARKUPHINTS
+		stderr.printf ("Resolving attributes of %s:", me);
+		foreach (var attr in markup_attributes)
+			stderr.printf ("%s\n", attr.attribute_name);
+		stderr.printf ("\n");
+		#endif
 		resolve_composition_method (resolver);
 	}
 
 	void resolve_composition_method (MarkupResolver resolver) {
 		var candidates = resolver.get_composition_method_candidates (this.parent_tag.resolved_type.data_type as TypeSymbol);
+		
+		//trim the list down to the explicit one, present with value = "true"
+		foreach (var candidate in candidates) {
+			var explicit = get_attribute (candidate.name);
+			if (explicit is SimpleMarkupAttribute && ((SimpleMarkupAttribute)explicit).attribute_value == "true") {
+				remove_attribute (explicit);
+				candidates = new Vala.ArrayList<Callable> ();
+				candidates.add (candidate);
+				break;//before foreach complains
+			}
+		}
+		
 		
 		if (candidates.size == 0) {
 			Report.error (source_reference, "No composition methods found for adding %s to a %s".printf (full_name, parent_tag.full_name));
@@ -63,6 +81,10 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 					matches ++;
 				}
 			}
+
+			#if DEBUGMARKUPHINTS
+			stderr.printf ("comparing %s %d parameters with %d matches\n", current_candidate.name, parameters.size, matches);
+			#endif
 			
 			if (matches < parameters.size) {  //does not match
 				if (parameters.size < min) {
@@ -121,7 +143,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		//for subtags: one of the creation method's name is present with the value "true"
 		foreach (var candidate in candidates) {
 			var explicit = get_attribute (candidate.name);
-			if (explicit != null) {
+			if (explicit is SimpleMarkupAttribute && ((SimpleMarkupAttribute)explicit).attribute_value == "true") {
 				remove_attribute (explicit);
 				candidates = new Vala.ArrayList<CreationMethod> ();
 				candidates.add (candidate);

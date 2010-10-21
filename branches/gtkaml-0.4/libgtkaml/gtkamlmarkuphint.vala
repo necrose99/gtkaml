@@ -34,9 +34,6 @@ public class Gtkaml.MarkupHint {
 		Vala.List<string> methods = new Vala.ArrayList<string> ();
 		foreach (var method_pair in hint_list) {
 			if (method_pair.name.has_prefix (MarkupHint.ADD)) {
-				#if DEBUGMARKUPHINTS
-				stderr.printf ("Returning %s method name as %s\n", method_pair.name, method_pair.name.substring (MarkupHint.ADD.length));
-				#endif
 				methods.add (method_pair.name.substring (MarkupHint.ADD.length));
 			}
 		} 
