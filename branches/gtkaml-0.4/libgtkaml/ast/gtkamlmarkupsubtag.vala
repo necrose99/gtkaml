@@ -23,12 +23,6 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 	public override void resolve_attributes (MarkupResolver resolver) {
 		base.resolve_attributes (resolver);
-		#if DEBUGMARKUPHINTS
-		stderr.printf ("Resolving attributes of %s:", me);
-		foreach (var attr in markup_attributes)
-			stderr.printf ("%s\n", attr.attribute_name);
-		stderr.printf ("\n");
-		#endif
 		resolve_composition_method (resolver);
 	}
 
