@@ -43,8 +43,8 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 
 
 	private void parse_class_members (MarkupParser parser, string source) {
-		var classes = parser.call_vala_parser ("public class %s { %s }".printf ("Temp", source), "%s-members".printf (markup_class.name)).get_classes();
-		foreach (var x in classes.get(0).get_methods ()) {
+		var temp_class = parser.parse_class_members (markup_class.name, source);
+		foreach (var x in temp_class.get_methods ()) {
 			if (!(x is CreationMethod))  {
 				markup_class.add_method (x);
 			}
@@ -61,15 +61,6 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 		
 		var block = new Block (markup_class.source_reference);
 
-		//unfortunately base/construct detection is not possible before vala symbol resolving:-S
-		/*if (markup_class.base_class.default_construction_method != null && markup_class.base_class.default_construction_method.has_construct_function) {
-			var base_call = new MethodCall (new BaseAccess (markup_class.source_reference), markup_class.source_reference);
-			foreach (var parameter in creation_parameters) { 
-				base_call.add_argument (parameter.get_expression ());
-			}
-			block.add_statement (new ExpressionStatement (base_call, markup_class.source_reference));
-		}*/
-		
 		creation_method.body = block;
 		
 		markup_class.add_method (creation_method);
