@@ -40,7 +40,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 
 		parse_using_directives (scanner);
 
-		parse_text (scanner, markup_class.markup_root);
+		markup_class.markup_root.text = parse_text (scanner);
 		parse_attributes (scanner, markup_class.markup_root);
 		parse_markup_subtags (scanner, markup_class.markup_root);
 		
@@ -84,8 +84,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	void parse_attributes (MarkupScanner scanner, MarkupTag markup_tag) {
 		for (Attr* attr = scanner.node->properties; attr != null; attr = attr->next) {
 			if (attr->ns == null) {
-				var attribute = new SimpleMarkupAttribute (attr->name, attr->children->content, scanner.get_src ());
-				markup_tag.add_markup_attribute (attribute);
+				parse_attribute (markup_tag, attr->name, attr->children->content);
 			} else
 			if (attr->ns->href != scanner.gtkaml_uri) {
 				throw new ParseError.SYNTAX ("Attribute prefix not expected: %s".printf (attr->ns->href));
@@ -93,14 +92,32 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		}
 	}
 	
-	void parse_text (MarkupScanner scanner, MarkupTag markup_tag) {
-		markup_tag.text = "";
+	void parse_attribute (MarkupTag markup_tag, string name, string @value) {
+		string stripped_value = @value.strip ();
+		MarkupAttribute attribute;
+		if (stripped_value.has_prefix ("{")) {
+			if (stripped_value.has_suffix ("}")) {
+				string expression_source = stripped_value.substring (1, stripped_value.length - 2);
+				var expression = parse_vala_expression (markup_tag.markup_class.name, markup_tag.me, name, expression_source);
+				attribute = new SimpleMarkupAttribute.with_expression (name, expression, markup_tag.source_reference);
+			} else {
+				Report.error (markup_tag.source_reference, "Unmatched closing brace in %'s value.".printf (name));
+				return;
+			}
+		} else {
+			attribute = new SimpleMarkupAttribute (name, @value, markup_tag.source_reference);
+		}
+		markup_tag.add_markup_attribute (attribute);
+	}
+	
+	string parse_text (MarkupScanner scanner) {
+		string text = "";
 		for (Xml.Node* node = scanner.node->children; node != null; node = node->next)
 		{
-			if (node->type != ElementType.CDATA_SECTION_NODE && node->type != ElementType.TEXT_NODE) continue;
-			markup_tag.text += node->content + "\n";
+			if (node->type != ElementType.CDATA_SECTION_NODE && node->type != ElementType.TEXT_NODE) continue;//TODO break?
+			text += node->content + "\n";
 		}
-		markup_tag.text = markup_tag.text.chomp ();
+		return text.chomp ();
 	}
 	
 	void parse_markup_subtags (MarkupScanner scanner, MarkupTag parent_tag) {
@@ -142,13 +159,26 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		message ("found gtkaml tag %s".printf (scanner.node->name)); //TODO
 	}
 	
-	public Class parse_class_members (string class_name, string members_source) {
-		var temp_ns = call_vala_parser ("public class Temp { %s }".printf (members_source), "%s-members".printf (class_name));
+	public Class parse_vala_members (string class_name, string members_source) throws ParseError  {
+		var temp_source = "public class Temp { %s }".printf (members_source);
+		
+		var temp_ns = call_vala_parser (temp_source, class_name + "-members");
 		if (temp_ns is Namespace && temp_ns.get_classes ().size == 1) {
 			return temp_ns.get_classes ().get (0);
 		} else {
-			Report.error (null, "There was an error parsing the code section.");
-			return new Class("Temp");
+			throw new ParseError.SYNTAX ("There was an error parsing the code section.");
+		}
+	}
+	
+	public Expression parse_vala_expression (string class_name, string target, string target_member, string expression_source) throws ParseError {
+		var temp_source = "VoidFunc voidFunc = ()=> %s;".printf (expression_source);
+		
+		var temp_ns = call_vala_parser (temp_source, class_name + "_" + target + "_" + target_member + "_expression");
+		if (temp_ns is Namespace && temp_ns.get_fields ().size == 1 && temp_ns.get_fields ().get (0).initializer is LambdaExpression) {
+			var temp_lambda = (LambdaExpression)temp_ns.get_fields ().get (0).initializer;
+			return temp_lambda.expression_body;
+		} else {
+			throw new ParseError.SYNTAX ("There was an error parsing the code section.");
 		}
 	}
 	
