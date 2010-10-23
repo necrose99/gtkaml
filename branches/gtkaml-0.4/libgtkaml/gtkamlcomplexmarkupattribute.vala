@@ -9,6 +9,14 @@ public class Gtkaml.ComplexMarkupAttribute : Object, MarkupAttribute {
 	public DataType target_type {get; set;}
 	
 	public Expression get_expression () {
-		assert_not_reached();
+		assert_not_reached ();
+	}
+
+	public Statement get_assignment (Expression parent_access) {
+		assert_not_reached ();
+	}
+
+	public void resolve (Class owning_class) {
+		assert_not_reached ();
 	}
 }

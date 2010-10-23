@@ -22,8 +22,9 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 	}
 
 	public override void resolve_attributes (MarkupResolver resolver) {
-		base.resolve_attributes (resolver);
+		resolve_creation_method (resolver);
 		resolve_composition_method (resolver);
+		resolve_attribute_types (resolver);
 	}
 
 	void resolve_composition_method (MarkupResolver resolver) {
@@ -50,7 +51,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 		int min = 100; Callable min_match_method = candidates.get (0);
 		int max = -1; Callable max_match_method = candidates.get (0);
-		SimpleMarkupAttribute max_self = new SimpleMarkupAttribute("not-intialized-warning-was-true",null);
+		SimpleMarkupAttribute max_self = new SimpleMarkupAttribute ("not-intialized-warning-was-true",null);
 		Vala.List<SimpleMarkupAttribute> matched_method_parameters = new Vala.ArrayList<MarkupAttribute> ();
 		
 		var i = 0;

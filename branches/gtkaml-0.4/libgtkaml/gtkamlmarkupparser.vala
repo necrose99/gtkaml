@@ -94,18 +94,19 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	
 	void parse_attribute (MarkupTag markup_tag, string name, string @value) {
 		string stripped_value = @value.strip ();
+		string undername = name.replace ("-", "_");
 		MarkupAttribute attribute;
 		if (stripped_value.has_prefix ("{")) {
 			if (stripped_value.has_suffix ("}")) {
 				string expression_source = stripped_value.substring (1, stripped_value.length - 2);
-				var expression = parse_vala_expression (markup_tag.markup_class.name, markup_tag.me, name, expression_source);
-				attribute = new SimpleMarkupAttribute.with_expression (name, expression, markup_tag.source_reference);
+				var expression = parse_vala_expression (markup_tag.markup_class.name, markup_tag.me, undername, expression_source);
+				attribute = new SimpleMarkupAttribute.with_expression (undername, expression, markup_tag.source_reference);
 			} else {
 				Report.error (markup_tag.source_reference, "Unmatched closing brace in %'s value.".printf (name));
 				return;
 			}
 		} else {
-			attribute = new SimpleMarkupAttribute (name, @value, markup_tag.source_reference);
+			attribute = new SimpleMarkupAttribute (undername, @value, markup_tag.source_reference);
 		}
 		markup_tag.add_markup_attribute (attribute);
 	}

@@ -86,13 +86,32 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 */
 	public virtual void resolve_attributes (MarkupResolver resolver) {
 		resolve_creation_method (resolver);
+		resolve_attribute_types (resolver);
+	}
+	
+	public virtual void resolve_attribute_types (MarkupResolver resolver) {
+		foreach (var attribute in markup_attributes) {
+			attribute.resolve ((Class)resolved_type.data_type);
+		}
 	}
 	
 	/** 
 	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
-	 * Final AST generation phase (all AST)
+	 * Final AST generation phase1 (all AST)
 	 */
 	public abstract void generate (MarkupResolver resolver);
+	
+	/**
+	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
+	 * Final AST generation phase2 (attributes)
+	 */
+	public virtual void generate_attributes (MarkupResolver resolver) 
+	{
+		var parent_access = new MemberAccess.simple (me, source_reference);
+		foreach (var attribute in markup_attributes) {
+			markup_class.constructor.body.add_statement (attribute.get_assignment (parent_access));
+		}
+	}
 	
 	/**
 	 * picks up creation method parameters and determines the creation method, if applicable

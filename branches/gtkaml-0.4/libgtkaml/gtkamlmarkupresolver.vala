@@ -73,6 +73,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		markup_tag.generate (this);
 		foreach (MarkupTag child_tag in markup_tag.get_child_tags ())
 			generate_markup_tag (child_tag);
+		markup_tag.generate_attributes (this);
 	}
 		
 	public Vala.List<SimpleMarkupAttribute> get_default_parameters (string full_type_name, Callable m, SourceReference? source_reference = null) {
