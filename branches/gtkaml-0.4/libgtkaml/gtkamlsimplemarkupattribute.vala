@@ -7,11 +7,11 @@ using Vala;
 public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 	public string attribute_name {get { return _attribute_name; }}
 	public DataType target_type { get; set; }
-	public bool is_signal {get; set;}
 
 	private SourceReference? source_reference;
 	private string _attribute_name;
 	private Expression _attribute_expression;
+	private Vala.Signal _signal;
 
 	public string? attribute_value {get; private set;}
 	
@@ -37,13 +37,6 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 	
 	public Expression get_expression () {
 		if (_attribute_expression != null) {
-			if (is_signal) {
-				var block = new Block (source_reference);
-				block.add_statement (new ExpressionStatement (_attribute_expression));
-				var lambda = new LambdaExpression.with_statement_body(block, source_reference);
-				//TODO signal parameters w/ lambda.add_parameter;
-				return lambda;
-			}
 			return _attribute_expression;
 		}
 		
@@ -57,15 +50,15 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		} else if (type_name == "int" || type_name == "uint") {
 			return new IntegerLiteral (attribute_value, source_reference);
 		} else {
-			stderr.printf ("Error: attribute literal of '%s' type found\n", target_type.data_type.get_full_name ());
+			Report.error (source_reference, "Error: attribute literal of '%s' type found\n".printf (target_type.data_type.get_full_name ()));
 		}
-		assert_not_reached();
+		assert_not_reached ();//TODO remove this?
 	}
 
 	public Statement get_assignment (Expression parent_access) {
 		var attribute_access = new MemberAccess (parent_access, attribute_name, source_reference);
 		Assignment assignment;
-		if (is_signal) {
+		if (_signal != null) {
 			//TODO: use connect ()
 			assignment = new Assignment (attribute_access, get_expression (), AssignmentOperator.ADD, source_reference);
 		} else {
@@ -74,22 +67,46 @@ public class Gtkaml.SimpleMarkupAttribute : Object, MarkupAttribute {
 		return new ExpressionStatement (assignment);
 	}
 	
-	public void resolve (Class owning_class) {
-		//search properties
-		foreach (var property in owning_class.get_properties ()) {
-			if (property.name == attribute_name) {
-				target_type = property.property_type.copy ();
-				return;
+	public void resolve (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError {
+
+		assert (markup_tag.resolved_type is ObjectType);
+		var cl = ((ObjectType)markup_tag.resolved_type).type_symbol;
+		
+		Symbol? resolved_attribute = resolver.search_symbol (cl, attribute_name);
+		
+		if (resolved_attribute is Property)
+		{
+			target_type = ((Property)resolved_attribute).property_type.copy ();
+		} else if (resolved_attribute is Field) {
+			target_type = ((Field)resolved_attribute).variable_type.copy ();
+		} else if (resolved_attribute is Vala.Signal) {
+			_signal = (Vala.Signal)resolved_attribute;
+		} else {
+			throw new ParseError.SYNTAX ("Unkown attribute type %s.%s".printf (cl.name, attribute_name));
+		}
+		
+		string stripped_value = attribute_value.strip ();
+		if (stripped_value.has_prefix ("{")) {
+			if (stripped_value.has_suffix ("}")) {
+				string code_source = stripped_value.substring (1, stripped_value.length - 2);
+				if (_signal != null) {
+					var stmts = resolver.vala_parser.parse_statements (markup_tag.markup_class.name, markup_tag.me, attribute_name, code_source);
+					var lambda = new LambdaExpression.with_statement_body(stmts, source_reference);
+
+					lambda.add_parameter ("target");
+					foreach (var parameter in _signal.get_parameters ()) {
+						lambda.add_parameter (parameter.name);
+					}
+					
+					_attribute_expression = lambda;
+				} else {
+					_attribute_expression = resolver.vala_parser.parse_expression (markup_tag.markup_class.name, markup_tag.me, attribute_name, code_source);
+				}
+			} else {
+				Report.error (source_reference, "Unmatched closing brace in %'s value.".printf (attribute_name));
 			}
 		}
 
-		//search signals
-		foreach (var signal in owning_class.get_signals ()) {
-			if (signal.name == attribute_name) {
-				is_signal = true;
-				return;
-			}
-		}
 	}
 
 }

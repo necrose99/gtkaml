@@ -89,9 +89,9 @@ public abstract class Gtkaml.MarkupTag : Object {
 		resolve_attribute_types (resolver);
 	}
 	
-	public virtual void resolve_attribute_types (MarkupResolver resolver) {
+	public virtual void resolve_attribute_types (MarkupResolver resolver) throws ParseError {
 		foreach (var attribute in markup_attributes) {
-			attribute.resolve ((Class)resolved_type.data_type);
+			attribute.resolve (resolver, this);
 		}
 	}
 	

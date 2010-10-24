@@ -14,10 +14,15 @@ using Vala;
 public class Gtkaml.MarkupResolver : SymbolResolver {
 
 	public MarkupHintsStore markup_hints;
+	public ValaParser vala_parser;
+
+	internal CodeContext context {get; set;}
 
 	public new void resolve (CodeContext context) {
 		markup_hints = new MarkupHintsStore (context);
+		vala_parser = new ValaParser ();
 		markup_hints.parse ();
+		this.context = context;
 		base.resolve (context);
 	}
 
@@ -37,16 +42,28 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		}
 	}
 	
-	public Vala.List<DataType> get_what_extends (DataType type) {
-		if (type is Class) {
-			return (type as Class).get_base_types ();
-		} 
-		else
-		if (type is Interface) {
-			return (type as Interface).get_prerequisites (); 
+	public Symbol? search_symbol (ObjectTypeSymbol type, string sym_name)
+	{
+		Symbol? sym = type.scope.lookup (sym_name);
+		if (sym == null) {
+			Vala.List<DataType> base_types;
+			if (type is Class) {
+				base_types = ((Class)type).get_base_types();
+			} else {
+				return null;
+			} 
+			foreach (var base_type in base_types){
+				if (base_type is ClassType) {
+					sym = search_symbol (((ClassType)base_type).class_symbol, sym_name);
+				} else if (base_type is InterfaceType) {
+					sym = search_symbol (((InterfaceType)base_type).interface_symbol, sym_name);
+				} else if (base_type is ObjectType) {
+					sym = search_symbol (((ObjectType)base_type).type_symbol, sym_name);
+				}
+				if (sym != null) break;
+			}
 		}
-		else
-			return new Vala.ArrayList<DataType> ();
+		return sym;
 	}
 	
 	/** processes tag hierarchy. Removes unresolved ones after this step */
@@ -130,7 +147,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 			}
 		}
 		if (parent_tag_symbol is Class) {
-			Class parent_class = parent_tag_symbol as Class;
+			Class parent_class = (Class)parent_tag_symbol;
 			if (parent_class.base_class != null)
 				foreach (var m in get_composition_method_candidates (parent_class.base_class))
 					candidates.add (m);
@@ -147,7 +164,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		stderr.printf ("\rsearching %s in %s..", name, type.name);
 		#endif
 		if (type is Class) {
-			Class class_type = type as Class;
+			Class class_type = (Class)type;
 			foreach (var m in class_type.get_methods ())
 				if (m.name == name) return m;
 			foreach (var s in class_type.get_signals ())

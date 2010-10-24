@@ -16,7 +16,7 @@ public class Gtkaml.ComplexMarkupAttribute : Object, MarkupAttribute {
 		assert_not_reached ();
 	}
 
-	public void resolve (Class owning_class) {
+	public void resolve (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError {
 		assert_not_reached ();
 	}
 }
