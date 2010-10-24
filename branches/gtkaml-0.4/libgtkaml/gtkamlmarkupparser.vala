@@ -135,18 +135,27 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	}
 	
 	void parse_markup_subtag (MarkupScanner scanner, MarkupTag parent_tag) {
-		MarkupSubTag markup_tag;
+		MarkupSubTag markup_tag = null;
 		string identifier = null;
+		
 		if (scanner.node->get_ns_prop ("public", scanner.gtkaml_uri) != null) {
 			identifier = parse_identifier (scanner.node->get_ns_prop ("public", scanner.gtkaml_uri));
-			markup_tag = new MarkupMember (parent_tag /*TODO:WTF*/, scanner.node->name, parse_namespace (scanner), identifier, SymbolAccessibility.PUBLIC, scanner.get_src ());
-		} else
+			markup_tag = new MarkupMember (parent_tag, scanner.node->name, parse_namespace (scanner), identifier, SymbolAccessibility.PUBLIC, scanner.get_src ());
+		}  
+		
 		if (scanner.node->get_ns_prop ("private", scanner.gtkaml_uri) != null) {
-			if (identifier != null) throw new ParseError.SYNTAX ("Cannot specify both private and public");
+			if (identifier != null) 
+				throw new ParseError.SYNTAX ("Cannot specify both private and public");
 			identifier = parse_identifier (scanner.node->get_ns_prop ("private", scanner.gtkaml_uri));
-			markup_tag = new MarkupMember (parent_tag /*TODO:WTF*/, scanner.node->name, parse_namespace (scanner), identifier, SymbolAccessibility.PRIVATE, scanner.get_src ());
-		} else {
-			markup_tag = new UnresolvedMarkupSubTag (parent_tag /*TODO:WTF*/, scanner.node->name, parse_namespace (scanner), scanner.get_src ());
+			markup_tag = new MarkupMember (parent_tag, scanner.node->name, parse_namespace (scanner), identifier, SymbolAccessibility.PRIVATE, scanner.get_src ());
+		} 
+		
+		if (markup_tag == null) {
+			if (scanner.node->properties != null) { //has attributes
+				markup_tag = new MarkupTemp (parent_tag, scanner.node->name, parse_namespace (scanner), scanner.get_src ());
+			} else { 
+				markup_tag = new UnresolvedMarkupSubTag (parent_tag, scanner.node->name, parse_namespace (scanner), scanner.get_src ());
+			}
 		}
 		
 		parent_tag.add_child_tag (markup_tag);
