@@ -21,7 +21,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		this.parent_tag = parent_tag;
 	}
 
-	public override void resolve_attributes (MarkupResolver resolver) {
+	public override void resolve_attributes (MarkupResolver resolver) throws ParseError {
 		resolve_creation_method (resolver);
 		resolve_composition_method (resolver);
 		resolve_attribute_types (resolver);

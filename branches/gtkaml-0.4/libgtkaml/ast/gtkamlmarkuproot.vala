@@ -9,14 +9,14 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	
 	public override string me { get { return "this"; } }
 
-	public override void generate_public_ast (MarkupParser parser) {
+	public override void generate_public_ast (MarkupParser parser) throws ParseError {
 		markup_class.add_base_type (data_type.copy ());
 		markup_class.constructor = new Constructor (markup_class.source_reference);
 		markup_class.constructor.body = new Block (markup_class.source_reference);	
 		parse_class_members (parser, this.text);
 	}
 
-	public override void generate (MarkupResolver resolver) {
+	public override void generate (MarkupResolver resolver) throws ParseError {
 		generate_creation_method (resolver);
 	}
 
@@ -42,7 +42,7 @@ public class Gtkaml.MarkupRoot : MarkupTag {
 	}
 
 
-	private void parse_class_members (MarkupParser parser, string source) {
+	private void parse_class_members (MarkupParser parser, string source) throws ParseError {
 		var temp_class = parser.parse_vala_members (markup_class.name, source);
 		foreach (var x in temp_class.get_methods ()) {
 			if (!(x is CreationMethod))  {

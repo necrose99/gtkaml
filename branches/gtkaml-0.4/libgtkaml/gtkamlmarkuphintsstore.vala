@@ -44,9 +44,8 @@ public class Gtkaml.MarkupHintsStore {
 				var hints = parse_symbol (ref key_file, symbol_fullname);
 				markup_hints.set (symbol_fullname, hints);
 			}
-		} catch (KeyFileError e) {
+		} catch {
 			context.report.warn (null, "There was an error parsing %s as markuphints file".printf (package_filename));
-			return;
 		}
 	}
 	

@@ -68,14 +68,14 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 * This only generates placeholder Vala AST so that the Parser can move on.
 	 * e.g. the class itself, its public properties go here.
 	 */
-	public abstract void generate_public_ast (MarkupParser parser);
+	public abstract void generate_public_ast (MarkupParser parser) throws ParseError;
 
 	/**
 	 * Called when Gtkaml is resolving. 
 	 * Here replacements in the Gtkaml AST can be made (e.g. UnresolvedMarkupTag -> MarkupTemp).
 	 * Tags to remove must return 'null' here so that the SymbolResolver can remove them later
 	 */
-	public virtual MarkupTag? resolve (MarkupResolver resolver) {
+	public virtual MarkupTag? resolve (MarkupResolver resolver) throws ParseError {
 		resolver.visit_data_type (data_type);
 		_full_name = resolved_type.data_type.get_full_name ();
 		return this;
@@ -84,7 +84,7 @@ public abstract class Gtkaml.MarkupTag : Object {
 	/**
 	 * Called when Gtkaml is resolving, after recursing over children
 	 */
-	public virtual void resolve_attributes (MarkupResolver resolver) {
+	public virtual void resolve_attributes (MarkupResolver resolver) throws ParseError {
 		resolve_creation_method (resolver);
 		resolve_attribute_types (resolver);
 	}
@@ -99,14 +99,13 @@ public abstract class Gtkaml.MarkupTag : Object {
 	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
 	 * Final AST generation phase1 (all AST)
 	 */
-	public abstract void generate (MarkupResolver resolver);
+	public abstract void generate (MarkupResolver resolver) throws ParseError;
 	
 	/**
 	 * Called after Gtkaml finished resolving, before Vala resolver kicks in.
 	 * Final AST generation phase2 (attributes)
 	 */
-	public virtual void generate_attributes (MarkupResolver resolver) 
-	{
+	public virtual void generate_attributes (MarkupResolver resolver) throws ParseError	{
 		var parent_access = new MemberAccess.simple (me, source_reference);
 		foreach (var attribute in markup_attributes) {
 			markup_class.constructor.body.add_statement (attribute.get_assignment (parent_access));

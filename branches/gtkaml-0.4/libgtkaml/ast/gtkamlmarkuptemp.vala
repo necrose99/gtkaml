@@ -16,15 +16,15 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 		temp_name = ("_" + tag_name + markup_class.get_temp_name ()).replace (".", "_");
 	}
 	
-	public override void generate_public_ast (MarkupParser parser) {
+	public override void generate_public_ast (MarkupParser parser) throws ParseError {
 		//nothing public about local temps
 	}
 
-	public override MarkupTag? resolve (MarkupResolver resolver) {
+	public override MarkupTag? resolve (MarkupResolver resolver) throws ParseError {
 		return base.resolve (resolver);
 	}
 	
-	public override void generate (MarkupResolver resolver) {
+	public override void generate (MarkupResolver resolver) throws ParseError {
 		generate_construct_local ();
 		generate_add ();
 	}

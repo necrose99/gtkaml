@@ -19,11 +19,15 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	}
 
 	public void parse_file (SourceFile source_file) {
-		MarkupScanner scanner = new MarkupScanner(source_file);
-		parse_markup_class (scanner);
+		try {
+			MarkupScanner scanner = new MarkupScanner(source_file);
+			parse_markup_class (scanner);
+		} catch (ParseError e) {
+			Report.error (null, e.message);
+		}
 	}
 
-	void parse_markup_class (MarkupScanner scanner) {
+	void parse_markup_class (MarkupScanner scanner) throws ParseError {
 		parse_gtkaml_uri (scanner);
 		
 		MarkupNamespace base_ns = parse_namespace (scanner);
@@ -48,30 +52,30 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		
 	}
 	
-	string parse_identifier (string identifier) {
+	string parse_identifier (string identifier) throws ParseError {
 		return identifier;
 	}
 
-	void parse_using_directives (MarkupScanner scanner) {
+	void parse_using_directives (MarkupScanner scanner) throws ParseError {
 		for (Ns* ns = scanner.node->ns_def; ns != null; ns = ns->next) {
 			if (ns->href != scanner.gtkaml_uri) 
 				parse_using_directive (scanner, ns->href);
 		}
 	}
 	
-	void parse_using_directive (MarkupScanner scanner, string ns) {
+	void parse_using_directive (MarkupScanner scanner, string ns) throws ParseError {
 		var ns_sym = new UnresolvedSymbol (null, parse_identifier(ns), scanner.get_src ());
 		var ns_ref = new UsingDirective (ns_sym, ns_sym.source_reference);
 		scanner.source_file.add_using_directive (ns_ref);
 	}
 
-	MarkupNamespace parse_namespace (MarkupScanner scanner) {
+	MarkupNamespace parse_namespace (MarkupScanner scanner) throws ParseError {
 		MarkupNamespace ns = new MarkupNamespace (null, scanner.node->ns->href);
 		ns.explicit_prefix = (scanner.node->ns->prefix != null);
 		return ns;
 	}
 
-	void parse_gtkaml_uri (MarkupScanner scanner) {
+	void parse_gtkaml_uri (MarkupScanner scanner) throws ParseError {
 		for (Ns* ns = scanner.node->ns_def; ns != null; ns = ns->next) {
 			if (ns->href.has_prefix ("http://gtkaml.org")) {
 				scanner.gtkaml_uri = ns->href;
@@ -81,7 +85,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		throw new ParseError.SYNTAX ("No gtkaml namespace found.");
 	}
 	
-	void parse_attributes (MarkupScanner scanner, MarkupTag markup_tag) {
+	void parse_attributes (MarkupScanner scanner, MarkupTag markup_tag) throws ParseError {
 		for (Attr* attr = scanner.node->properties; attr != null; attr = attr->next) {
 			if (attr->ns == null) {
 				parse_attribute (markup_tag, attr->name, attr->children->content);
@@ -92,7 +96,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		}
 	}
 	
-	void parse_attribute (MarkupTag markup_tag, string name, string @value) {
+	void parse_attribute (MarkupTag markup_tag, string name, string @value) throws ParseError {
 		string stripped_value = @value.strip ();
 		string undername = name.replace ("-", "_");
 		MarkupAttribute attribute;
@@ -111,7 +115,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		markup_tag.add_markup_attribute (attribute);
 	}
 	
-	string parse_text (MarkupScanner scanner) {
+	string parse_text (MarkupScanner scanner) throws ParseError {
 		string text = "";
 		for (Xml.Node* node = scanner.node->children; node != null; node = node->next)
 		{
@@ -121,7 +125,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		return text.chomp ();
 	}
 	
-	void parse_markup_subtags (MarkupScanner scanner, MarkupTag parent_tag) {
+	void parse_markup_subtags (MarkupScanner scanner, MarkupTag parent_tag) throws ParseError {
 		for (Xml.Node* node = scanner.node->children; node != null; node = node->next)
 		{
 			if (node->type != ElementType.ELEMENT_NODE) continue;
@@ -134,7 +138,7 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 		}
 	}
 	
-	void parse_markup_subtag (MarkupScanner scanner, MarkupTag parent_tag) {
+	void parse_markup_subtag (MarkupScanner scanner, MarkupTag parent_tag) throws ParseError {
 		MarkupSubTag markup_tag = null;
 		string identifier = null;
 		
@@ -196,19 +200,23 @@ public class Gtkaml.MarkupParser : CodeVisitor {
 	 * parses a vala source string temporary stored in .gtkaml/what.vala
 	 * returns the root namespace
 	 */
-	protected Namespace call_vala_parser(string source, string temp_filename) {
+	protected Namespace call_vala_parser(string source, string temp_filename) throws ParseError {
 		var ctx = new CodeContext ();
 		var filename = ".gtkaml/" + temp_filename + ".vala";
 		
-		DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
-		FileUtils.set_contents (filename, source);
-		var temp_source_file = new SourceFile (ctx, SourceFileType.SOURCE, filename, source);
-		temp_source_files.add (temp_source_file);
-		ctx.add_source_file (temp_source_file);
+		try {
+			DirUtils.create_with_parents (".gtkaml", 488 /*0750*/);
+			FileUtils.set_contents (filename, source);
+			var temp_source_file = new SourceFile (ctx, SourceFileType.SOURCE, filename, source);
+			temp_source_files.add (temp_source_file);
+			ctx.add_source_file (temp_source_file);
 		
-		var parser = new Vala.Parser ();
-		parser.parse (ctx);
-		return ctx.root;
+			var parser = new Vala.Parser ();
+			parser.parse (ctx);
+			return ctx.root;
+		} catch {
+			throw new ParseError.FAILED ("There was an error writing temporary '%s'".printf (filename));
+		}
 	}
 
 

@@ -14,11 +14,11 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 		base (parent_tag, tag_name, tag_namespace, source_reference);
 	}	
 	
-	public override void generate_public_ast (MarkupParser parser) {
+	public override void generate_public_ast (MarkupParser parser) throws ParseError {
 		//No public AST for unkown stuff
 	}
 	
-	public override MarkupTag? resolve (MarkupResolver resolver) {
+	public override MarkupTag? resolve (MarkupResolver resolver) throws ParseError {
 		if (!tag_namespace.explicit_prefix && markup_attributes.size == 0)  { //candidate for attribute
 			ObjectTypeSymbol parent_object = parent_tag.resolved_type.data_type as ObjectTypeSymbol;
 			if (parent_object != null) {
@@ -37,7 +37,7 @@ public class Gtkaml.UnresolvedMarkupSubTag : MarkupSubTag {
 		return markup_temp.resolve (resolver);
 	}
 	
-	public override void generate (MarkupResolver resolver) {
+	public override void generate (MarkupResolver resolver) throws ParseError {
 		assert_not_reached ();//unresolved tags are replaced with temporary variables or complex attributes at resolve () time
 	}
 }

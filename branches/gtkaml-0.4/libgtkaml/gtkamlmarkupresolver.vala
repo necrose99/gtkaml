@@ -29,8 +29,12 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	}
 	
 	public void visit_markup_class (MarkupClass mcl) {
-		resolve_markup_tag (mcl.markup_root);
-		generate_markup_tag (mcl.markup_root);
+		try {
+			resolve_markup_tag (mcl.markup_root);
+			generate_markup_tag (mcl.markup_root);
+		} catch (ParseError e) {
+			Report.error (null, e.message);
+		}
 	}
 	
 	public Vala.List<DataType> get_what_extends (DataType type) {
@@ -46,7 +50,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 	}
 	
 	/** processes tag hierarchy. Removes unresolved ones after this step */
-	public bool resolve_markup_tag (MarkupTag markup_tag) {
+	public bool resolve_markup_tag (MarkupTag markup_tag) throws ParseError {
 		//resolve first
 		MarkupTag? resolved_tag = markup_tag.resolve (this);
 		
@@ -69,7 +73,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		return resolved_tag != null;
 	}
 
-	private void generate_markup_tag (MarkupTag markup_tag) {
+	private void generate_markup_tag (MarkupTag markup_tag) throws ParseError {
 		markup_tag.generate (this);
 		foreach (MarkupTag child_tag in markup_tag.get_child_tags ())
 			generate_markup_tag (child_tag);

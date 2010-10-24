@@ -10,7 +10,7 @@ public class Gtkaml.MarkupScanner {
 	public Xml.Node* node;
 	public SourceFile source_file;
 
-	public MarkupScanner (SourceFile source_file) {
+	public MarkupScanner (SourceFile source_file) throws ParseError {
 		this.whole_doc = null;
 		this.source_file = source_file;
 		
