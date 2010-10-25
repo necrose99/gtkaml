@@ -45,7 +45,8 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 		Property p = new Property (member_name, variable_type, getter, setter, source_reference);
 		p.access = access;
 		
-		p.field = new Field ("_%s".printf (p.name), variable_type.copy (), p.initializer, p.source_reference);
+		variable_type = p.property_type.copy ();
+		p.field = new Field ("_%s".printf (p.name), variable_type, p.initializer, p.source_reference);
 		p.field.access = SymbolAccessibility.PRIVATE;
 		p.field.binding = p.binding;
 		
