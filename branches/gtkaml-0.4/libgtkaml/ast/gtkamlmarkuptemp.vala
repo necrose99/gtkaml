@@ -25,12 +25,12 @@ public class Gtkaml.MarkupTemp : MarkupSubTag {
 	}
 	
 	public override void generate (MarkupResolver resolver) throws ParseError {
-		generate_construct_local ();
-		generate_add ();
+		generate_construct_local (resolver);
+		generate_add (resolver);
 	}
 	
-	private void generate_construct_local() {		
-		var initializer = get_initializer ();
+	private void generate_construct_local(MarkupResolver resolver) throws ParseError {		
+		var initializer = get_initializer (resolver);
 		var local_variable = new LocalVariable (null, me,  initializer, source_reference);
 		var local_declaration = new DeclarationStatement (local_variable, source_reference);
 		

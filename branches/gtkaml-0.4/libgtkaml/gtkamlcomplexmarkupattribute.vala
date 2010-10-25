@@ -8,15 +8,11 @@ public class Gtkaml.ComplexMarkupAttribute : Object, MarkupAttribute {
 	public Expression attribute_expression {get { assert_not_reached(); }}
 	public DataType target_type {get; set;}
 	
-	public Expression get_expression () {
+	public Expression get_expression (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError {
 		assert_not_reached ();
 	}
 
-	public Statement get_assignment (Expression parent_access) {
-		assert_not_reached ();
-	}
-
-	public void resolve (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError {
+	public Statement get_assignment (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError {
 		assert_not_reached ();
 	}
 }

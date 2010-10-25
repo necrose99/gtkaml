@@ -27,30 +27,34 @@ public class Gtkaml.MarkupMember : MarkupSubTag {
 	}
 	
 	public override void generate (MarkupResolver resolver) throws ParseError {
-		generate_construct_member ();
-		generate_add ();
+		generate_construct_member (resolver);
+		generate_add (resolver);
 	}
 	
 	private void generate_property () {
 		var variable_type = data_type.copy ();
+		variable_type.value_owned = false;
 		PropertyAccessor getter = new PropertyAccessor (true, false, false, variable_type, null, source_reference);
 		
 		variable_type = data_type.copy ();
+		variable_type.value_owned = false;
 		PropertyAccessor setter = new PropertyAccessor (false, true, false, variable_type, null, source_reference);
 		
 		variable_type = data_type.copy ();
+		variable_type.value_owned = true;
 		Property p = new Property (member_name, variable_type, getter, setter, source_reference);
 		p.access = access;
 		
 		p.field = new Field ("_%s".printf (p.name), variable_type.copy (), p.initializer, p.source_reference);
 		p.field.access = SymbolAccessibility.PRIVATE;
+		p.field.binding = p.binding;
 		
 		markup_class.add_property (p);
 	}
 	
-	private void generate_construct_member ()
+	private void generate_construct_member (MarkupResolver resolver) throws ParseError 
 	{
-		var initializer = get_initializer ();
+		var initializer = get_initializer (resolver);
 		var assignment = new Assignment (new MemberAccess.simple (me, source_reference), initializer, AssignmentOperator.SIMPLE, source_reference);
 		
 		markup_class.constructor.body.add_statement (new ExpressionStatement (assignment, source_reference));

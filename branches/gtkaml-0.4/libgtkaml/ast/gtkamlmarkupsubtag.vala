@@ -24,7 +24,6 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 	public override void resolve_attributes (MarkupResolver resolver) throws ParseError {
 		resolve_creation_method (resolver);
 		resolve_composition_method (resolver);
-		resolve_attribute_types (resolver);
 	}
 
 	void resolve_composition_method (MarkupResolver resolver) {
@@ -68,7 +67,7 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 			var parameters = resolver.get_default_parameters (current_candidate.parent_symbol.get_full_name (), current_candidate, source_reference);
 			int matches = 0;
 
-			self = new SimpleMarkupAttribute.with_expression (parameters.get(0).attribute_name, new MemberAccess.simple (me, source_reference), source_reference);
+			self = new SimpleMarkupAttribute (parameters.get(0).attribute_name, "{"+me+"}", source_reference);
 			add_markup_attribute (self);
 
 			foreach (var parameter in parameters) {
@@ -149,22 +148,17 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		return candidates;
 	}
 
-	protected ObjectCreationExpression get_initializer ()
+	protected ObjectCreationExpression get_initializer (MarkupResolver resolver) throws ParseError 
 	{
 		var creation_method_access = get_class_expression ();
-		if (creation_method.name != "new") {
-			creation_method_access = new MemberAccess (creation_method_access, creation_method.name, source_reference);
-		}
+		creation_method_access = new MemberAccess (creation_method_access, creation_method.name, source_reference);
 		creation_method_access.creation_member = true;
 		
 		var initializer = new ObjectCreationExpression (creation_method_access, source_reference);
-		if (creation_method.name != "new") {
-			initializer.constructor = creation_method;
-		}
 		
 		//TODO: determine the initialize to call from MarkupHintsStore
 		foreach (var parameter in creation_parameters) {
-			initializer.add_argument (parameter.get_expression ());
+			initializer.add_argument (parameter.get_expression (resolver, this));
 		}
 		
 		DataType variable_type = resolved_type.copy ();
@@ -175,13 +169,13 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 		return initializer;
 	}
 
-	protected void generate_add () 
+	protected void generate_add (MarkupResolver resolver) throws ParseError 
 	{
 		var parent_member = new MemberAccess.simple (parent_tag.me, parent_tag.source_reference);
 		var method_call = new MethodCall (new MemberAccess (parent_member, composition_method.name, source_reference));
 		
 		foreach (MarkupAttribute attr in composition_parameters) {
-			method_call.add_argument (attr.get_expression ());
+			method_call.add_argument (attr.get_expression (resolver, this));
 		}
 		
 		markup_class.constructor.body.add_statement (new ExpressionStatement (method_call, source_reference));

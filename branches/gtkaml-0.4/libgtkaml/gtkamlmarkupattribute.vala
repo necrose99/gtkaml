@@ -8,10 +8,8 @@ public interface Gtkaml.MarkupAttribute : Object {
 	public abstract string attribute_name {get; }
 	public abstract DataType target_type {get; set;} 
 	
-	public abstract Expression get_expression ();
-	public abstract Statement get_assignment (Expression parent_access);
-	
-	public abstract void resolve (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError;
+	public abstract Expression get_expression (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError;
+	public abstract Statement get_assignment (MarkupResolver resolver, MarkupTag markup_tag) throws ParseError;
 	
 }
 
