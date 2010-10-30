@@ -18,7 +18,7 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 
 	internal CodeContext context {get; set;}
 
-	public new void resolve (CodeContext context) {
+	public void resolve (CodeContext context) {
 		markup_hints = new MarkupHintsStore (context);
 		vala_parser = new ValaParser ();
 		markup_hints.parse ();

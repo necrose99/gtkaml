@@ -2,11 +2,12 @@ using Vala;
 
 public class Gtkaml.CodeContext : Vala.CodeContext {
 
-	public SymbolResolver markup_resolver { get; private set; }
+	public MarkupResolver markup_resolver { get; private set; }
+	public SymbolResolver resolver { get { return markup_resolver; } }
 	
 	public CodeContext () {
-		markup_resolver = new MarkupResolver ();
 		base ();
+		markup_resolver = new MarkupResolver ();
 	}
 
 	public new void check () {

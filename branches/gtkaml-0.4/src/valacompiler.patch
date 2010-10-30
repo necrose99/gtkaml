@@ -1,5 +1,5 @@
 --- ../vala/compiler/valacompiler.vala	2010-10-29 14:49:36.000000000 +0300
-+++ src/gtkamlcompiler.vala	2010-10-30 14:10:47.000000000 +0300
++++ src/gtkamlcompiler.vala	2010-10-30 15:49:41.000000000 +0300
 @@ -1,4 +1,4 @@
 -/* valacompiler.vala
 +/* gtkamlcompiler.vala
@@ -22,15 +22,51 @@
  	static string basedir;
  	static string directory;
  	static bool version;
-@@ -153,7 +156,7 @@
+@@ -82,7 +85,7 @@
+ 
+ 	static bool run_output;
+ 
+-	private CodeContext context;
++	private Gtkaml.CodeContext context;
+ 
+ 	const OptionEntry[] options = {
+ 		{ "girdir", 0, 0, OptionArg.FILENAME_ARRAY, ref gir_directories, "Look for .gir files in DIRECTORY", "DIRECTORY..." },
+@@ -152,8 +155,8 @@
+ 	}
  
  	private int run () {
- 		context = new CodeContext ();
+-		context = new CodeContext ();
 -		CodeContext.push (context);
++		context = new Gtkaml.CodeContext ();
 +		Vala.CodeContext.push (context);
  
  		// default to build executable
  		if (!ccode_only && !compile_only && output == null) {
+@@ -188,12 +191,12 @@
+ 		context.includedir = includedir;
+ 		context.output = output;
+ 		if (basedir == null) {
+-			context.basedir = CodeContext.realpath (".");
++			context.basedir = Vala.CodeContext.realpath (".");
+ 		} else {
+-			context.basedir = CodeContext.realpath (basedir);
++			context.basedir = Vala.CodeContext.realpath (basedir);
+ 		}
+ 		if (directory != null) {
+-			context.directory = CodeContext.realpath (directory);
++			context.directory = Vala.CodeContext.realpath (directory);
+ 		} else {
+ 			context.directory = context.basedir;
+ 		}
+@@ -279,7 +282,7 @@
+ 
+ 		if (fast_vapis != null) {
+ 			foreach (string vapi in fast_vapis) {
+-				var rpath = CodeContext.realpath (vapi);
++				var rpath = Vala.CodeContext.realpath (vapi);
+ 				var source_file = new SourceFile (context, SourceFileType.FAST, rpath);
+ 				context.add_source_file (source_file);
+ 			}
 @@ -307,7 +310,7 @@
  		bool has_c_files = false;
  
