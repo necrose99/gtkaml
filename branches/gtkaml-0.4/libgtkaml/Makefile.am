@@ -43,7 +43,7 @@ libgtkaml_la_VALASOURCES = \
 	workarounds/gtkamlcallable.vala \
 	workarounds/gtkamlvalaparser.vala
 
-libgtkaml_la_SOURCES = \
+nodist_libgtkaml_la_SOURCES = \
 	libgtkaml.stamp \
 	$(libgtkaml_la_VALASOURCES:.vala=.c) \
 	gtkaml.h

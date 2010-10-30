@@ -11,7 +11,7 @@ BUILT_SOURCES = gtkamlc.stamp
 
 gtkamlc_VALASOURCES = gtkamlcompiler.vala
 
-gtkamlc_SOURCES = \
+nodist_gtkamlc_SOURCES = \
 	gtkamlc.stamp \
 	$(gtkamlc_VALASOURCES:.vala=.c) 
 
