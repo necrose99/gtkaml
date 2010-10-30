@@ -4,10 +4,10 @@ using Xml;
 
 public class Gtkaml.MarkupParser : CodeVisitor {
 
-	private CodeContext context;
+	private Vala.CodeContext context;
 	public ValaParser vala_parser;
 
-	public void parse (CodeContext context) {
+	public void parse (Vala.CodeContext context) {
 		this.context = context;
 		this.vala_parser = new ValaParser ();
 		context.accept (this);
