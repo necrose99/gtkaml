@@ -21,6 +21,7 @@ lib_LTLIBRARIES = \
 BUILT_SOURCES = libgtkaml.stamp
 
 libgtkaml_la_VALASOURCES = \
+	gtkamlcodecontext.vala \
 	gtkamlmarkupparser.vala \
 	gtkamlmarkupscanner.vala \
 	gtkamlmarkupresolver.vala \

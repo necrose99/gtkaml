@@ -14,7 +14,7 @@ public class Gtkaml.Callable {
 		this.member = member;
 	}
 	
-	public Vala.List<FormalParameter> get_parameters ()
+	public Vala.List<Vala.Parameter> get_parameters ()
 	{
 		if (member is Method)
 			return ((Method)member).get_parameters ();

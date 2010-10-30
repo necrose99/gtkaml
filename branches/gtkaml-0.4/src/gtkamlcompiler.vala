@@ -156,7 +156,7 @@ class Gtkaml.Compiler {
 
 	private int run () {
 		context = new CodeContext ();
-		CodeContext.push (context);
+		Vala.CodeContext.push (context);
 
 		// default to build executable
 		if (!ccode_only && !compile_only && output == null) {
@@ -349,16 +349,12 @@ class Gtkaml.Compiler {
 			interface_writer.write_file (context, fast_vapi_filename);
 			return quit ();
 		}
-		
-		var resolver = new MarkupResolver ();
-		resolver.resolve (context);
-		
+
+		context.check ();
+
 		if (context.report.get_errors () > 0 || (fatal_warnings && context.report.get_warnings () > 0)) {
 			return quit ();
 		}
-
-		var analyzer = new SemanticAnalyzer ();
-		analyzer.analyze (context);
 
 		if (!ccode_only && !compile_only && library == null) {
 			// building program, require entry point
@@ -371,13 +367,6 @@ class Gtkaml.Compiler {
 			var code_writer = new CodeWriter (CodeWriterType.DUMP);
 			code_writer.write_file (context, dump_tree);
 		}
-
-		if (context.report.get_errors () > 0 || (fatal_warnings && context.report.get_warnings () > 0)) {
-			return quit ();
-		}
-
-		var flow_analyzer = new FlowAnalyzer ();
-		flow_analyzer.analyze (context);
 
 		if (context.report.get_errors () > 0 || (fatal_warnings && context.report.get_warnings () > 0)) {
 			return quit ();
@@ -562,6 +551,9 @@ class Gtkaml.Compiler {
 	}
 
 	static int main (string[] args) {
+		// initialize locale
+		Intl.setlocale (LocaleCategory.ALL, "");
+
 		if (Path.get_basename (args[0]) == "gtkaml") {
 			return run_source (args);
 		}
