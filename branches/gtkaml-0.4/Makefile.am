@@ -1,6 +1,7 @@
 SUBDIRS = \
 	libgtkaml \
-	src 
+	src \
+	tests/gtk2
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gtkaml-1.0.pc

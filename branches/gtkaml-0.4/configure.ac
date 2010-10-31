@@ -48,6 +48,7 @@ gtkaml-1.0.pc
 src/Makefile
 libgtkaml/Makefile
 libgtkaml/gtkaml-1.0.deps
+tests/gtk2/Makefile
 ])
 
 AC_OUTPUT
