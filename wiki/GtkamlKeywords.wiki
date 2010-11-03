@@ -6,53 +6,53 @@ As seen in the [Example example] or in the tests and sample that come with gtkam
 
 Here are their specifications, assuming the prefix is declared with *`xmlns:g`*.
 
-=== g:name ===
+=== gtkaml:name ===
 The name of the class you're creating. May contain fully qualified name.
 
 Allowed only at the root tag level.
 
-=== g:namespace ===
+=== gtkaml:namespace ===
 The name of the namespace your class resides in.
 
 Allowed only at the root tag level.
 
-=== g:implements ===
+=== gtkaml:implements ===
 The comma-separated list of interfaces that the class implements.
  
 Note that the inherited class is the root tag name.
 
-=== g:public ===
+=== gtkaml:public ===
 Specifies a name under which the current tag becomes a public class member.
 
-Mutually exclusive with `g:private`.
+Mutually exclusive with `gtkaml:private`.
 
-=== g:private ===
+=== gtkaml:private ===
 Specifies a name under which the current tag becomes a private class member.
 
 Mutually exclusive with `class:public`.
 
-=== g:existing ===
+=== gtkaml:existing ===
 Specifies that the current widget doesn't get constructed, but it configures a an existing widget. Also, it gets added to the parent container, unless it's `standalone` too.
 
 The value is the identifier/expression under which the existing widget is reachable.
 
-The expression is cast to the tag's name (e.g. `<VBox g:existing="dialog.vbox1" spacing="1" />` becomes `(dialog.vbox as VBox).spacing = 1`)
+The expression is cast to the tag's name (e.g. `<VBox gtkaml:existing="dialog.vbox1" spacing="1" />` becomes `(dialog.vbox as VBox).spacing = 1`)
 
 Allowed only on non-root tags.
 
-=== g:standalone ===
+=== gtkaml:standalone ===
 Specifies that the current widget doesn't get added to the parent container.
 
 The only valid value is "true".
 
 Allowed only on non-root tags.
 
-=== g:construct ===
+=== gtkaml:construct ===
 Specifies code to be executed just before adding this widget to the parent container.
 
 The code may use `target` as the name of the current widget, just like with a signal
 
-=== g:preconstruct ===
+=== gtkaml:preconstruct ===
 Specifies code to be executed just after the instance is created. 
 
 The code may use `target` as the name of the current widget, just like with a signal
