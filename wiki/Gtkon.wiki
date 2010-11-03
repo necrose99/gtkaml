@@ -23,7 +23,7 @@ The default prefix is introduced with `using=Gtk`, meaning that unprefixed nodes
 Aliases may be defined like this `using:p=Pango`, so from now on `p:` is for Pango nodes. 
 
 === Example ===
-
+gtk-hello.gtkon
 {{{
 Dialog gtkon:version=0.2 using=Gtk gtkaml:name="SearchDialog" title="Find" !has-separator destroy={Gtk.main_quit} {
 	/*Dialog already has a VBox named vbox (existing) and is already added to the Dialog (standalone) */
