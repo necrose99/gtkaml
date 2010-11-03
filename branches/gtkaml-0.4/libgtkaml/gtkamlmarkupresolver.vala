@@ -2,14 +2,14 @@ using GLib;
 using Vala;
 
 /**
- * TODO: Gtkaml SymbolResolver's  responsibilities:
- * - determine if an attribute is a field or a signal and use = or += appropiately
+ * Gtkaml SymbolResolver's  responsibilities:
+ * * determine if an attribute is a field or a signal and use = or += appropiately
  * Literal attribute values:
- * - determine the type of the literal field attribute (boolean, string and enum)
- * - determine the method reference for the literal signal attribute
+ * * determine the type of the literal field attribute (boolean, string and enum)
+ * * determine the method reference for the literal signal attribute
  * Expression attribute values:
- * - signals: use the result of lambda parsing add the signal parameters
- * - fields: use the expression of the lambda as field assignment
+ * * signals: use the result of lambda parsing add the signal parameters
+ * * fields: use the expression of the lambda as field assignment
  */
 public class Gtkaml.MarkupResolver : SymbolResolver {
 
@@ -66,7 +66,9 @@ public class Gtkaml.MarkupResolver : SymbolResolver {
 		return sym;
 	}
 	
-	/** processes tag hierarchy. Removes unresolved ones after this step */
+	/**
+	 * processes tag hierarchy. Removes unresolved ones after this step
+	 */
 	public bool resolve_markup_tag (MarkupTag markup_tag) throws ParseError {
 		//resolve first
 		MarkupTag? resolved_tag = markup_tag.resolve (this);

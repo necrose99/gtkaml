@@ -5,33 +5,52 @@ using Vala;
  * A tag that is a parent of others. Can be the root tag.
  * 
  * You have to implement:
- * - generate_public_ast
- * - (optionally) resolve
- * - generate
+ * * generate_public_ast
+ * * (optionally) resolve
+ * * generate
  */ 
 public abstract class Gtkaml.MarkupTag : Object {
 	
 	protected Vala.List<MarkupSubTag> child_tags = new Vala.ArrayList<MarkupSubTag> ();
 	protected Vala.List<MarkupAttribute> markup_attributes = new Vala.ArrayList<MarkupAttribute> ();
 
-	/** not-ignorable text nodes concatenated */
+	/**
+	 * not-ignorable text nodes concatenated
+	*/
 	public string text {get; set;}
-	/** the actual tag encountered */	
+
+	/**
+	 * the actual tag encountered
+	 */	
 	public string tag_name {get; set;}
-	/** the Vala namespace */
+
+	/**
+	 * the Vala namespace
+	 */
 	public MarkupNamespace tag_namespace {get; set;}
-	/** the Vala class in which this tag was defined */
+
+	/**
+	 * the Vala class in which this tag was defined
+	 */
 	public weak MarkupClass markup_class {get; private set;}
+
 	public SourceReference? source_reference {get; set;}
 	
-	/** the expression to be used (either 'this', or 'property name' or 'temporary variable name') when using the tag */
+	/**
+	 * the expression to be used (either 'this', or 'property name' or 'temporary variable name') when using the tag
+	 */
 	public abstract string me {get;}
 	
-	/** usually an Unresolved data type created from the tag name/namespace */
+	/**
+	 * usually an Unresolved data type created from the tag name/namespace
+	 */
 	public DataType data_type {get ; set;}
 	
 	private DataTypeParent _data_type_parent;
-	/** the determined data type - see resolve() */
+
+	/**
+	 * the determined data type - see resolve()
+	 */
 	public DataType resolved_type { 
 		get {
 			assert (!(_data_type_parent.data_type is UnresolvedType));
@@ -40,14 +59,21 @@ public abstract class Gtkaml.MarkupTag : Object {
 	}
 
 	private string _full_name;
-	/** shortcut for resolved_type.data_type.get_full_name () -> for debugging */
+
+	/**
+	 * shortcut for resolved_type.data_type.get_full_name () -> for debugging
+	 */
 	public string full_name { get {	return _full_name; } }
 	
-	/** attributes explicitly found as creation parameters + default ones.
-		All in the original order.
+	/**
+	 * attributes explicitly found as creation parameters + default ones.
+	 * All in the original order.
 	 */
 	public Vala.List<MarkupAttribute> creation_parameters = new Vala.ArrayList<MarkupAttribute> ();
-	/** resolved creation method */
+
+	/**
+	 * resolved creation method
+	 */
 	public CreationMethod creation_method;
 	
 	public MarkupTag (MarkupClass markup_class, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference = null) {
@@ -214,7 +240,9 @@ public abstract class Gtkaml.MarkupTag : Object {
 		child_tag.parent_tag = this;
 	}
 	
-	/** replaces a child tag and moves all its attributes and subtags to the new one */
+	/**
+	 * replaces a child tag and moves all its attributes and subtags to the new one
+	 */
 	public void replace_child_tag (MarkupSubTag old_child, MarkupSubTag new_child) {
 		for (int i = 0; i < child_tags.size; i++) {
 			if (child_tags[i] == old_child) {

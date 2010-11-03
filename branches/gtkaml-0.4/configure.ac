@@ -42,6 +42,16 @@ AC_SUBST(VALA_LIBS)
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
+AC_ARG_ENABLE([docs], ([--enable-docs],[enable to generate valadoc]),
+              [enable_docs=$enableval], [enable_docs=no])
+AM_CONDITIONAL([ENABLE_DOCS], [test x$enable_docs = xyes])
+
+AS_IF([test "x$enable_docs" != xno],
+      [AC_PATH_PROG([VALADOC], [valadoc], :)
+       AC_SUBST(VALADOC)
+       AS_IF([test "$VALADOC" = :],
+             [AC_MSG_ERROR([valadoc not found])])])
+
 AC_CONFIG_FILES([
 Makefile
 gtkaml-1.0.pc

@@ -9,11 +9,15 @@ public abstract class Gtkaml.MarkupSubTag : MarkupTag {
 
 	public weak MarkupTag parent_tag {get;set;}
 
-	/** attributes explicitly found as composition parameters + default ones.
-		All in the original order.
+	/**
+	 * Attributes explicitly found as composition parameters + default ones.
+	 * All in the original order.
 	 */
 	public Vala.List<MarkupAttribute> composition_parameters = new Vala.ArrayList<MarkupAttribute> ();
-	/** resolved composition method */
+
+	/**
+	 * resolved composition method
+	 */
 	public Callable composition_method;
 
 	public MarkupSubTag (MarkupTag parent_tag, string tag_name, MarkupNamespace tag_namespace, SourceReference? source_reference) {
