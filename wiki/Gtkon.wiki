@@ -16,6 +16,11 @@ Although colon-separated prefixes are still present as aliases to imported names
   * public members may be introduced directly with a leading `$` on the attribute (`$id` instead of `gtkaml:public="id"`). Private members start with `$.`. Referencing an existing member is done with `&`
   * code islands are between  -{ and }-
  
+The root node has to state the syntax version as `gtkon:version=0.2`. 
+
+The default prefix is introduced with `using=Gtk`, meaning that unprefixed nodes are from the Gtk namespace.
+
+Aliases may be defined like this `using:p=Pango`, so from now on `p:` is for Pango nodes. 
 
 === Example ===
 
@@ -30,5 +35,8 @@ Dialog gtkon:version=0.2 using=Gtk gtkaml:name="SearchDialog" title="Find" !has-
 		CheckButton $match_case with-mnemonic label="_Match case" !expand;
 		CheckButton $find_backwards with-mnemonic label="Find _backwards" !expand;
 	}
+	-{
+		/* Vala code */
+	}-
 }
 }}}
