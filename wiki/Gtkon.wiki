@@ -1,0 +1,24 @@
+#summary Alternative JSON-like syntax for Gtkaml
+
+== Introduction ==
+
+Gtkon is a JSON-like syntax alternative to the standard XML that Gtkaml provides.
+
+== Gtkon Syntax ==
+
+=== Example ===
+
+{{{
+Dialog gtkon:version=0.2 using=Gtk gtkaml:name="SearchDialog" title="Find" !has-separator border-width=5 default-width=350 default-height=100 response={on_response} destroy={Gtk.main_quit} {
+	/*Dialog already has a VBox named vbox (existing) and is already added to the Dialog (standalone) */
+	VBox spacing=10 &vbox gtkaml:standalone {
+		HBox !homogeneous spacing=20 !expand {
+			Label with-mnemonic label="_Search for:" mnemonic-widget={search_entry} !expand;
+			Entry $.search_entry;
+		}
+		CheckButton $.match_case with-mnemonic label="_Match case" !expand;
+		CheckButton $.find_backwards with-mnemonic label="Find _backwards" !expand;
+	}
+}
+}}}
+
