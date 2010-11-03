@@ -1,4 +1,4 @@
-#summary Alternative JSON-like syntax for Gtkaml
+#summary Gtkaml Object Notation
 
 == Introduction ==
 
@@ -6,19 +6,29 @@ Gtkon is a JSON-like syntax alternative to the standard XML that Gtkaml provides
 
 == Gtkon Syntax ==
 
+Just like the XML syntax, each node corresponds to a widget which is added to the parent container.
+
+Although colon-separated prefixes are still present as aliases to imported namespaces, the more lax syntax allows for the following shortcuts:
+
+  * nodes just end on closing brace, no need to repeat the opening node name
+  * values without whitespace may be left unquoted
+  * attributes may not have a value, in which case they are treated as ="true". A leading "!" means "false"
+  * public members may be introduced directly with a leading `$` on the attribute (`$id` instead of `gtkaml:public="id"`). Private members start with `$.`. Referencing an existing member is done with `&`
+  * code islands are between  -{ and }-
+ 
+
 === Example ===
 
 {{{
-Dialog gtkon:version=0.2 using=Gtk gtkaml:name="SearchDialog" title="Find" !has-separator border-width=5 default-width=350 default-height=100 response={on_response} destroy={Gtk.main_quit} {
+Dialog gtkon:version=0.2 using=Gtk gtkaml:name="SearchDialog" title="Find" !has-separator destroy={Gtk.main_quit} {
 	/*Dialog already has a VBox named vbox (existing) and is already added to the Dialog (standalone) */
 	VBox spacing=10 &vbox gtkaml:standalone {
 		HBox !homogeneous spacing=20 !expand {
 			Label with-mnemonic label="_Search for:" mnemonic-widget={search_entry} !expand;
-			Entry $.search_entry;
+			Entry $search_entry;
 		}
-		CheckButton $.match_case with-mnemonic label="_Match case" !expand;
-		CheckButton $.find_backwards with-mnemonic label="Find _backwards" !expand;
+		CheckButton $match_case with-mnemonic label="_Match case" !expand;
+		CheckButton $find_backwards with-mnemonic label="Find _backwards" !expand;
 	}
 }
 }}}
-
