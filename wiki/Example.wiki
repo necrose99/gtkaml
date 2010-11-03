@@ -4,7 +4,7 @@
 = From Vala GTKSamples =
 
 == [http://live.gnome.org/Vala/GTKSample#line-7 Basic Sample] ==
-(Available in [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/gtk-hello.gtkon Gtkon] syntax too) 
+(Available in [Gtkon] syntax [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/gtk-hello.gtkon here]) 
 {{{
 <Window xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk" g:name="GtkHello"
   type="{WindowType.TOPLEVEL}" title="First GTK+ Program" 
@@ -32,7 +32,7 @@ $ ./gtk-hello
 }}}
 
 == [http://live.gnome.org/Vala/GTKSample#line-46 Synchronizing Widgets] ==
-(Available in [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/sync-sample.gtkon Gtkon] syntax too) 
+(Available in [Gtkon] syntax [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/sync-sample.gtkon here]) 
 {{{
 <Window xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk"
   title="Enter your age" position="{WindowPosition.CENTER}"
@@ -69,7 +69,7 @@ $ ./gtk-hello
 }}}
 
 == [http://live.gnome.org/Vala/GTKSample#line-211 Creating a Dialog] ==
-(Available in [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/search-dialog.gtkon Gtkon] syntax too) 
+(Available in [Gtkon] syntax [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/search-dialog.gtkon here]) 
 {{{
 <Dialog xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk"
   g:name="SearchDialog" title="Find" has-separator="false"
@@ -142,7 +142,7 @@ $ ./gtk-hello
 
 
 == [http://live.gnome.org/Vala/GTKSample#line-435 TreeView with ListStore] ==
-(Available in [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/treeview-liststore-sample.gtkon Gtkon] syntax too) 
+(Available in [Gtkon] syntax [http://code.google.com/p/gtkaml/source/browse/trunk/examples/vala2gtkon/treeview-liststore-sample.gtkon here]) 
 {{{
 <Window xmlns:g="http://gtkaml.org/0.2" xmlns="Gtk"
   g:name="TreeViewSample" title="Tree View Sample"
