@@ -16,7 +16,7 @@ Although colon-separated prefixes are still present as aliases to imported names
   * public members may be introduced directly with a leading `$` on the attribute (`$id` instead of `gtkaml:public="id"`). Private members start with `$.`. Referencing an existing member is done with `&`
   * code islands are between  -{ and }-
  
-The root node has to state the syntax version as `gtkon:version=0.2`. 
+The root node has to have the `gtkon:version=0.2` attribute and the regular gtkaml:name of the class.
 
 The default prefix is introduced with `using=Gtk`, meaning that unprefixed nodes are from the Gtk namespace.
 
