@@ -154,6 +154,16 @@ label</label>
   * use more human-parsable version numbering scheme (x.y.z) (DONE in 0.2.3)
 
 ==Goals for 0.4==
+  * signal handlers syntax: use {} for arbitrary expressions and no (additional) curly braces for method names or lambdas. (DONE in 0.4.0)
+  * enum literals (e.g. `<Window type="TOPLEVEL">` instead of `<Window type="{WindowType.TOPLEVEL}>"`)
+  * non-class code after the XML end tag (e.g. int main() belongs there, not public static int main() )
+  * text runs
+  * pango and cairo examples
+  * clutter mx support
+  * hildon examples
+
+
+==Goals for 0.6==
 To think about:
   * ====rewrite====
     * method matcher should parse the **.implicits files upfront
@@ -161,21 +171,14 @@ To think about:
   * ====data binding==== 
 By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
   *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
-  * signal handlers syntax: use {} for arbitrary expressions and no (additional) curly braces for method names or lambdas.
   * property values syntax: introduce data binding expression similar to lambda notation (see below)
-  * enum literals (e.g. `<Window type="TOPLEVEL">` instead of `<Window type="{WindowType.TOPLEVEL}>"`)
   * `<gtkaml:Code source='path'>` instead of `<![[CDATA ... ]]>`. Suggest `filename.gtkaml.vala` as preferred path, (let `<![[CDATA>` live on, too). 
   * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
   * array add methods (e.g. define an attribute then fill it with array elements)
-  * non-class code after the XML end tag (e.g. int main() belongs there, not public static int main() )
 
 ==Not formulated ideas==  
   * Genie support through root gtkaml:language attribute (+ genie code generator). Bonus points: yaml markup for genie, detect it automatically
   * implement GtkBuildable by default? re-use GtkBuildable instead of 'implicits' ?
-  * text runs
-  * pango and cairo markup
-  * clutter markup
-  * hildon markup (maemo)
 
 Side projects:
   * converter from glade/gtkbuilder (based on libglade?)
