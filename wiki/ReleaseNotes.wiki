@@ -1,6 +1,16 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+
+=== (2010-11-06) gtkaml 0.4.0 ===
+  * first version with gtkon syntax
+  * [breaking] signal values are by default references to methods, and generate lambda body only when enclosed in braces (behaviour is reversed wrt gtkaml 0.2.x)
+  * Fixed Issue #22 "can't find class with nested namespace" - fix by herodjar
+  * gtkaml builds with vala-0.10.1 and vala-0.12 from HEAD so it does not distribute .c/.h files anymore
+  * added support for run_source with the `gtkaml' command (the source cannot start with #! yet)
+  * added the --write-vala (-V) switch which stops gtkamlc right after generating vala files.
+
+
 === (2010-10-15) gtkaml 0.2.11 and 0.2.12 ===
 Changes in 0.2.11:
   * fixed building with libvala-0.10
