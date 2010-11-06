@@ -2,7 +2,7 @@
 
 == Introduction ==
 
-Gtkon is a JSON-like syntax alternative to the standard XML that Gtkaml provides.
+Gtkon is a JSON-like alternative syntax to the standard XML that Gtkaml provides.
 
 == Gtkon Syntax ==
 
