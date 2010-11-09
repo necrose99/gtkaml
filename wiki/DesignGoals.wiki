@@ -142,16 +142,16 @@ label</label>
 
   * attributes can be hyphen-separated instead of underscores (e.g. `destroy-event`  instead of `destroy_event`) (DONE in 0.2)
 
-=Future Goals=
-
-==Goals for 0.2.x.x==
-
   * delete generated files unless --save-temps present (DONE in 0.2.0.1)
   * align generated .vala source lines to the first code island lines (DONE in 0.2.0.1)
-  * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (TODO)
   * fix existing bugs + reformulate .implicits parsing code (partially DONE in 0.2.0.2)
   * cleanup source (TODO)
   * use more human-parsable version numbering scheme (x.y.z) (DONE in 0.2.3)
+  * allow signals to be container add functions (e.g. Container.add () is a signal and it is not used right now) (DONE in 0.2.8)
+
+
+=Future Goals=
+
 
 ==Goals for 0.4==
   * signal handlers syntax: use {} for arbitrary expressions and no (additional) curly braces for method names or lambdas. (DONE in 0.4.0)
@@ -159,7 +159,7 @@ label</label>
   * non-class code after the XML end tag (e.g. int main() belongs there, not public static int main() )
   * text runs
   * pango and cairo examples
-  * clutter mx support
+  * clutter/mx support
   * hildon examples
 
 
@@ -169,9 +169,12 @@ To think about:
     * method matcher should parse the **.implicits files upfront
     * stop generating text (.vala) files. Directly create vala AST elements. The problem when I started gtkaml was that I didn't have a method to parse the 'code islands'. Now that Vala.Parser is a recursive descent parser, I could use other methods as entry points in the parser (e.g. `vala_parser_parse_declaration ()` ). This would also enrich gtkaml's knowledge about the current source.  
   * ====data binding==== 
-By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
+    * By using the 'notify' event of GLib.Object we can re-evaluate a property value on each change of one of its tokens. 
+    * property values syntax: introduce data binding expression similar to lambda notation such as `<Label label='title => {"Title: " + title}' />` which binds on `this.title`. Maybe bind all MemberAccess by default, and disable binding with `<Label label='(){"Title: " + title}' />` ?
+
+  * composition methods should support arrays/collections (as seen in Clutter Stage.add())
+  * "together properties" which generate a call (such as `x="10" y="15"` generates `set_position (10, 10);`
   *	~~vala re-entrant parser (allows to generate AST directly instead of code, and to parse 'code islands')~~
-  * property values syntax: introduce data binding expression similar to lambda notation (see below)
   * `<gtkaml:Code source='path'>` instead of `<![[CDATA ... ]]>`. Suggest `filename.gtkaml.vala` as preferred path, (let `<![[CDATA>` live on, too). 
   * introduce `gtkaml:show-all="true"` which basically sets `visible="true"` on all child widgets unless explicitly set invisible 
   * array add methods (e.g. define an attribute then fill it with array elements)
