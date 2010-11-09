@@ -3,7 +3,7 @@
 
 === (2010-11-09) gtkaml 0.4.1 ===
   * updated to valacompiler 0.11.2, compatible with vala 0.10.2
-  * initial support for clutter (adding to stage) [1]
+  * initial support for clutter (adding to stage) [http://code.google.com/p/gtkaml/source/browse/trunk/examples/clutter/full-example.gtkon [1]]
   * support for vala structs (such as Clutter.Color)
 
 
