@@ -1,6 +1,11 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2010-11-09) gtkaml 0.4.1 ===
+  * updated to valacompiler 0.11.2, compatible with vala 0.10.2
+  * initial support for clutter (adding to stage) [1]
+  * support for vala structs (such as Clutter.Color)
+
 
 === (2010-11-06) gtkaml 0.4.0 ===
   * first version with gtkon syntax
