@@ -1,6 +1,20 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2011-03-14) gtkaml 0.4.2 ===
+  * updated to valacompiler 0.11.6, compatible with vala 0.10.4
+  * internal classes:  by using gtkaml:internal="foo" on the root node. The existing gtkaml:name becomes an alias for gtkaml:public.
+  * internal and protected modifiers for fields, along with public/private
+  * properties: a field with e.g. gtkaml:property="get; internal set;" becomes a property. This feature is available as property='get;internal set' in Gtkon
+  * gtkon:version is now optional
+  * use $foo on root node in Gtkon for the class name, instead of name="foo"
+
+Issues fixed:
+  * #18 Signals in interfaces are not detected
+  * #23 Cannot refer to variables created in code
+  * #24 Invalid UTF-8 handling
+
+
 === (2010-11-09) gtkaml 0.4.1 ===
   * updated to valacompiler 0.11.2, compatible with vala 0.10.2
   * initial support for clutter (adding to stage) [http://code.google.com/p/gtkaml/source/browse/trunk/examples/clutter/full-example.gtkon [1]]
