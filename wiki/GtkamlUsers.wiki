@@ -1,8 +1,7 @@
 #summary Projects using Gtkaml
 
-  * giocommander - [http://code.google.com/p/giocommander/source/browse/#svn%2Ftrunk%2Fsrc http://code.google.com/p/giocommander/] 
-
   * radare2 GUI  - http://radare.nopcode.org/get/lacon-radare-2009/#%2832%29
+  * giocommander - [http://code.google.com/p/giocommander/source/browse/#svn%2Ftrunk%2Fsrc http://code.google.com/p/giocommander/] 
 
 
 
