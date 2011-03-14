@@ -180,19 +180,8 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		string name = root_class_definition.target_name;
 		string base_ns = root_class_definition.base_ns;
 		string base_name = root_class_definition.base_type.name;
-
-		switch (root_class_definition.definition_scope) {
-			case DefinitionScope.PUBLIC:
-				class_start += "public class ";
-				break;
-			case DefinitionScope.INTERNAL:
-				class_start += "internal class ";
-				break;
-			default:
-				Report.error(null, "Invalid class visibility");
-				break;
-		}
 		
+		class_start += "public class ";
 		if (ns!=null) class_start += ns + ".";
 		class_start += name + " : ";
 		if (base_ns!=null) class_start += base_ns + ".";
@@ -211,33 +200,21 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 
 	protected void write_declaration (ClassDefinition class_definition) {
 		switch (class_definition.definition_scope) {
+		case DefinitionScope.MAIN_CLASS:
+			/* do something here? */
+			break;
 		case DefinitionScope.PUBLIC:
 			members_declarations += "\tpublic " + class_definition.base_full_name +
-				" " + class_definition.identifier;
-			break;
-		case DefinitionScope.INTERNAL:
-			members_declarations += "\tinternal " + class_definition.base_full_name +
-				" " + class_definition.identifier;
-			break;
-		case DefinitionScope.PROTECTED:
-			members_declarations += "\tprotected " + class_definition.base_full_name +
-				" " + class_definition.identifier;
+				" " + class_definition.identifier + ";\n";
 			break;
 		case DefinitionScope.PRIVATE:
 			members_declarations += "\tprivate " + class_definition.base_full_name +
-				" " + class_definition.identifier;
+				" " + class_definition.identifier + ";\n";
 			break;
-		}
-
-		if (class_definition.definition_scope == DefinitionScope.CONSTRUCTOR) {
+		case DefinitionScope.CONSTRUCTOR:
 			construct_body_locals += "\t\t" + class_definition.base_full_name +
 				" " + class_definition.identifier + ";\n";
-		} else {
-			if (class_definition.property_desc != null) {
-				members_declarations +=  " { " + class_definition.property_desc + " }\n";
-			} else {
-				members_declarations += ";\n";
-			}
+			break;
 		}
 	}	
 		
@@ -311,10 +288,6 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		using_directives += "using %s;\n".printf(ns);
 	}
 
-	private inline string escape (string str) {
-		return str.replace ("\"", "\\\"");
-	}
-
 	protected string generate_literal (Attribute attr) {
 		string literal;
 		DataType type;
@@ -352,7 +325,7 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		} else if (type is UnresolvedType) {
 			UnresolvedType utype = type as UnresolvedType;
 			if (utype.unresolved_symbol.name == "string") {
-				literal = "\"" + escape (stripped_value) + "\"";
+				literal = "\"" + value.escape ("") + "\"";
 			} else if (utype.unresolved_symbol.name == "bool") {
 				if (stripped_value != "true" && stripped_value != "false") {
 					Report.error (null, "'%s' is not a boolean literal".printf (value));

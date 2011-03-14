@@ -4,8 +4,6 @@ int tok_idx;
 string tokens[64];
 bool mustclose;
 GtkonTokenType last_type;
-bool first_class = true;
-bool has_version = false;
 
 private static void pushtoken (string token) {
 	if (tok_idx>=tokens.length)
@@ -211,7 +209,6 @@ public class GtkonToken {
 			bos += "  ";
 		switch (type) {
 		case GtkonTokenType.CLASS:
-			str = str.replace (".", ":");
 			if (str != "") {
 				pushtoken (str);
 				bos += "<";
@@ -221,10 +218,6 @@ public class GtkonToken {
 		case GtkonTokenType.COMMENT_LINE:
 			return eos; //bos+"<!-- "+str+" -->\n";
 		case GtkonTokenType.BEGIN:
-			if (first_class && !has_version) {
-				first_class = false;
-				return " xmlns:gtkaml=\"http://gtkaml.org/"+Config.PACKAGE_VERSION+"\">\n";
-			}
 			return ">\n";
 		case GtkonTokenType.END:
 			return eos+bos+"</"+poptoken ()+">\n";
@@ -246,20 +239,10 @@ public class GtkonToken {
 				var arg = foo[1].replace ("\"", "").replace ("'", "");
 				if (foo.length != 2)
 					error ("Missing value in attribute '%s'", str);
-				if (foo[0] == "gtkon:version") {
-					has_version = true;
+				if (foo[0] == "gtkon:version")
 					return " xmlns:gtkaml=\"http://gtkaml.org/"+arg+"\"";
-				}
-				if (foo[0] == "standalone")
-					return " gtkaml:standalone=\""+arg+"\"";
-				if (foo[0] == "construct")
-					return " gtkaml:construct=\""+arg+"\"";
-				if (foo[0] == "property")
-					return " gtkaml:property=\""+arg+"\"";
-				if (foo[0] == "name") {
-					warning ("name= attribute is deprecated. use '$' prefix");
+				if (foo[0] == "name")
 					return " gtkaml:name=\""+arg+"\"";
-				}
 				if (foo[0] == "using")
 					return " xmlns=\""+arg+"\"";
 				if (foo[0].has_prefix ("using:"))
@@ -293,8 +276,6 @@ public class GtkonParser {
 		/* reset global vars -- hacky */
 		tok_idx = 0;
 		mustclose = false;
-		first_class = true;
-		has_version = false;
 		last_type = GtkonTokenType.INVALID;
 	}
 
