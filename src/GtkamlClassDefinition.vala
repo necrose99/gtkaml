@@ -24,9 +24,8 @@ using GLib;
 using Vala;
 
 public enum DefinitionScope {
+	MAIN_CLASS = 0,
 	PUBLIC,
-	INTERNAL,
-	PROTECTED,
 	PRIVATE,
 	CONSTRUCTOR
 }
@@ -35,7 +34,6 @@ public enum DefinitionScope {
 public class Gtkaml.ClassDefinition : GLib.Object {
 	public Vala.SourceReference source_reference { get; set; }
 	public string identifier { get; set; }
-	public string property_desc { get; set; }
 	public string base_full_name {
 		owned get { 
 			//BUG return (ns == null)? base_type.name : ns + "." + base_type.name;
@@ -50,7 +48,7 @@ public class Gtkaml.ClassDefinition : GLib.Object {
 	}
 
 	public string base_ns { get; set; }
-	public TypeSymbol base_type { get; set; }
+	public Vala.Class base_type { get; set; }
 	public Vala.List<Gtkaml.Attribute> attrs { get; set; }
 	public weak ClassDefinition parent_container { get; set; }
 	public Vala.List<ClassDefinition> children { get; set; }
@@ -61,7 +59,7 @@ public class Gtkaml.ClassDefinition : GLib.Object {
 	public string preconstruct_code { get; set; }
 
 	public ClassDefinition (SourceReference source_reference, string identifier,
-		string base_ns, TypeSymbol base_type, DefinitionScope definition_scope,
+		string base_ns, Vala.Class base_type, DefinitionScope definition_scope,
 		ClassDefinition? parent_container = null)
 	{
 		this.source_reference = source_reference;

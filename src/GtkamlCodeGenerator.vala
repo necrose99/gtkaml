@@ -86,7 +86,6 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 			generate_children (class_definition);
 			write_construct (class_definition);
 		} else if (class_definition is ReferenceClassDefinition) {
-			write_complex_attributes (class_definition);
 			generate_children (class_definition);
 			write_setters (class_definition);
 			write_add (class_definition);			
@@ -144,7 +143,7 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 			if (real_construct_code.has_suffix ("}"))
 				real_construct_code = real_construct_code.substring (1, real_construct_code.length - 2);
 			else Report.error (null, "%s for %s not properly ended".printf (construct_type, identifier));
-		} else real_construct_code = " (self, target) => { %s; }".printf (construct_code);
+		} else real_construct_code = " (thiz, target) => { %s; }".printf (construct_code);
 
 		this.construct_signals += "\tprivate signal void %s (%s target);\n".printf (construct_signal, identifier_type);
 		string to_append = "\t\t%s.connect (%s);\n".printf (construct_signal, real_construct_code)
@@ -154,7 +153,7 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		else this.construct_body += to_append;
 	}
 
-	protected void write_complex_attributes (ClassDefinition class_definition) {
+	protected void write_complex_attributes (ClassDefinition class_definition) {	
 		foreach (Attribute attr in class_definition.attrs) {
 			if (attr is ComplexAttribute)
 				generate ( (attr as ComplexAttribute).complex_type );
@@ -180,19 +179,8 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		string name = root_class_definition.target_name;
 		string base_ns = root_class_definition.base_ns;
 		string base_name = root_class_definition.base_type.name;
-
-		switch (root_class_definition.definition_scope) {
-			case DefinitionScope.PUBLIC:
-				class_start += "public class ";
-				break;
-			case DefinitionScope.INTERNAL:
-				class_start += "internal class ";
-				break;
-			default:
-				Report.error(null, "Invalid class visibility");
-				break;
-		}
 		
+		class_start += "public class ";
 		if (ns!=null) class_start += ns + ".";
 		class_start += name + " : ";
 		if (base_ns!=null) class_start += base_ns + ".";
@@ -211,33 +199,21 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 
 	protected void write_declaration (ClassDefinition class_definition) {
 		switch (class_definition.definition_scope) {
+		case DefinitionScope.MAIN_CLASS:
+			/* do something here? */
+			break;
 		case DefinitionScope.PUBLIC:
 			members_declarations += "\tpublic " + class_definition.base_full_name +
-				" " + class_definition.identifier;
-			break;
-		case DefinitionScope.INTERNAL:
-			members_declarations += "\tinternal " + class_definition.base_full_name +
-				" " + class_definition.identifier;
-			break;
-		case DefinitionScope.PROTECTED:
-			members_declarations += "\tprotected " + class_definition.base_full_name +
-				" " + class_definition.identifier;
+				" " + class_definition.identifier + ";\n";
 			break;
 		case DefinitionScope.PRIVATE:
 			members_declarations += "\tprivate " + class_definition.base_full_name +
-				" " + class_definition.identifier;
+				" " + class_definition.identifier + ";\n";
 			break;
-		}
-
-		if (class_definition.definition_scope == DefinitionScope.CONSTRUCTOR) {
+		case DefinitionScope.CONSTRUCTOR:
 			construct_body_locals += "\t\t" + class_definition.base_full_name +
 				" " + class_definition.identifier + ";\n";
-		} else {
-			if (class_definition.property_desc != null) {
-				members_declarations +=  " { " + class_definition.property_desc + " }\n";
-			} else {
-				members_declarations += ";\n";
-			}
+			break;
 		}
 	}	
 		
@@ -255,10 +231,8 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 			construct_name = "." + construct_name; // with_label->.with_label
 		else construct_name = "";
 
-		constructors += "\t\t" + class_definition.identifier + " = ";
-		if (class_definition.base_type is ObjectTypeSymbol)	constructors += " new ";
-		constructors += class_definition.base_full_name + construct_name + " (";
-
+		constructors += "\t\t" + class_definition.identifier + " = new " +
+			class_definition.base_full_name + construct_name + " (";
 		int i = 0;
 		for (; i < class_definition.construct_method.parameter_attributes.size - 1 ; i++) {
 			Attribute attr = class_definition.construct_method.parameter_attributes.get (i);
@@ -311,10 +285,6 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		using_directives += "using %s;\n".printf(ns);
 	}
 
-	private inline string escape (string str) {
-		return str.replace ("\"", "\\\"");
-	}
-
 	protected string generate_literal (Attribute attr) {
 		string literal;
 		DataType type;
@@ -352,7 +322,7 @@ public class Gtkaml.CodeGenerator : GLib.Object {
 		} else if (type is UnresolvedType) {
 			UnresolvedType utype = type as UnresolvedType;
 			if (utype.unresolved_symbol.name == "string") {
-				literal = "\"" + escape (stripped_value) + "\"";
+				literal = "\"" + value.escape ("") + "\"";
 			} else if (utype.unresolved_symbol.name == "bool") {
 				if (stripped_value != "true" && stripped_value != "false") {
 					Report.error (null, "'%s' is not a boolean literal".printf (value));
