@@ -4,7 +4,7 @@
 
 As seen in the [Example example] or in the tests and sample that come with gtkaml, there is a *prefix* (usually referred to as `xmlns:g="http://gtkaml.org/0.2"` or `xmlns:gtkaml="http://gtkaml.org/0.2"`, or `xmlns:class`) that contains attributes that are _not_ part of the Gtk+ Vala bindings.
 
-Here are their specifications, assuming the prefix is declared with *`xmlns:gtk`*.
+Here are their specifications, assuming the prefix is declared with *`xmlns:gtkaml`*.
 
 === gtkaml:name ===
 The name of the class you're creating. May contain fully qualified name.
