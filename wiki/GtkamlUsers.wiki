@@ -1,6 +1,6 @@
 #summary Projects using Gtkaml
 
-  * radare2 GUI  - [http://www.radare.org/get/lacon-radare-2009/#%2832%29 http://www.radare.org/ ]
+  * radare2 GUI  - [http://locklabs.com/?Products http://www.locklabs.com] (see [http://www.radare.org] for more information)
   * giocommander - [http://code.google.com/p/giocommander/source/browse/#svn%2Ftrunk%2Fsrc http://code.google.com/p/giocommander/]  (not released)
 
 
