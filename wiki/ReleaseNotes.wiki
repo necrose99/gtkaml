@@ -1,6 +1,13 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2011-03-22) gtkaml 0.4.3 ===
+  * #! shebang support for GtkON files to be used with the `gtkaml` executable
+  * vim syntax files for gtkon and gtkaml files. (thanks pancake@nopcode.org). See editors/vim/README on how to use them.
+  * removed own debian/`*` files in favour of debian's own packaging scripts (thanks David <dapal@debian.org>) 
+  * optional running of tests with --enable-tests at configure stage
+
+
 === (2011-03-14) gtkaml 0.4.2 ===
   * updated to valacompiler 0.11.6, compatible with vala 0.10.4
   * internal classes:  by using gtkaml:internal="foo" on the root node. The existing gtkaml:name becomes an alias for gtkaml:public.
