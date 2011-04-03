@@ -23,6 +23,9 @@
         <h2 class="main_title">Description:</h2>
         <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">abstract</span> <span class="main_keyword">class</span> <b><a href="Gtkaml.Ast.MarkupChildTag.html" class="abstract_class">MarkupChildTag</a></b> : <span class="main_type"><a href="Gtkaml.Ast.MarkupTag.html" class="abstract_class">MarkupTag</a></span>
         </div>
+        <div class="description">
+          <p>MarkupChildTag is a MarkupTag that has itself a parent: parent_tag,  </p>
+        </div>
         <div class="box">
           <div class="headline">
             <div class="text">All known sub-classes:</div>
@@ -78,6 +81,13 @@
               <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">override</span> <span class="main_keyword">void</span> <b><a href="Gtkaml.Ast.MarkupChildTag.resolve_attributes.html" class="virtual_method">resolve_attributes</a></b> (<span class="main_type"><a href="Gtkaml.MarkupResolver.html" class="class">MarkupResolver</a></span> resolver) <span class="main_keyword">throws</span> <span class="main_type"><code>ParseError</code></span>
               </span>
               <div class="leaf_brief_description">
+              </div></li>
+            <li class="virtual_method">
+              <span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_keyword">override</span> <span class="main_type"><code>List</code></span>&lt;<span class="main_type"><code>CreationMethod</code></span>&gt; <b><a href="Gtkaml.Ast.MarkupChildTag.get_creation_method_candidates.html" class="virtual_method">get_creation_method_candidates</a></b> ()
+              </span>
+              <div class="leaf_brief_description">
+                <span class="brief_description">returns the list of possible creation methods, containing a single element if explicitly requested 
+                </span>
               </div></li>
             <li class="method">
               <span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_type"><code>ObjectCreationExpression</code></span> <b><a href="Gtkaml.Ast.MarkupChildTag.get_initializer.html" class="method">get_initializer</a></b> (<span class="main_type"><a href="Gtkaml.MarkupResolver.html" class="class">MarkupResolver</a></span> resolver) <span class="main_keyword">throws</span> <span class="main_type"><code>ParseError</code></span>

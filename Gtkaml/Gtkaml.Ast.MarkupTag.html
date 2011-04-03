@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<?xml version="1.0" encoding="utf-8"?>
 <html>
   <head>
     <title>Vala Binding Reference</title>
@@ -25,7 +23,12 @@
         </div>
         <div class="description">
           <p>A tag that is a parent of others. Can be the root tag. </p>
-          <p>You have to implement: * generate_public_ast * (optionally) resolve * generate </p>
+          <p>You have to implement: </p>
+          <ul>
+            <li>generate_public_ast</li>
+            <li>(optionally) resolve</li>
+            <li>generate</li>
+          </ul>
         </div>
         <div class="box">
           <div class="headline">
@@ -177,6 +180,12 @@
               </span>
               <div class="leaf_brief_description">
                 <span class="brief_description">decides weather to halt on error or just issue an warning </span>
+              </div></li>
+            <li class="virtual_method">
+              <span class="leaf_code_definition"><span class="main_keyword">protected</span> <span class="main_keyword">virtual</span> <span class="main_type"><code>List</code></span>&lt;<span class="main_type"><code>CreationMethod</code></span>&gt; <b><a href="Gtkaml.Ast.MarkupTag.get_creation_method_candidates.html" class="virtual_method">get_creation_method_candidates</a></b> ()
+              </span>
+              <div class="leaf_brief_description">
+                <span class="brief_description">returns the list of possible creation methods </span>
               </div></li>
             <li class="method">
               <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><code>List</code></span>&lt;<span class="main_type"><a href="Gtkaml.Ast.MarkupChildTag.html" class="abstract_class">MarkupChildTag</a></span>&gt; <b><a href="Gtkaml.Ast.MarkupTag.get_child_tags.html" class="method">get_child_tags</a></b> ()
