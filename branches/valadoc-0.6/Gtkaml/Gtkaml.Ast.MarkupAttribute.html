@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html>
+  <head>
+    <title>Vala Binding Reference</title>
+    <link href="devhelpstyle.css" rel="stylesheet" type="text/css"/>
+    <script src="scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">Gtkaml.Ast.MarkupAttribute Reference Manual</div>
+    <div class="site_body">
+      <div class="site_content">
+        <h1 class="main_title">MarkupAttribute</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Object Hierarchy:</h2>
+        
+        <img class="main_diagram" usemap="#Gtkaml.Ast.MarkupAttribute" alt="Object hierarchy for MarkupAttribute" src="img/Gtkaml.Ast.MarkupAttribute.png"/>
+<map id="Gtkaml.Ast.MarkupAttribute" name="Gtkaml.Ast.MarkupAttribute">
+<area shape="rect" id="node1" href="Gtkaml.Ast.MarkupAttribute.html" title="Gtkaml.Ast.MarkupAttribute" alt="" coords="5,5,240,53"/>
+</map>
+
+        <h2 class="main_title">Description:</h2>
+        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">class</span> <b><a href="Gtkaml.Ast.MarkupAttribute.html" class="class">MarkupAttribute</a></b>
+        </div>
+        <div class="description">
+          <p>Represents an attribute of a MarkupTag </p>
+        </div>
+        <div class="box">
+          <div class="headline">
+            <div class="text">All known sub-classes:</div>
+            <div class="toggle">
+              <img onclick="toggle_box  (this, 'box-content-0')" src="coll_open.png">&nbsp;</div>
+            </div>
+            <div class="content" id="box-content-0">
+              <div class="column">
+                <ul class="navi_inline">
+                  <li class="class">
+                    <a href="Gtkaml.Ast.MarkupComplexAttribute.html">MarkupComplexAttribute</a></li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul class="navi_inline">
+                </ul>
+              </div>
+              <div class="column">
+                <ul class="navi_inline">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="namespace_note">
+            <b>Namespace:</b> Gtkaml.Ast</div>
+          <div class="package_note">
+            <b>Package:</b> Gtkaml</div>
+          <h2 class="main_title">Content:</h2>
+          <h3 class="main_title">Properties:</h3>
+          <ul class="navi_inline">
+            <li class="property">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_type"><code>DataType</code></span> <b><a href="Gtkaml.Ast.MarkupAttribute.target_type.html" class="property">target_type</a></b> { <span class="main_keyword">set</span>; <span class="main_keyword">get</span>; }
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+            <li class="property">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span> <b><a href="Gtkaml.Ast.MarkupAttribute.attribute_name.html" class="property">attribute_name</a></b> { <span class="main_keyword">get</span>; }
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+            <li class="property">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_basic_type"><code>string</code></span>? <b><a href="Gtkaml.Ast.MarkupAttribute.attribute_value.html" class="property">attribute_value</a></b> { <span class="main_keyword">get</span>; }
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+          </ul>
+          <h3 class="main_title">Creation methods:</h3>
+          <ul class="navi_inline">
+            <li class="creation_method">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Gtkaml.Ast.MarkupAttribute.MarkupAttribute.html" class="creation_method">MarkupAttribute</a></b> (<span class="main_basic_type"><code>string</code></span> attribute_name, <span class="main_basic_type"><code>string</code></span>? attribute_value, <span class="main_type"><code>SourceReference</code></span>? source_reference =<span class="main_optional_parameter">null</span>)
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+            <li class="creation_method">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <b><a href="Gtkaml.Ast.MarkupAttribute.MarkupAttribute.with_type.html" class="creation_method">MarkupAttribute.with_type</a></b> (<span class="main_basic_type"><code>string</code></span> attribute_name, <span class="main_basic_type"><code>string</code></span>? attribute_value, <span class="main_type"><code>DataType</code></span> target_type, <span class="main_type"><code>SourceReference</code></span>? source_reference =<span class="main_optional_parameter">null</span>)
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+          </ul>
+          <h3 class="main_title">Methods:</h3>
+          <ul class="navi_inline">
+            <li class="virtual_method">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">virtual</span> <span class="main_type"><code>Expression</code></span> <b><a href="Gtkaml.Ast.MarkupAttribute.get_expression.html" class="virtual_method">get_expression</a></b> (<span class="main_type"><a href="Gtkaml.MarkupResolver.html" class="class">MarkupResolver</a></span> resolver, <span class="main_type"><a href="Gtkaml.Ast.MarkupTag.html" class="abstract_class">MarkupTag</a></span> markup_tag) <span class="main_keyword">throws</span> <span class="main_type"><code>ParseError</code></span>
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+            <li class="virtual_method">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">virtual</span> <span class="main_type"><code>Statement</code></span> <b><a href="Gtkaml.Ast.MarkupAttribute.get_assignment.html" class="virtual_method">get_assignment</a></b> (<span class="main_type"><a href="Gtkaml.MarkupResolver.html" class="class">MarkupResolver</a></span> resolver, <span class="main_type"><a href="Gtkaml.Ast.MarkupTag.html" class="abstract_class">MarkupTag</a></span> markup_tag) <span class="main_keyword">throws</span> <span class="main_type"><code>ParseError</code></span>
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+            <li class="virtual_method">
+              <span class="leaf_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">virtual</span> <span class="main_keyword">void</span> <b><a href="Gtkaml.Ast.MarkupAttribute.resolve.html" class="virtual_method">resolve</a></b> (<span class="main_type"><a href="Gtkaml.MarkupResolver.html" class="class">MarkupResolver</a></span> resolver, <span class="main_type"><a href="Gtkaml.Ast.MarkupTag.html" class="abstract_class">MarkupTag</a></span> markup_tag) <span class="main_keyword">throws</span> <span class="main_type"><code>ParseError</code></span>
+              </span>
+              <div class="leaf_brief_description">
+              </div></li>
+          </ul>
+        </div>
+      </div>
+      <br/>
+      <div class="site_footer">Generated by <a href="http://www.valadoc.org/">Valadoc</a>
+      </div>
+    </body>
+  </html>

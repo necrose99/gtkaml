@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book xmlns="http://www.devhelp.net/book" title="Gtkaml Reference Manual" language="vala" name="" version="" author="" link="index.htm">
+  <chapters>
+    <sub name="Gtkaml" link="Gtkaml.html">
+      <sub name="CodeContext" link="Gtkaml.CodeContext.html"></sub>
+      <sub name="MarkupParser" link="Gtkaml.MarkupParser.html"></sub>
+      <sub name="MarkupResolver" link="Gtkaml.MarkupResolver.html"></sub>
+      <sub name="MarkupClass" link="Gtkaml.MarkupClass.html"></sub>
+      <sub name="MarkupNamespace" link="Gtkaml.MarkupNamespace.html"></sub>
+      <sub name="MarkupHint" link="Gtkaml.MarkupHint.html"></sub>
+      <sub name="MarkupHintsStore" link="Gtkaml.MarkupHintsStore.html"></sub>
+      <sub name="Callable" link="Gtkaml.Callable.html"></sub>
+      <sub name="ValaParser" link="Gtkaml.ValaParser.html"></sub>
+      <sub name="Ast" link="Gtkaml.Ast.html">
+        <sub name="MarkupAttribute" link="Gtkaml.Ast.MarkupAttribute.html"></sub>
+        <sub name="MarkupComplexAttribute" link="Gtkaml.Ast.MarkupComplexAttribute.html"></sub>
+        <sub name="MarkupTag" link="Gtkaml.Ast.MarkupTag.html"></sub>
+        <sub name="MarkupRoot" link="Gtkaml.Ast.MarkupRoot.html"></sub>
+        <sub name="MarkupChildTag" link="Gtkaml.Ast.MarkupChildTag.html"></sub>
+        <sub name="MarkupUnresolvedTag" link="Gtkaml.Ast.MarkupUnresolvedTag.html"></sub>
+        <sub name="MarkupMember" link="Gtkaml.Ast.MarkupMember.html"></sub>
+        <sub name="MarkupTemp" link="Gtkaml.Ast.MarkupTemp.html"></sub></sub></sub>
+  </chapters>
+  <functions>
+    <keyword type="" name="CodeContext" link="Gtkaml.CodeContext.html"/>
+    <keyword type="" name="MarkupParser" link="Gtkaml.MarkupParser.html"/>
+    <keyword type="" name="MarkupResolver" link="Gtkaml.MarkupResolver.html"/>
+    <keyword type="" name="MarkupClass" link="Gtkaml.MarkupClass.html"/>
+    <keyword type="" name="MarkupNamespace" link="Gtkaml.MarkupNamespace.html"/>
+    <keyword type="" name="MarkupHint" link="Gtkaml.MarkupHint.html"/>
+    <keyword type="" name="MarkupHintsStore" link="Gtkaml.MarkupHintsStore.html"/>
+    <keyword type="" name="Callable" link="Gtkaml.Callable.html"/>
+    <keyword type="" name="ValaParser" link="Gtkaml.ValaParser.html"/>
+    <keyword type="" name="MarkupAttribute" link="Gtkaml.Ast.MarkupAttribute.html"/>
+    <keyword type="" name="MarkupComplexAttribute" link="Gtkaml.Ast.MarkupComplexAttribute.html"/>
+    <keyword type="" name="MarkupTag" link="Gtkaml.Ast.MarkupTag.html"/>
+    <keyword type="" name="MarkupRoot" link="Gtkaml.Ast.MarkupRoot.html"/>
+    <keyword type="" name="MarkupChildTag" link="Gtkaml.Ast.MarkupChildTag.html"/>
+    <keyword type="" name="MarkupUnresolvedTag" link="Gtkaml.Ast.MarkupUnresolvedTag.html"/>
+    <keyword type="" name="MarkupMember" link="Gtkaml.Ast.MarkupMember.html"/>
+    <keyword type="" name="MarkupTemp" link="Gtkaml.Ast.MarkupTemp.html"/>
+    <keyword type="" name="Ast" link="Gtkaml.Ast.html"/>
+    <keyword type="" name="Gtkaml" link="Gtkaml.html"/>
+  </functions>
+</book>
