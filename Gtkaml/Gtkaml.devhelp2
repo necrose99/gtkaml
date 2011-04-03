@@ -19,7 +19,8 @@
         <sub name="MarkupChildTag" link="Gtkaml.Ast.MarkupChildTag.html"></sub>
         <sub name="MarkupUnresolvedTag" link="Gtkaml.Ast.MarkupUnresolvedTag.html"></sub>
         <sub name="MarkupMember" link="Gtkaml.Ast.MarkupMember.html"></sub>
-        <sub name="MarkupTemp" link="Gtkaml.Ast.MarkupTemp.html"></sub></sub></sub>
+        <sub name="MarkupTemp" link="Gtkaml.Ast.MarkupTemp.html"></sub>
+        <sub name="MarkupReference" link="Gtkaml.Ast.MarkupReference.html"></sub></sub></sub>
   </chapters>
   <functions>
     <keyword type="" name="CodeContext" link="Gtkaml.CodeContext.html"/>
@@ -39,6 +40,7 @@
     <keyword type="" name="MarkupUnresolvedTag" link="Gtkaml.Ast.MarkupUnresolvedTag.html"/>
     <keyword type="" name="MarkupMember" link="Gtkaml.Ast.MarkupMember.html"/>
     <keyword type="" name="MarkupTemp" link="Gtkaml.Ast.MarkupTemp.html"/>
+    <keyword type="" name="MarkupReference" link="Gtkaml.Ast.MarkupReference.html"/>
     <keyword type="" name="Ast" link="Gtkaml.Ast.html"/>
     <keyword type="" name="Gtkaml" link="Gtkaml.html"/>
   </functions>
