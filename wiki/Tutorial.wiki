@@ -1,5 +1,5 @@
 #summary gtkaml introduction (draft)
-*this is work in progress*
+_this tutorial is work in progress_
 = Introduction =
 
 gktaml enables you to quickly write user interfaces in GTK+ while _not_ losing any coding capabilities you would otherwise have.
@@ -10,7 +10,7 @@ This is a quick walk-trough on how to code in gtkaml and Vala.
 
 {{{
 <Window xmlns="Gtk" gtkaml:name="HelloWorldWindow" title="Hello World" 
-delete-event="{Gtk.main_quit}" xmlns:gtkaml="http://gtkaml.org/0.2" >
+delete-event="Gtk.main_quit" xmlns:gtkaml="http://gtkaml.org/0.6" >
 <![CDATA[
    public static int main (string[] args)
    {
@@ -18,6 +18,7 @@ delete-event="{Gtk.main_quit}" xmlns:gtkaml="http://gtkaml.org/0.2" >
        var window = new HelloWorldWindow ();
        window.show_all ();
        Gtk.main ();
+       return 0;
    }
 ]]>
 </Window>   
@@ -37,7 +38,7 @@ The `xmlns:gtkaml="http://gtkaml.org/0.2"` is the declaration of the gtkaml pref
 
 `delete-event` is a signal of the Gtk.Window. It is triggered when the window is closed. The value specifies that the main Gtk quit function should be added as handler.
 
-`<![CDATA[` is an XML construction that allows you to write otherwise invalid characters (like '`<`'). `gtkaml` uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
+`<![CDATA[` is an XML construct that allows you to write otherwise invalid characters (like '`<`'). `gtkaml` uses this section to specify code that goes in the class definition: in this case, the entry point `main ()`.
 
 ===Compiling the example===
 Let's say you save the above in a file named `tutorial.gtkaml`
@@ -48,6 +49,10 @@ The fastest way to compile this would be
 The `--pkg` parameter tells vala to include the bindings for Gtk. That means to also include the headers and the linking parameters specified by e.g. `pkg-config`
 
 If the above command complains that `gtk+-2.0 not found in specified Vala API directories` then you should add the `--vapidir /path/to/share/vala/vapi` in the command-line, where `/path/to` is the prefix of your vala installation.
+
+If you want the generated .vala and .c files, try this command
+
+`gtkamlc -C --pkg gtk+-2.0 tutorial.gtkaml --dump-tree=tutorial.vala`
 
 Now, the output is actually three files, tutorial.c and tutorial.h and tutorial.vala. The later can be inspected to understand what gtkaml did with your XML, before passing it to valac, but the first two files are the actual code you need: to compile them, use the following command:
 {{{
