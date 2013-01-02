@@ -1,6 +1,23 @@
 #summary release notes for gtkaml (chronologically-reversed)
 #labels Featured
 
+=== (2013-01-03) gtkaml 0.6 beta 3 ===
+This third beta release contains the following fixes compared to beta2:
+  * prevent a crasher when class name is blank
+  * stop stripping CDATA tags' leading and trailing whitespaces
+  * honor -D defines in the context used to parse members
+  * honoring -d for .gtkaml generated files
+  * fix a bug copying fields twice if generated automatically by properties
+  
+Support was added for enum literals, like `<Window type='toplevel' />`
+
+
+=== (2012-12-31) gtkaml 0.6 beta 2 ===
+This second beta release includes a new way of interaction with the Vala compiler that enables future developments. 
+
+There should be *no* notable differences compared to 0.6beta2's functionality other than:
+  * compatibility with Vala 0.18
+
 === (2011-12-31) gtkaml 0.6 beta 1 ===
 This beta release includes a new way of interaction with the Vala compiler that enables future developments. 
 
